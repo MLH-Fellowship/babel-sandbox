@@ -165,18 +165,19 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
 
         {enableCustomPlugin && (
-          <Wrapper>
-            <Code
-              value={customPlugin}
-              onChange={(val) => setCustomPlugin(val)}
-              docName="plugin.js"
-            />
-            <Toggle onClick={() => toggleCustomPlugin(false)} />
-          </Wrapper>
-        )}
-        <div class="one column row">
 
-        </div>
+          <div class="one column row">
+            <Wrapper>
+              <Code
+                value={customPlugin}
+                onChange={(val) => setCustomPlugin(val)}
+                docName="plugin.js"
+              />
+              <Toggle onClick={() => toggleCustomPlugin(false)} />
+            </Wrapper>
+        )}
+
+          </div>
       </div>
 
       {results}
