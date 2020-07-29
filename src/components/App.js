@@ -165,7 +165,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
         {enableCustomPlugin && (
           <div className="one column row">
-            <Wrapper>
+            <Wrapper className="column">
               <Code
                 value={customPlugin}
                 onChange={(val) => setCustomPlugin(val)}
