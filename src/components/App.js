@@ -215,6 +215,27 @@ const Root = styled.div`
   padding: 4px;
 `;
 
+const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  flex: 1;
+  position: relative;
+`;
+
+const Wrapper = styled.div`
+  background: rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding: 0.25rem 1rem 0.75rem;
+  position: relative;
+
+  & + & {
+    margin-top: 1px;
+  }
+`;
+
 const Config = styled(Editor)`
   padding: 4px;
 `;
