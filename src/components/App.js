@@ -43,7 +43,21 @@ function CompiledOutput({
     <Wrapper>
       <div class="ui celled grid">
         <div class="row">
-          <div class="one wide column"></div>
+          <div class="one wide column">
+
+            <Section>
+              <Config
+                value={
+                  config === Object(config)
+                    ? JSON.stringify(config, null, "\t")
+                    : config
+                }
+                onChange={onConfigChange}
+                docName="config.json"
+                config={{ mode: "application/json" }}
+              />
+            </Section>
+          </div>
         </div>
         <div class="row">
           <div class="one wide column"></div>
@@ -55,18 +69,6 @@ function CompiledOutput({
           <div class="two wide column"></div>
         </div>
       </div>
-      <Section>
-        <Config
-          value={
-            config === Object(config)
-              ? JSON.stringify(config, null, "\t")
-              : config
-          }
-          onChange={onConfigChange}
-          docName="config.json"
-          config={{ mode: "application/json" }}
-        />
-      </Section>
       <Section>
         <Code
           value={compiled?.code ?? ""}
