@@ -122,66 +122,33 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           <div class="column"></div>
         </div>
       </div>
-      <Section>
-        {/* buttons */}
 
-        <Actions>
-          <label>
-            <input
-              checked={enableCustomPlugin}
-              onChange={() => toggleCustomPlugin(!enableCustomPlugin)}
-              type="checkbox"
-            />
-            <span>Custom Plugin</span>
-          </label>
-          <button
-            onClick={() =>
-              setBabelConfig((configs) => [
-                ...configs,
-                configs[configs.length - 1],
-              ])
-            }
-          >
-            Add New Config
-          </button>
-          <button
-            onClick={() => {
-              setSource("const hello = 'world';");
-            }}
-          >
-            Use Example (WIP)
-          </button>
-        </Actions>
 
-        {/* input section */}
 
+      <Wrapper>
+        <Code
+          value={source}
+          onChange={(val) => setSource(val)}
+          docName="source.js"
+        />
+        <FileSize>
+          {size}b, {gzip}b
+          </FileSize>
+        {/* <AST source={source}></AST> */}
+      </Wrapper>
+
+
+      {enableCustomPlugin && (
         <Wrapper>
           <Code
-            value={source}
-            onChange={(val) => setSource(val)}
-            docName="source.js"
+            value={customPlugin}
+            onChange={(val) => setCustomPlugin(val)}
+            docName="plugin.js"
           />
-          <FileSize>
-            {size}b, {gzip}b
-          </FileSize>
-          {/* <AST source={source}></AST> */}
+          <Toggle onClick={() => toggleCustomPlugin(false)} />
         </Wrapper>
-
-        {/* custom plugin section */}
-
-        {enableCustomPlugin && (
-          <Wrapper>
-            <Code
-              value={customPlugin}
-              onChange={(val) => setCustomPlugin(val)}
-              docName="plugin.js"
-            />
-            <Toggle onClick={() => toggleCustomPlugin(false)} />
-          </Wrapper>
-        )}
-        {/* output code and config section*/}
-        {results}
-      </Section>
+      )}
+      {results}
     </Root>
   );
 };
