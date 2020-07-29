@@ -175,9 +175,10 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               />
               <Toggle onClick={() => toggleCustomPlugin(false)} />
             </Wrapper>
-        )}
 
           </div>
+        )}
+
       </div>
 
       {results}
