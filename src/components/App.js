@@ -119,7 +119,34 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
       <div class="ui grid">
         <div class="one column row">
-          <div class="column"></div>
+
+          <Actions>
+            <label>
+              <input
+                checked={enableCustomPlugin}
+                onChange={() => toggleCustomPlugin(!enableCustomPlugin)}
+                type="checkbox"
+              />
+              <span>Custom Plugin</span>
+            </label>
+            <button
+              onClick={() =>
+                setBabelConfig((configs) => [
+                  ...configs,
+                  configs[configs.length - 1],
+                ])
+              }
+            >
+              Add New Config
+          </button>
+            <button
+              onClick={() => {
+                setSource("const hello = 'world';");
+              }}
+            >
+              Use Example (WIP)
+          </button>
+          </Actions>
         </div>
       </div>
 
