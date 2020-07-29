@@ -149,22 +149,21 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </Actions>
         </div>
         <div class="one column row">
+
+          <Wrapper>
+            <Code
+              value={source}
+              onChange={(val) => setSource(val)}
+              docName="source.js"
+            />
+            <FileSize>
+              {size}b, {gzip}b
+          </FileSize>
+            {/* <AST source={source}></AST> */}
+          </Wrapper>
         </div>
       </div>
 
-
-
-      <Wrapper>
-        <Code
-          value={source}
-          onChange={(val) => setSource(val)}
-          docName="source.js"
-        />
-        <FileSize>
-          {size}b, {gzip}b
-          </FileSize>
-        {/* <AST source={source}></AST> */}
-      </Wrapper>
 
 
       {enableCustomPlugin && (
