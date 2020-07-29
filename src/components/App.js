@@ -42,7 +42,7 @@ function CompiledOutput({
   return (
     <Wrapper>
       <div className="two column row">
-        <Section>
+        <div className="column">
           <Config
             value={
               config === Object(config)
@@ -53,8 +53,8 @@ function CompiledOutput({
             docName="config.json"
             config={{ mode: "application/json" }}
           />
-        </Section>
-        <Section>
+        </div>
+        <div className="column">
           <Code
             value={compiled?.code ?? ""}
             docName="result.js"
