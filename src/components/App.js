@@ -180,7 +180,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </Wrapper>
         )}
         {/* output code and config section*/}
-        {resultsp}
+        {results}
       </Section>
     </Root>
   );
