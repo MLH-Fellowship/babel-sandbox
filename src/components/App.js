@@ -41,6 +41,7 @@ function CompiledOutput({
 
   return (
     <Wrapper>
+    <div class="one column row">
       <Section>
         <Config
           value={
@@ -163,9 +164,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         </div>
 
 
-
         {enableCustomPlugin && (
-
           <div class="one column row">
             <Wrapper>
               <Code
@@ -175,7 +174,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               />
               <Toggle onClick={() => toggleCustomPlugin(false)} />
             </Wrapper>
-
           </div>
         )}
 
