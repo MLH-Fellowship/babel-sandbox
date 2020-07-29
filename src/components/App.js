@@ -119,7 +119,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   return (
     <Root>
       <div class="ui grid">
-        <div class="one column row">
+        <div className="one column row">
           <Actions>
             <label>
               <input
