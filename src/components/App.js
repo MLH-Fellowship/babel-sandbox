@@ -148,7 +148,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </button>
           </Actions>
         </div>
-        <div class="one column row">
+        <div className="one column row">
           <Wrapper>
             <Code
               value={source}
