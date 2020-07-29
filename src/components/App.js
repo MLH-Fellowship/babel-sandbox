@@ -48,6 +48,12 @@ function CompiledOutput({
         <div class="row">
           <div class="one wide column"></div>
         </div>
+        <div class="row">
+          <div class="two wide column"></div>
+        </div>
+        <div class="row">
+          <div class="two wide column"></div>
+        </div>
       </div>
       <Section>
         <Config
