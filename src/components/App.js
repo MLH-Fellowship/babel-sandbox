@@ -148,7 +148,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </button>
           </Actions>
         </div>
-        <div className="one column row">
+        <div className="one wide column">
           <Wrapper>
             <Code
               value={source}
@@ -164,7 +164,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
 
         {enableCustomPlugin && (
-          <div className="one column row">
+          <div className="one wide column">
             <Wrapper>
               <Code
                 value={customPlugin}
