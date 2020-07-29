@@ -117,69 +117,66 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   return (
     <Root>
 
-      <div class="ui celled grid">
-        <div class="row">
-          <div class="one wide column">
-            <Section>
-              {/* buttons */}
+      <Section>
+        {/* buttons */}
 
-              <Actions>
-                <label>
-                  <input
-                    checked={enableCustomPlugin}
-                    onChange={() => toggleCustomPlugin(!enableCustomPlugin)}
-                    type="checkbox"
-                  />
-                  <span>Custom Plugin</span>
-                </label>
-                <button
-                  onClick={() =>
-                    setBabelConfig((configs) => [
-                      ...configs,
-                      configs[configs.length - 1],
-                    ])
-                  }
-                >
-                  Add New Config
+        <Actions>
+          <label>
+            <input
+              checked={enableCustomPlugin}
+              onChange={() => toggleCustomPlugin(!enableCustomPlugin)}
+              type="checkbox"
+            />
+            <span>Custom Plugin</span>
+          </label>
+          <button
+            onClick={() =>
+              setBabelConfig((configs) => [
+                ...configs,
+                configs[configs.length - 1],
+              ])
+            }
+          >
+            Add New Config
           </button>
-                <button
-                  onClick={() => {
-                    setSource("const hello = 'world';");
-                  }}
-                >
-                  Use Example (WIP)
+          <button
+            onClick={() => {
+              setSource("const hello = 'world';");
+            }}
+          >
+            Use Example (WIP)
           </button>
-              </Actions>
+        </Actions>
 
-              {/* input section */}
+        {/* input section */}
 
-              <Wrapper>
-                <Code
-                  value={source}
-                  onChange={(val) => setSource(val)}
-                  docName="source.js"
-                />
-                <FileSize>
-                  {size}b, {gzip}b
+        <Wrapper>
+          <Code
+            value={source}
+            onChange={(val) => setSource(val)}
+            docName="source.js"
+          />
+          <FileSize>
+            {size}b, {gzip}b
           </FileSize>
-                {/* <AST source={source}></AST> */}
-              </Wrapper>
+          {/* <AST source={source}></AST> */}
+        </Wrapper>
 
-              {/* custom plugin section */}
+        {/* custom plugin section */}
 
-              {enableCustomPlugin && (
-                <Wrapper>
-                  <Code
-                    value={customPlugin}
-                    onChange={(val) => setCustomPlugin(val)}
-                    docName="plugin.js"
-                  />
-                  <Toggle onClick={() => toggleCustomPlugin(false)} />
-                </Wrapper>
-              )}
-              {/* output code and config section*/}
-              {resultsp}
-            </Section>
+        {enableCustomPlugin && (
+          <Wrapper>
+            <Code
+              value={customPlugin}
+              onChange={(val) => setCustomPlugin(val)}
+              docName="plugin.js"
+            />
+            <Toggle onClick={() => toggleCustomPlugin(false)} />
+          </Wrapper>
+        )}
+        {/* output code and config section*/}
+        {resultsp}
+      </Section>
     </Root>
   );
 };
@@ -195,11 +192,11 @@ function useDebounce(value, delay) {
 
   React.useEffect(() => {
     const handler = setTimeout(() => {
-            setDebouncedValue(value);
+      setDebouncedValue(value);
     }, delay);
 
     return () => {
-            clearTimeout(handler);
+      clearTimeout(handler);
     };
   }, [delay, value]);
 
@@ -233,7 +230,7 @@ const Wrapper = styled.div`
   position: relative;
 
   & + & {
-            margin - top: 1px;
+    margin-top: 1px;
   }
 `;
 
@@ -246,8 +243,8 @@ const Code = styled(Editor)`
   width: 100%;
 
   ${(p) =>
-            p.isError &&
-            css`
+    p.isError &&
+    css`
       background: rgba(234, 76, 137, 0.2);
     `};
 `;
@@ -280,7 +277,7 @@ const ToggleRoot = styled.div`
   z-index: 2;
 
   &:hover {
-            color: red;
+    color: red;
   }
 `;
 
@@ -289,6 +286,6 @@ const Actions = styled(Wrapper)`
   padding: 1rem;
 
   button {
-            margin - left: 1rem;
+    margin-left: 1rem;
   }
 `;
