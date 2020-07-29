@@ -46,10 +46,7 @@ function CompiledOutput({
           <div class="one wide column"></div>
         </div>
         <div class="row">
-          <div class="four wide column"></div>
-          <div class="four wide column"></div>
-          <div class="four wide column"></div>
-          <div class="four wide column"></div>
+          <div class="one wide column"></div>
         </div>
       </div>
       <Section>
