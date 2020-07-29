@@ -61,7 +61,7 @@ function CompiledOutput({
             config={{ readOnly: true, lineWrapping: true }}
             isError={compiled?.error ?? false}
           />
-        </Section>
+        </div>
         <FileSize>
           {compiled?.size}b, {gzip}b
       </FileSize>
