@@ -41,7 +41,20 @@ function CompiledOutput({
 
   return (
     <Wrapper>
-      <div class="ui celled grid"><div class="row"><div class="four wide column"></div><div class="four wide column"></div><div class="four wide column"></div><div class="four wide column"></div></div><div class="row"><div class="four wide column"></div><div class="four wide column"></div><div class="four wide column"></div><div class="four wide column"></div></div></div>
+      <div class="ui celled grid">
+        <div class="row">
+          <div class="four wide column"></div>
+          <div class="four wide column"></div>
+          <div class="four wide column"></div>
+          <div class="four wide column"></div>
+        </div>
+        <div class="row">
+          <div class="four wide column"></div>
+          <div class="four wide column"></div>
+          <div class="four wide column"></div>
+          <div class="four wide column"></div>
+        </div>
+      </div>
       <Section>
         <Config
           value={
