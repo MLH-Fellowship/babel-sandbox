@@ -118,7 +118,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
   return (
     <Root>
-      <div className="ui grid">
+      <div className="ui grid celled">
         <div className="row">
           <Actions>
             <label>
