@@ -149,6 +149,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </Actions>
         </div>
         <div class="one column row">
+        </div>
       </div>
 
 
