@@ -208,11 +208,12 @@ function useDebounce(value, delay) {
 // STYLES
 
 const Root = styled.div`
-  display: flex;
-  flex-direction: column;
-  // height: 100%;
-  height: 100vh;
-  padding: 4px;
+`;
+
+const Section = styled.section`
+`;
+
+const Wrapper = styled.div`
 `;
 
 const Config = styled(Editor)`
