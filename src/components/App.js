@@ -176,9 +176,9 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </div>
         )}
 
-      </div>
 
-      {results}
+        {results}
+      </div>
     </Root>
   );
 };
