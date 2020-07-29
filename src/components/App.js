@@ -41,31 +41,32 @@ function CompiledOutput({
 
   return (
     <Wrapper>
-    <div class="one column row">
-      <Section>
-        <Config
-          value={
-            config === Object(config)
-              ? JSON.stringify(config, null, "\t")
-              : config
-          }
-          onChange={onConfigChange}
-          docName="config.json"
-          config={{ mode: "application/json" }}
-        />
-      </Section>
-      <Section>
-        <Code
-          value={compiled?.code ?? ""}
-          docName="result.js"
-          config={{ readOnly: true, lineWrapping: true }}
-          isError={compiled?.error ?? false}
-        />
-      </Section>
-      <FileSize>
-        {compiled?.size}b, {gzip}b
+      <div class="one column row">
+        <Section>
+          <Config
+            value={
+              config === Object(config)
+                ? JSON.stringify(config, null, "\t")
+                : config
+            }
+            onChange={onConfigChange}
+            docName="config.json"
+            config={{ mode: "application/json" }}
+          />
+        </Section>
+        <Section>
+          <Code
+            value={compiled?.code ?? ""}
+            docName="result.js"
+            config={{ readOnly: true, lineWrapping: true }}
+            isError={compiled?.error ?? false}
+          />
+        </Section>
+        <FileSize>
+          {compiled?.size}b, {gzip}b
       </FileSize>
-      <Toggle onClick={removeConfig} />
+        <Toggle onClick={removeConfig} />
+      </div>
     </Wrapper>
   );
 }
