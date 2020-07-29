@@ -149,7 +149,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </Actions>
         </div>
         <div className="one column row">
-          <Wrapper>
+          <Wrapper className="column">
             <Code
               value={source}
               onChange={(val) => setSource(val)}
