@@ -61,7 +61,6 @@ function CompiledOutput({
         </div>
         <div class="row">
           <div class="one wide column">
-
             <Section>
               <Code
                 value={compiled?.code ?? ""}
