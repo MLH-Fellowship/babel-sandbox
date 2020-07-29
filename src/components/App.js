@@ -60,7 +60,17 @@ function CompiledOutput({
           </div>
         </div>
         <div class="row">
-          <div class="one wide column"></div>
+          <div class="one wide column">
+
+            <Section>
+              <Code
+                value={compiled?.code ?? ""}
+                docName="result.js"
+                config={{ readOnly: true, lineWrapping: true }}
+                isError={compiled?.error ?? false}
+              />
+            </Section>
+          </div>
         </div>
         <div class="row">
           <div class="two wide column"></div>
@@ -69,14 +79,6 @@ function CompiledOutput({
           <div class="two wide column"></div>
         </div>
       </div>
-      <Section>
-        <Code
-          value={compiled?.code ?? ""}
-          docName="result.js"
-          config={{ readOnly: true, lineWrapping: true }}
-          isError={compiled?.error ?? false}
-        />
-      </Section>
       <FileSize>
         {compiled?.size}b, {gzip}b
       </FileSize>
