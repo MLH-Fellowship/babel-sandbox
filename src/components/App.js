@@ -41,7 +41,7 @@ function CompiledOutput({
 
   return (
     <Wrapper>
-      <div class="one column row">
+      <div class="two column row">
         <Section>
           <Config
             value={
