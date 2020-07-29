@@ -60,7 +60,7 @@ function CompiledOutput({
           </div>
         </div>
         <div class="row">
-          <div class="one wide column">
+          <div class="one wide column loop">
             <Section>
               <Code
                 value={compiled?.code ?? ""}
