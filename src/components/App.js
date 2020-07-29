@@ -149,7 +149,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </Actions>
         </div>
         <div class="one column row">
-
           <Wrapper>
             <Code
               value={source}
@@ -161,6 +160,9 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </FileSize>
             {/* <AST source={source}></AST> */}
           </Wrapper>
+        </div>
+        <div class="one column row">
+
         </div>
       </div>
 
