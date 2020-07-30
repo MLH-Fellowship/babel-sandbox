@@ -186,7 +186,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                   </Menu.Item>
               </Menu.Menu>
             </Menu>
-            <Segment attached='bottom'>
+            <Segment inverted attached='bottom'>
               <Code
                 value={source}
                 onChange={(val) => setSource(val)}
