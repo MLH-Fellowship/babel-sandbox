@@ -45,19 +45,20 @@ function CompiledOutput({
   return (
     <Grid.Row>
       <Grid.Column width={16}>
+
+        <Menu attached='top' tabular inverted>
+          <Menu.Item>
+            plugin.js
+                </Menu.Item>
+          <Menu.Menu position='right'>
+            <Menu.Item>
+              <Icon name='close' size='' />
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
         <Segment>
           <Grid columns={2} relaxed='very'>
             <Grid.Column>
-              <Menu attached='top' tabular inverted>
-                <Menu.Item>
-                  plugin.js
-                </Menu.Item>
-                <Menu.Menu position='right'>
-                  <Menu.Item>
-                    <Icon name='close' size='' />
-                  </Menu.Item>
-                </Menu.Menu>
-              </Menu>
               <Wrapper>
                 <Config
                   value={
