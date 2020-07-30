@@ -81,7 +81,9 @@ function CompiledOutput({
               />
             </Grid.Column>
           </Grid>
-          <Divider vertical></Divider>
+          <Divider vertical>
+            <Icon name='close' />
+          </Divider>
         </Segment>
       </Grid.Column>
       <FileSize>
