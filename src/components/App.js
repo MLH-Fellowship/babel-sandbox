@@ -196,9 +196,9 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               </Menu>
               <Wrapper>
                 <Code
-                  value={source}
-                  onChange={(val) => setSource(val)}
-                  docName="source.js"
+                  value={customPlugin}
+                  onChange={(val) => setCustomPlugin(val)}
+                  docName="plugin.js"
                 />
                 <FileSize>
                   {size}b, {gzip}b
@@ -206,11 +206,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                 {/* <AST source={source}></AST> */}
               </Wrapper>
 
-              <Code
-                value={customPlugin}
-                onChange={(val) => setCustomPlugin(val)}
-                docName="plugin.js"
-              />
               <Toggle onClick={() => toggleCustomPlugin(false)} />
             </Grid.Column>
           </Grid.Row>
