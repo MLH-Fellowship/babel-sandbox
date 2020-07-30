@@ -206,9 +206,7 @@ function useDebounce(value, delay) {
 // STYLES
 
 const Root = styled.div`
-  background-color: #2C3138;
 `;
-
 
 const Wrapper = styled.div`
 `;
