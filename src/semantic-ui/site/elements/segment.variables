@@ -2,4 +2,4 @@
     User Variable Overrides
 *******************************/
 @border: none;
-@solidWhiteBorderColor: #263238;
+@solidWhiteBorderColor: #1d2025;
