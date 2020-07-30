@@ -188,14 +188,14 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                 <Menu.Item>
                   plugin.js
                 </Menu.Item>
+                <Menu.Item>
+                  {size}b, {gzip}b
+                </Menu.Item>
                 <Menu.Menu position='right'>
                   <Menu.Item onClick={() => toggleCustomPlugin(false)}>
                     <Icon name='close' size='' />
                   </Menu.Item>
                 </Menu.Menu>
-                <Menu.Item>
-                  {size}b, {gzip}b
-                </Menu.Item>
               </Menu>
               <Wrapper>
                 <Code
