@@ -155,29 +155,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
       <Grid celled='internally'>
         <Grid.Row>
-          <Actions>
-            <label>
-              <input
-                checked={enableCustomPlugin}
-                onChange={() => toggleCustomPlugin(!enableCustomPlugin)}
-                type="checkbox"
-              />
-              <span>Custom Plugin</span>
-            </label>
-            <button
-            >
-              Add New Config
-          </button>
-            <button
-              onClick={() => {
-                setSource("const hello = 'world';");
-              }}
-            >
-              Use Example (WIP)
-          </button>
-          </Actions>
-        </Grid.Row>
-        <Grid.Row>
           <Wrapper className="column">
             <Code
               value={source}
