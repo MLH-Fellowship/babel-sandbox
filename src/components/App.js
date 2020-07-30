@@ -190,7 +190,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                 docName="plugin.js"
               />
               <Toggle onClick={() => toggleCustomPlugin(false)} />
-            </Grid.Grid.Column>
+            </Grid.Column>
           </Grid.Row>
         )}
         {results}
