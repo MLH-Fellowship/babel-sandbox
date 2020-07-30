@@ -7,6 +7,8 @@ import { Editor } from "./Editor";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
 
+import { Button } from 'semantic-ui-react'
+
 window.babel = Babel;
 
 function CompiledOutput({
