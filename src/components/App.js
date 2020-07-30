@@ -160,13 +160,9 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             <Menu attached='top' tabular>
               <Menu.Item
                 name='bio'
-                active={activeItem === 'bio'}
-                onClick={this.handleItemClick}
               />
               <Menu.Item
                 name='photos'
-                active={activeItem === 'photos'}
-                onClick={this.handleItemClick}
               />
               <Menu.Menu position='right'>
                 <Menu.Item>
