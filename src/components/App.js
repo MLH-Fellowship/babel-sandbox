@@ -209,11 +209,6 @@ const Root = styled.div`
   background-color: #2C3138;
 `;
 
-const Section = styled.section`
-`;
-
-const Wrapper = styled.div`
-`;
 
 const Config = styled(Editor)`
   padding: 4px;
