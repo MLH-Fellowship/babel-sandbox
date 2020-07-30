@@ -204,7 +204,6 @@ import {Dropdown, Icon, Menu, Segment} from 'semantic-ui-react'
             </div>
 )
 
-export default MenuExampleAttached
           <Wrapper className="column">
               <Code
                 value={source}
