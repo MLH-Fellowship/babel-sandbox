@@ -116,7 +116,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
   return (
     <Root>
-      <div className="ui internally celled grid">
+      <Grid celled='internally'>
         <div className="row">
           <Actions>
             <label>
