@@ -125,15 +125,14 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         </Menu.Item>
         <Dropdown item icon='wrench' simple>
           <Dropdown.Menu>
-            <Dropdown.Item>New</Dropdown.Item>
             <Dropdown.Item>
 
               <Icon name='dropdown' />
-              <span className='text'>Import Plugin</span>
+              <span className='text'>New</span>
 
               <Dropdown.Menu>
-                <Dropdown.Item>babel/</Dropdown.Item>
-                <Dropdown.Item>Example</Dropdown.Item>
+                <Dropdown.Item>Blank Plugin</Dropdown.Item>
+                <Dropdown.Item>Import Plugin</Dropdown.Item>
               </Dropdown.Menu>
 
             </Dropdown.Item>
