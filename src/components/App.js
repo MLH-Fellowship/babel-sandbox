@@ -7,9 +7,7 @@ import { Editor } from "./Editor";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
 
-import {
-  Grid, Dropdown, Icon, Menu, Segment
-} from 'semantic-ui-react'
+import { Grid, Dropdown, Icon, Menu, Segment } from 'semantic-ui-react'
 
 
 window.babel = Babel;
@@ -158,7 +156,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
       <Grid celled='internally'>
         <Grid.Row>
 
-          <Menu attached='top' inverted>
+          <Menu attached='top'>
             <Dropdown item icon='wrench' simple>
               <Dropdown.Menu>
                 <Dropdown.Item>
@@ -194,7 +192,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             </Menu.Menu>
           </Menu>
 
-          <Segment attached='bottom' inverted>
+          <Segment attached='bottom'>
             <Wrapper className="column">
               <Code
                 value={source}
