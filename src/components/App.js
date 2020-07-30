@@ -184,6 +184,28 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           <Grid.Row>
             <Grid.Column width={16}>
 
+              <Menu attached='top' tabular inverted>
+                <Menu.Item>
+                  input.js
+              </Menu.Item>
+                <Menu.Menu position='right'>
+                  <Menu.Item>
+                    <Icon name='close' size='' />
+                  </Menu.Item>
+                </Menu.Menu>
+              </Menu>
+              <Wrapper>
+                <Code
+                  value={source}
+                  onChange={(val) => setSource(val)}
+                  docName="source.js"
+                />
+                <FileSize>
+                  {size}b, {gzip}b
+          </FileSize>
+                {/* <AST source={source}></AST> */}
+              </Wrapper>
+
               <Code
                 value={customPlugin}
                 onChange={(val) => setCustomPlugin(val)}
