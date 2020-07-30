@@ -146,7 +146,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </button>
           </Actions>
         </Grid.Row>
-        <div className="one column row">
+        <Grid.Row>
           <Wrapper className="column">
             <Code
               value={source}
@@ -158,11 +158,11 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </FileSize>
             {/* <AST source={source}></AST> */}
           </Wrapper>
-        </div>
+        </Grid.Row>
 
 
         {enableCustomPlugin && (
-          <div className="one column row">
+          <Grid.Row>
             <Wrapper className="column">
               <Code
                 value={customPlugin}
@@ -171,12 +171,12 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               />
               <Toggle onClick={() => toggleCustomPlugin(false)} />
             </Wrapper>
-          </div>
+          </Grid.Row>
         )}
 
 
         {results}
-      </div>
+        </Grid.Row>
     </Root>
   );
 };
