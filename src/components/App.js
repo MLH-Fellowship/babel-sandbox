@@ -127,7 +127,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           <Dropdown.Menu>
             <Dropdown.Item onClick={() => {
               setSource("const hello = 'world';");
-            }}>Load Default</Dropdown.Item>
+            }}>Load Example</Dropdown.Item>
             <Dropdown.Item>
 
               <Icon name='dropdown' />
