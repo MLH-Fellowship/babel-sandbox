@@ -81,6 +81,8 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   const [size, setSize] = useState(null);
   const [gzip, setGzip] = useState(null);
   const debouncedSource = useDebounce(source, 125);
+  const [shareLink, setShareLink] = React.useState("");
+  const [showShareLink, setShowShareLink] = React.useState(false);
 
   const updateBabelConfig = useCallback((config, index) => {
     setBabelConfig((configs) => {
@@ -145,6 +147,40 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           >
             Use Example (WIP)
           </button>
+          <button
+            onClick={() => {
+              const toSend = {
+                source,
+                plugin_source: enableCustomPlugin ? customPlugin : "",
+                configs: babelConfig.map((config) => JSON.stringify(config)),
+              };
+              const url = "/api/v1/blobs/create";
+              fetch(url, {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(toSend),
+              })
+                .then((resp) => resp.text())
+                .then((text) => {
+                  setShareLink(text);
+                  setShowShareLink(true);
+                })
+                .catch((err) => {
+                  setShareLink(
+                    "failed to get response from the server, our bad :("
+                  );
+                  setShowShareLink(true);
+                });
+            }}
+          >
+            Share
+          </button>
+          {showShareLink && (
+            <input type="text" value={shareLink} readOnly></input>
+          )}
         </Actions>
 
         {/* input section */}
