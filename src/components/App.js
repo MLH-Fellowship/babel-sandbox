@@ -127,7 +127,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           <Dropdown.Menu>
             <Dropdown.Item>
 
-              <Dropdown.Item>Load Example</Dropdown.Item>
+              <Dropdown.Item>Load</Dropdown.Item>
 
               <Icon name='dropdown' />
               <span className='text'>Add Plugin</span>
@@ -180,6 +180,13 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               }
             >
               Add New Config
+          </button>
+            <button
+              onClick={() => {
+                setSource("const hello = 'world';");
+              }}
+            >
+              Use Example (WIP)
           </button>
           </Actions>
         </Grid.Row>
