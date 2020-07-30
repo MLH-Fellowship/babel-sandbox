@@ -188,7 +188,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                 <Menu.Item>
                   plugin.js
                 </Menu.Item>
-                <Menu.Item>
+                <Menu.Item position="right">
                   {size}b, {gzip}b
                 </Menu.Item>
                 <Menu.Menu position='right'>
