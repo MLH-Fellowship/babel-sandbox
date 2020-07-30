@@ -161,12 +161,12 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               <Menu.Item>
                 input.js
               </Menu.Item>
-            </Menu>
-            <Menu.Menu position='right'>
-              <Menu.Item>
-                {size}b, {gzip}b
+              <Menu.Menu position='right'>
+                <Menu.Item>
+                  {size}b, {gzip}b
                   </Menu.Item>
-            </Menu.Menu>
+              </Menu.Menu>
+            </Menu>
             <Wrapper>
               <Code
                 value={source}
