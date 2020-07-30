@@ -45,6 +45,17 @@ function CompiledOutput({
   return (
     <Grid.Row>
       <Grid.Column width={8}>
+
+        <Menu attached='top' tabular inverted>
+          <Menu.Item>
+            plugin.js
+                </Menu.Item>
+          <Menu.Menu position='right'>
+            <Menu.Item onClick={() => toggleCustomPlugin(false)}>
+              <Icon name='close' size='' />
+            </Menu.Item>
+          </Menu.Menu>
+        </Menu>
         <Config
           value={
             config === Object(config)
