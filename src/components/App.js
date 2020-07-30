@@ -157,7 +157,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         <Grid.Row>
 
           <Grid.Column width={16}>
-            <Menu attached='top' tabular>
+            <Menu attached='top' tabular inverted>
               <Menu.Item
                 name='bio'
               />
