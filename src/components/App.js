@@ -156,23 +156,25 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
       <Grid celled='internally'>
         <Grid.Row>
 
-          <Header as='h2' attached='top'>
-            Attached Header
+          <div>
+            <Header as='h2' attached='top'>
+              Attached Header
           </Header>
 
-          <Segment attached>
-            <Wrapper className="column">
-              <Code
-                value={source}
-                onChange={(val) => setSource(val)}
-                docName="source.js"
-              />
-              <FileSize>
-                {size}b, {gzip}b
+            <Segment attached>
+              <Wrapper className="column">
+                <Code
+                  value={source}
+                  onChange={(val) => setSource(val)}
+                  docName="source.js"
+                />
+                <FileSize>
+                  {size}b, {gzip}b
           </FileSize>
-              {/* <AST source={source}></AST> */}
-            </Wrapper>
-          </Segment>
+                {/* <AST source={source}></AST> */}
+              </Wrapper>
+            </Segment>
+          </div>
         </Grid.Row>
         {enableCustomPlugin && (
           <Grid.Row>
