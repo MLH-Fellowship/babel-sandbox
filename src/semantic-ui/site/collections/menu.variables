@@ -2,5 +2,4 @@
     User Variable Overrides
 *******************************/
 @background: #323330;
-@border: #222321;
-@boxShadow: #222321;
+@attachedBorder: #222321;
