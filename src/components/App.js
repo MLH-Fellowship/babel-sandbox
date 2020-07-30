@@ -7,7 +7,7 @@ import { Editor } from "./Editor";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
 
-import { Grid, Dropdown, Icon, Menu, Segment } from 'semantic-ui-react'
+import { Grid, Dropdown, Icon, Menu, Button } from 'semantic-ui-react'
 
 
 window.babel = Babel;
@@ -120,7 +120,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   return (
     <Root>
       <Menu attached='top'>
-
         <Menu.Item>
           <Button>Log-in</Button>
         </Menu.Item>
