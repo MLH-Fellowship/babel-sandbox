@@ -161,11 +161,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               <Menu.Item>
                 input.js
               </Menu.Item>
-              <Menu.Menu position='right'>
-                <Menu.Item>
-                  <Icon name='close' size='' />
-                </Menu.Item>
-              </Menu.Menu>
             </Menu>
             <Wrapper>
               <Code
