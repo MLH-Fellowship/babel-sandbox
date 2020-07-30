@@ -8,6 +8,8 @@ import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
 
 import { Grid } from 'semantic-ui-react'
+import { Dropdown, Icon, Menu, Segment } from 'semantic-ui-react'
+
 
 window.babel = Babel;
 
