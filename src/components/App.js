@@ -189,7 +189,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                   plugin.js
               </Menu.Item>
                 <Menu.Menu position='right'>
-                  <Menu.Item>
+                  <Menu.Item onClick={() => toggleCustomPlugin(false)}>
                     <Icon name='close' size='' />
                   </Menu.Item>
                 </Menu.Menu>
@@ -205,8 +205,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                 </FileSize>
                 {/* <AST source={source}></AST> */}
               </Wrapper>
-
-              <Toggle onClick={() => toggleCustomPlugin(false)} />
             </Grid.Column>
           </Grid.Row>
         )}
