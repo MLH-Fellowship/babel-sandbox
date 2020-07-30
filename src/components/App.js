@@ -146,8 +146,8 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               </Dropdown.Menu>
 
             </Dropdown.Item>
-            <Dropdown.Item>Save...</Dropdown.Item>
             <Dropdown.Divider />
+            <Dropdown.Item>Save...</Dropdown.Item>
             <Dropdown.Item>Share</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
