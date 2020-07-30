@@ -120,6 +120,10 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   return (
     <Root>
       <Menu attached='top'>
+
+        <Menu.Item>
+          <Button>Log-in</Button>
+        </Menu.Item>
         <Dropdown item icon='wrench' simple>
           <Dropdown.Menu>
             <Dropdown.Item>
