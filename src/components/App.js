@@ -162,7 +162,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </Header>
 
             <Segment attached>
-              <Wrapper className="column">
+              <Wrapper>
                 <Code
                   value={source}
                   onChange={(val) => setSource(val)}
