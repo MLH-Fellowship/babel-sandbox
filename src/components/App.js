@@ -181,13 +181,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             >
               Add New Config
           </button>
-            <button
-              onClick={() => {
-                setSource("const hello = 'world';");
-              }}
-            >
-              Use Example (WIP)
-          </button>
           </Actions>
         </Grid.Row>
         <Grid.Row>
