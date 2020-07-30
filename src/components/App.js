@@ -194,7 +194,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             </Menu.Menu>
           </Menu>
 
-          <Segment attached='bottom'>
+          <Segment attached='bottom' inverted>
             <Wrapper className="column">
               <Code
                 value={source}
