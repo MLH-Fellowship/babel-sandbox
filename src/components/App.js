@@ -193,19 +193,18 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </Menu>
 
           <Segment attached='bottom'>
-            <img src='/images/wireframe/paragraph.png' />
-          </Segment>
-          <Wrapper className="column">
-            <Code
-              value={source}
-              onChange={(val) => setSource(val)}
-              docName="source.js"
-            />
-            <FileSize>
-              {size}b, {gzip}b
+            <Wrapper className="column">
+              <Code
+                value={source}
+                onChange={(val) => setSource(val)}
+                docName="source.js"
+              />
+              <FileSize>
+                {size}b, {gzip}b
           </FileSize>
-            {/* <AST source={source}></AST> */}
-          </Wrapper>
+              {/* <AST source={source}></AST> */}
+            </Wrapper>
+          </Segment>
         </Grid.Row>
         {enableCustomPlugin && (
           <Grid.Row>
