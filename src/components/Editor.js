@@ -5,7 +5,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2';
 
 const StyledEditor = styled(CodeMirror)`
   .CodeMirror {
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: #141618;
     height: inherit;
     padding: 10px;
   }
