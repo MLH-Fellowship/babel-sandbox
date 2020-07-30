@@ -158,7 +158,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
       <Grid celled='internally'>
         <Grid.Row>
 
-          <Menu attached='top'>
+          <Menu attached='top' inverted>
             <Dropdown item icon='wrench' simple>
               <Dropdown.Menu>
                 <Dropdown.Item>
