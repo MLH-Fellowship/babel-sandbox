@@ -163,7 +163,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               </Menu.Item>
               <Menu.Menu position='right'>
                 <Menu.Item>
-                  <Icon name='close' size='tiny' />
+                  <Icon name='close' size='' />
                 </Menu.Item>
               </Menu.Menu>
             </Menu>
