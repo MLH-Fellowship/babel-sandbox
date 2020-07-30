@@ -7,7 +7,7 @@ import { Editor } from "./Editor";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
 
-import { Button } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 
 window.babel = Babel;
 
