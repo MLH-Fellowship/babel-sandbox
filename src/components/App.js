@@ -149,28 +149,24 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </Actions>
         </Grid.Row>
         <Grid.Row>
-          <Wrapper className="column">
-            <Code
-              value={source}
-              onChange={(val) => setSource(val)}
-              docName="source.js"
-            />
-            <FileSize>
-              {size}b, {gzip}b
+          <Code
+            value={source}
+            onChange={(val) => setSource(val)}
+            docName="source.js"
+          />
+          <FileSize>
+            {size}b, {gzip}b
           </FileSize>
-            {/* <AST source={source}></AST> */}
-          </Wrapper>
+          {/* <AST source={source}></AST> */}
         </Grid.Row>
         {enableCustomPlugin && (
           <Grid.Row>
-            <Wrapper className="column">
-              <Code
-                value={customPlugin}
-                onChange={(val) => setCustomPlugin(val)}
-                docName="plugin.js"
-              />
-              <Toggle onClick={() => toggleCustomPlugin(false)} />
-            </Wrapper>
+            <Code
+              value={customPlugin}
+              onChange={(val) => setCustomPlugin(val)}
+              docName="plugin.js"
+            />
+            <Toggle onClick={() => toggleCustomPlugin(false)} />
           </Grid.Row>
         )}
         {results}
