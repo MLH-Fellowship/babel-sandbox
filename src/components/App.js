@@ -44,7 +44,7 @@ function CompiledOutput({
 
   return (
     <Grid.Row>
-      <Grid.Column width={6}>
+      <Grid.Column width={8}>
         <Config
           value={
             config === Object(config)
@@ -56,7 +56,7 @@ function CompiledOutput({
           config={{ mode: "application/json" }}
         />
       </Grid.Column>
-      <Grid.Column width={6}>
+      <Grid.Column width={8}>
         <Code
           value={compiled?.code ?? ""}
           docName="result.js"
