@@ -51,7 +51,7 @@ function CompiledOutput({
             plugin.js
                 </Menu.Item>
           <Menu.Menu position='right'>
-            <Menu.Item>
+            <Menu.Item onClick={removeConfig} >
               <Icon name='close' size='' />
             </Menu.Item>
           </Menu.Menu>
@@ -89,7 +89,6 @@ function CompiledOutput({
       <FileSize>
         {compiled?.size}b, {gzip}b
       </FileSize>
-      <Toggle onClick={removeConfig} />
     </Grid.Row>
   );
 }
