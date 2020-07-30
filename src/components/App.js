@@ -136,6 +136,17 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               </Dropdown.Menu>
 
             </Dropdown.Item>
+            <Dropdown.Item>
+
+              <Icon name='dropdown' />
+              <span className='text'>Add Plugin</span>
+
+              <Dropdown.Menu>
+                <Dropdown.Item>Blank</Dropdown.Item>
+                <Dropdown.Item>Example</Dropdown.Item>
+              </Dropdown.Menu>
+
+            </Dropdown.Item>
             <Dropdown.Item>Open</Dropdown.Item>
             <Dropdown.Item>Save...</Dropdown.Item>
             <Dropdown.Item>Edit Permissions</Dropdown.Item>
