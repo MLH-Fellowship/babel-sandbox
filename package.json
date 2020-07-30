@@ -20,12 +20,10 @@
     "styled-components": "4.4.1"
   },
   "scripts": {
-    "scripts": {
-      "start": "craco start",
-      "build": "craco build",
-      "test": "craco test",
-      "eject": "craco eject"
-    }
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject"
   },
   "devDependencies": {
     "@craco/craco": "^5.6.4",
