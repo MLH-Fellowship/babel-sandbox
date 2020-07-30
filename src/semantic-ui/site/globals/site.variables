@@ -2,6 +2,5 @@
      User Global Variables
 *******************************/
 @primaryColor: #002f4e;
-@pageBackground: red;
-@dividedBorder: red;
-@borderColor: red;
+@pageBackground: #24282a;
+@celledBorderColor: red;
