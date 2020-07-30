@@ -126,6 +126,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         <Dropdown item icon='wrench' simple>
           <Dropdown.Menu>
             <Dropdown.Item>
+
               <Icon name='dropdown' />
               <span className='text'>New</span>
 
@@ -133,6 +134,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                 <Dropdown.Item>Document</Dropdown.Item>
                 <Dropdown.Item>Image</Dropdown.Item>
               </Dropdown.Menu>
+
             </Dropdown.Item>
             <Dropdown.Item>Open</Dropdown.Item>
             <Dropdown.Item>Save...</Dropdown.Item>
