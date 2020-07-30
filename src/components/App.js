@@ -116,108 +116,67 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
   return (
     <Root>
-      <div class="ui top attached menu">
-        <div class="ui dropdown icon item">
-          <i class="wrench icon"></i>
-          <div class="menu">
-            <div class="item">
-              <i class="dropdown icon"></i>
-              <span class="text">New</span>
-              <div class="menu">
-                <div class="item">Document</div>
-                <div class="item">Image</div>
-              </div>
-            </div>
-            <div class="item">
-              Open...
-      </div>
-            <div class="item">
-              Save...
-      </div>
-            <div class="item">Edit Permissions</div>
-            <div class="divider"></div>
-            <div class="header">
-              Export
-      </div>
-            <div class="item">
-              Share...
-      </div>
-          </div>
-        </div>
-        <div class="right menu">
-          <div class="ui right aligned category search item">
-            <div class="ui transparent icon input">
-              <input class="prompt" type="text" placeholder="Search animals...">
-                <i class="search link icon"></i>
-      </div>
-              <div class="results"></div>
-            </div>
-          </div>
-        </div>
-        <div class="ui bottom attached segment">
-          <p></p>
-        </div>
-        <div className="ui internally celled grid">
-          <div className="row">
-            <Actions>
-              <label>
-                <input
-                  checked={enableCustomPlugin}
-                  onChange={() => toggleCustomPlugin(!enableCustomPlugin)}
-                  type="checkbox"
-                />
-                <span>Custom Plugin</span>
-              </label>
-              <button
-                onClick={() =>
-                  setBabelConfig((configs) => [
-                    ...configs,
-                    configs[configs.length - 1],
-                  ])
-                }
-              >
-                Add New Config
+      <div className="ui internally celled grid">
+        <div className="row">
+          <Actions>
+            <label>
+              <input
+                checked={enableCustomPlugin}
+                onChange={() => toggleCustomPlugin(!enableCustomPlugin)}
+                type="checkbox"
+              />
+              <span>Custom Plugin</span>
+            </label>
+            <button
+              onClick={() =>
+                setBabelConfig((configs) => [
+                  ...configs,
+                  configs[configs.length - 1],
+                ])
+              }
+            >
+              Add New Config
           </button>
-              <button
-                onClick={() => {
-                  setSource("const hello = 'world';");
-                }}
-              >
-                Use Example (WIP)
+            <button
+              onClick={() => {
+                setSource("const hello = 'world';");
+              }}
+            >
+              Use Example (WIP)
           </button>
-            </Actions>
-          </div>
+          </Actions>
+        </div>
+        <div className="one column row">
+          <Wrapper className="column">
+            <Code
+              value={source}
+              onChange={(val) => setSource(val)}
+              docName="source.js"
+            />
+            <FileSize>
+              {size}b, {gzip}b
+          </FileSize>
+            {/* <AST source={source}></AST> */}
+          </Wrapper>
+        </div>
+
+
+        {enableCustomPlugin && (
           <div className="one column row">
             <Wrapper className="column">
               <Code
-                value={source}
-                onChange={(val) => setSource(val)}
-                docName="source.js"
+                value={customPlugin}
+                onChange={(val) => setCustomPlugin(val)}
+                docName="plugin.js"
               />
-              <FileSize>
-                {size}b, {gzip}b
-          </FileSize>
-              {/* <AST source={source}></AST> */}
+              <Toggle onClick={() => toggleCustomPlugin(false)} />
             </Wrapper>
           </div>
+        )}
 
 
-          {enableCustomPlugin && (
-            <div className="one column row">
-              <Wrapper className="column">
-                <Code
-                  value={customPlugin}
-                  onChange={(val) => setCustomPlugin(val)}
-                  docName="plugin.js"
-                />
-                <Toggle onClick={() => toggleCustomPlugin(false)} />
-              </Wrapper>
-            </div>
-          )}
-
-
-          {results}
-        </div>
+        {results}
+      </div>
     </Root>
   );
 };
@@ -233,11 +192,11 @@ function useDebounce(value, delay) {
 
   React.useEffect(() => {
     const handler = setTimeout(() => {
-        setDebouncedValue(value);
+      setDebouncedValue(value);
     }, delay);
 
     return () => {
-        clearTimeout(handler);
+      clearTimeout(handler);
     };
   }, [delay, value]);
 
