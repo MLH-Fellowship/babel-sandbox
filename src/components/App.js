@@ -119,7 +119,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
   return (
     <Root>
-      <Menu attached='top' >
+      <Menu attached='top' inverted>
         <Menu.Item>
           <img src="https://d33wubrfki0l68.cloudfront.net/7a197cfe44548cc1a3f581152af70a3051e11671/78df8/img/babel.svg" />
         </Menu.Item>
