@@ -2,4 +2,4 @@
     User Variable Overrides
 *******************************/
 @background: ##191C1D;
-@attachedBorder: #222321;
+@attachedBorder: ##191C1D;
