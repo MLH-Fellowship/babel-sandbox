@@ -156,7 +156,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
       <Grid celled='internally'>
         <Grid.Row>
 
-          <Grid.Column width={16}>
+          <Grid.Column width={16} inverted>
             <Header as='h5' attached='top'>
               Attached Header
           </Header>
