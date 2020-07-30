@@ -3,6 +3,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import * as Babel from "@babel/core";
 import styled, { css } from "styled-components";
 
+import ASTOutput from "../components/ASTExplorer/ASTOutput"
 import { Editor } from "./Editor";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
@@ -223,6 +224,10 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         )}
         {/* output code and config section*/}
         {results}
+        {/* AST Explorer section */}
+        <Wrapper>
+          <ASTOutput code={source} />
+        </Wrapper>
       </Section>
     </Root>
   );
