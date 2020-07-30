@@ -81,7 +81,7 @@ function CompiledOutput({
               />
             </Grid.Column>
           </Grid>
-          <Divider vertical>And</Divider>
+          <Divider vertical></Divider>
         </Segment>
       </Grid.Column>
       <FileSize>
