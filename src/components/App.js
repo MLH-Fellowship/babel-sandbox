@@ -157,7 +157,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         <Grid.Row>
 
           <Grid.Column width={16}>
-            <Header as='h2' attached='top'>
+            <Header as='h6' attached='top'>
               Attached Header
           </Header>
 
