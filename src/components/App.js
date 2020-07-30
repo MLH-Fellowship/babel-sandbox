@@ -117,7 +117,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   return (
     <Root>
       <Grid celled='internally'>
-        <div className="row">
+        <Grid.Row>
           <Actions>
             <label>
               <input
