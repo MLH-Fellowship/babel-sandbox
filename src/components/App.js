@@ -80,8 +80,8 @@ function CompiledOutput({
                 isError={compiled?.error ?? false}
               />
             </Grid.Column>
-            <Divider vertical>And</Divider>
           </Grid>
+          <Divider vertical>And</Divider>
         </Segment>
       </Grid.Column>
       <FileSize>
