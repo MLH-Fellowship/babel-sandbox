@@ -132,7 +132,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
               <Dropdown.Menu>
                 <Dropdown.Item>Config</Dropdown.Item>
-
                 <Dropdown.Item>
 
                   <Icon name='dropdown' />
