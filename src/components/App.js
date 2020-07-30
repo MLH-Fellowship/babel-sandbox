@@ -160,35 +160,34 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           <Header as='h2' attached='top'>
             Attached Header
     </Header>
-          <Segment attached>
 
-            <Segment attached='bottom'>
-              <Wrapper className="column">
-                <Code
-                  value={source}
-                  onChange={(val) => setSource(val)}
-                  docName="source.js"
-                />
-                <FileSize>
-                  {size}b, {gzip}b
+          <Segment attached='bottom'>
+            <Wrapper className="column">
+              <Code
+                value={source}
+                onChange={(val) => setSource(val)}
+                docName="source.js"
+              />
+              <FileSize>
+                {size}b, {gzip}b
           </FileSize>
-                {/* <AST source={source}></AST> */}
-              </Wrapper>
-            </Segment>
+              {/* <AST source={source}></AST> */}
+            </Wrapper>
+          </Segment>
         </Grid.Row>
-          {enableCustomPlugin && (
-            <Grid.Row>
-              <Wrapper className="column">
-                <Code
-                  value={customPlugin}
-                  onChange={(val) => setCustomPlugin(val)}
-                  docName="plugin.js"
-                />
-                <Toggle onClick={() => toggleCustomPlugin(false)} />
-              </Wrapper>
-            </Grid.Row>
-          )}
-          {results}
+        {enableCustomPlugin && (
+          <Grid.Row>
+            <Wrapper className="column">
+              <Code
+                value={customPlugin}
+                onChange={(val) => setCustomPlugin(val)}
+                docName="plugin.js"
+              />
+              <Toggle onClick={() => toggleCustomPlugin(false)} />
+            </Wrapper>
+          </Grid.Row>
+        )}
+        {results}
       </Grid>
 
     </Root >
@@ -206,11 +205,11 @@ function useDebounce(value, delay) {
 
   React.useEffect(() => {
     const handler = setTimeout(() => {
-        setDebouncedValue(value);
+      setDebouncedValue(value);
     }, delay);
 
     return () => {
-        clearTimeout(handler);
+      clearTimeout(handler);
     };
   }, [delay, value]);
 
