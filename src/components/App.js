@@ -174,7 +174,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                 {/* <AST source={source}></AST> */}
               </Wrapper>
             </Segment>
-          </Grid.Grid.Column>
+          </Grid.Column>
         </Grid.Row>
         {enableCustomPlugin && (
           <Grid.Row>
