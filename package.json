@@ -20,7 +20,8 @@
     "styled-components": "4.4.1"
   },
   "scripts": {
-    "start": "craco start",
+    "dev:less": "craco start",
+    "dev": "craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject"
