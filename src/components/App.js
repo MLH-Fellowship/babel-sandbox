@@ -159,7 +159,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
           <Header as='h2' attached='top'>
             Attached Header
-    </Header>
+          </Header>
 
           <Segment attached='bottom'>
             <Wrapper className="column">
