@@ -62,7 +62,7 @@ function CompiledOutput({
           config={{ readOnly: true, lineWrapping: true }}
           isError={compiled?.error ?? false}
         />
-      </Grid>
+      </Grid.Grid.Column>
       <FileSize>
         {compiled?.size}b, {gzip}b
       </FileSize>
