@@ -57,7 +57,6 @@ function CompiledOutput({
           </Menu.Menu>
         </Menu>
         <Wrapper>
-
           <Config
             value={
               config === Object(config)
