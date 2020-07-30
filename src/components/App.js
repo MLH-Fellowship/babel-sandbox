@@ -182,7 +182,8 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         </Grid.Row>
         {enableCustomPlugin && (
           <Grid.Row>
-            <Wrapper className="column">
+            <Grid.Column width={16}>
+
               <Code
                 value={customPlugin}
                 onChange={(val) => setCustomPlugin(val)}
