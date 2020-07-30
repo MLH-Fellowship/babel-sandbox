@@ -210,6 +210,9 @@ const Root = styled.div`
 `;
 
 
+const Wrapper = styled.div`
+`;
+
 const Config = styled(Editor)`
   padding: 4px;
 `;
