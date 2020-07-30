@@ -82,8 +82,7 @@ function CompiledOutput({
             </Grid.Column>
           </Grid>
           <Divider vertical>
-            <Icon name='                    <Icon name=' close' />
-' />
+            <Icon name='close' />
           </Divider>
         </Segment>
       </Grid.Column>
