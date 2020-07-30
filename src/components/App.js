@@ -187,23 +187,24 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               <Menu attached='top' tabular inverted>
                 <Menu.Item>
                   plugin.js
-              </Menu.Item>
+                </Menu.Item>
                 <Menu.Menu position='right'>
                   <Menu.Item onClick={() => toggleCustomPlugin(false)}>
                     <Icon name='close' size='' />
                   </Menu.Item>
                 </Menu.Menu>
+                <Menu.Item>
+                  plugin.js
+                </Menu.Item>
               </Menu>
+
+              {size}b, {gzip}b
               <Wrapper>
                 <Code
                   value={customPlugin}
                   onChange={(val) => setCustomPlugin(val)}
                   docName="plugin.js"
                 />
-                <FileSize>
-                  {size}b, {gzip}b
-                </FileSize>
-                {/* <AST source={source}></AST> */}
               </Wrapper>
             </Grid.Column>
           </Grid.Row>
