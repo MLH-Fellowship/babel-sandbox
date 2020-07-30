@@ -4,3 +4,4 @@
 @primaryColor: #002f4e;
 @pageBackground: #24282a;
 @dividedBorder: red;
+@borderColor: red;
