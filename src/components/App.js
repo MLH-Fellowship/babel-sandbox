@@ -161,7 +161,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               Attached Header
           </Header>
 
-            <Segment attached>
+            <Segment attached inverted>
               <Wrapper>
                 <Code
                   value={source}
