@@ -3,3 +3,4 @@
 *******************************/
 @primaryColor: #002f4e;
 @pageBackground: #24282a;
+@borderColor: rgba(0, 0, 0, 0.13);
