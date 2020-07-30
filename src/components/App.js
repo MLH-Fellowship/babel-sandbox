@@ -56,16 +56,19 @@ function CompiledOutput({
             </Menu.Item>
           </Menu.Menu>
         </Menu>
-        <Config
-          value={
-            config === Object(config)
-              ? JSON.stringify(config, null, "\t")
-              : config
-          }
-          onChange={onConfigChange}
-          docName="config.json"
-          config={{ mode: "application/json" }}
-        />
+        <Wrapper>
+
+          <Config
+            value={
+              config === Object(config)
+                ? JSON.stringify(config, null, "\t")
+                : config
+            }
+            onChange={onConfigChange}
+            docName="config.json"
+            config={{ mode: "application/json" }}
+          />
+        </Wrapper>
       </Grid.Column>
       <Grid.Column width={8}>
         <Code
