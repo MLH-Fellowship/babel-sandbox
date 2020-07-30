@@ -230,10 +230,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
 // UTILS
 
-function Toggle(props) {
-  return <ToggleRoot {...props}>x</ToggleRoot>;
-}
-
 function useDebounce(value, delay) {
   const [debouncedValue, setDebouncedValue] = React.useState(value);
 
