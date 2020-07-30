@@ -156,7 +156,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
       <Grid celled='internally'>
         <Grid.Row>
 
-          <Grid.Column width={6}>
+          <Grid.Column width={1}>
             <Header as='h2' attached='top'>
               Attached Header
           </Header>
@@ -174,7 +174,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                 {/* <AST source={source}></AST> */}
               </Wrapper>
             </Segment>
-          </div>
+          </Grid.Grid.Column>
         </Grid.Row>
         {enableCustomPlugin && (
           <Grid.Row>
