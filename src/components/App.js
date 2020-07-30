@@ -126,8 +126,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         <Dropdown item icon='wrench' simple>
           <Dropdown.Menu>
             <Dropdown.Item>New Config</Dropdown.Item>
-            <Dropdown.Item>Save...</Dropdown.Item>
-            <Dropdown.Item>Edit Permissions</Dropdown.Item>
             <Dropdown.Divider />
             <Dropdown.Header>Export</Dropdown.Header>
             <Dropdown.Item>Share</Dropdown.Item>
