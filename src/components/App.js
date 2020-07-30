@@ -264,22 +264,3 @@ const Config = styled(Editor)`
 
 const Code = styled(Editor)`
 `;
-
-const FileSize = styled.div`
-  background-color: rgba(255, 255, 255, 0.1);
-  border: 0;
-  border-radius: 0.5rem;
-  bottom: 1rem;
-  color: #888;
-  font-size: 0.75rem;
-  padding: 0.2rem;
-  position: absolute;
-  right: 2rem;
-  z-index: 2;
-`;
-
-const ToggleRoot = styled.div`
-`;
-
-const Actions = styled(Wrapper)`
-`;
