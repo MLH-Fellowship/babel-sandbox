@@ -162,47 +162,47 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                 input.js
               </Menu.Item>
             </Menu>
-            <Wrapper>
-              <Code
-                value={source}
-                onChange={(val) => setSource(val)}
-                docName="source.js"
-              />
-              <FileSize>
+            <Menu.Menu position='right'>
+              <Menu.Item>
                 {size}b, {gzip}b
-          </FileSize>
-              {/* <AST source={source}></AST> */}
-            </Wrapper>
-          </Grid.Column>
-        </Grid.Row>
-        {enableCustomPlugin && (
-          <Grid.Row>
-            <Grid.Column width={16}>
-
-              <Menu attached='top' tabular inverted>
-                <Menu.Item>
-                  plugin.js
-                </Menu.Item>
-                <Menu.Menu position='right'>
-                  <Menu.Item>
-                    {size}b, {gzip}b
                   </Menu.Item>
-                  <Menu.Item onClick={() => toggleCustomPlugin(false)}>
-                    <Icon name='close' size='' />
-                  </Menu.Item>
-                </Menu.Menu>
-              </Menu>
               <Wrapper>
                 <Code
-                  value={customPlugin}
-                  onChange={(val) => setCustomPlugin(val)}
-                  docName="plugin.js"
+                  value={source}
+                  onChange={(val) => setSource(val)}
+                  docName="source.js"
                 />
               </Wrapper>
-            </Grid.Column>
-          </Grid.Row>
-        )}
-        {results}
+          </Grid.Column>
+        </Grid.Row>
+          {enableCustomPlugin && (
+            <Grid.Row>
+              <Grid.Column width={16}>
+
+                <Menu attached='top' tabular inverted>
+                  <Menu.Item>
+                    plugin.js
+                </Menu.Item>
+                  <Menu.Menu position='right'>
+                    <Menu.Item>
+                      {size}b, {gzip}b
+                  </Menu.Item>
+                    <Menu.Item onClick={() => toggleCustomPlugin(false)}>
+                      <Icon name='close' size='' />
+                    </Menu.Item>
+                  </Menu.Menu>
+                </Menu>
+                <Wrapper>
+                  <Code
+                    value={customPlugin}
+                    onChange={(val) => setCustomPlugin(val)}
+                    docName="plugin.js"
+                  />
+                </Wrapper>
+              </Grid.Column>
+            </Grid.Row>
+          )}
+          {results}
       </Grid>
 
     </Root >
@@ -220,11 +220,11 @@ function useDebounce(value, delay) {
 
   React.useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedValue(value);
+        setDebouncedValue(value);
     }, delay);
 
     return () => {
-      clearTimeout(handler);
+        clearTimeout(handler);
     };
   }, [delay, value]);
 
