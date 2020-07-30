@@ -159,8 +159,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             {/* <AST source={source}></AST> */}
           </Wrapper>
         </Grid.Row>
-
-
         {enableCustomPlugin && (
           <Grid.Row>
             <Wrapper className="column">
@@ -173,8 +171,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             </Wrapper>
           </Grid.Row>
         )}
-
-
         {results}
       </Grid>
     </Root>
