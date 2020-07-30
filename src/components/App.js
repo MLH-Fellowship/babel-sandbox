@@ -186,13 +186,13 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                   </Menu.Item>
               </Menu.Menu>
             </Menu>
-            <Wrapper>
+            <Segment attached='bottom'>
               <Code
                 value={source}
                 onChange={(val) => setSource(val)}
                 docName="source.js"
               />
-            </Wrapper>
+            </Segment>
           </Grid.Column>
         </Grid.Row>
         {enableCustomPlugin && (
