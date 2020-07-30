@@ -125,6 +125,9 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         </Menu.Item>
         <Dropdown item icon='wrench' simple>
           <Dropdown.Menu>
+            <Dropdown.Item onClick={() => {
+              setSource("const hello = 'world';");
+            }}>Open</Dropdown.Item>
             <Dropdown.Item>
 
               <Icon name='dropdown' />
@@ -136,9 +139,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               </Dropdown.Menu>
 
             </Dropdown.Item>
-            <Dropdown.Item onClick={() => {
-              setSource("const hello = 'world';");
-            }}>Open</Dropdown.Item>
             <Dropdown.Item>Save...</Dropdown.Item>
             <Dropdown.Item>Edit Permissions</Dropdown.Item>
             <Dropdown.Divider />
