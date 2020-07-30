@@ -20,8 +20,8 @@
     "styled-components": "4.4.1"
   },
   "scripts": {
-    "dev:theme": "craco start",
-    "dev": "react-scripts start",
+    "theme": "craco start",
+    "start": "react-scripts start",
     "build": "craco build",
     "test": "craco test",
     "eject": "craco eject"
