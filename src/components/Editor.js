@@ -6,8 +6,6 @@ import { Controlled as CodeMirror } from 'react-codemirror2';
 const StyledEditor = styled(CodeMirror)`
   .CodeMirror {
     background-color: rgba(0, 0, 0, 0.3);
-    border-radius: 4px;
-    margin: 4px;
     height: inherit;
   }
 
