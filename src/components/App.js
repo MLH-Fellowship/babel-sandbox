@@ -49,8 +49,11 @@ function CompiledOutput({
         <Menu attached='top' tabular inverted>
           <Menu.Item>
             plugin.js
-                </Menu.Item>
+          </Menu.Item>
           <Menu.Menu position='right'>
+            <Menu.Item >
+              {compiled?.size}b, {gzip}b
+            </Menu.Item>
             <Menu.Item onClick={removeConfig} >
               <Icon name='close' size='' />
             </Menu.Item>
@@ -86,9 +89,6 @@ function CompiledOutput({
           </Divider>
         </Segment>
       </Grid.Column>
-      <FileSize>
-        {compiled?.size}b, {gzip}b
-      </FileSize>
     </Grid.Row>
   );
 }
