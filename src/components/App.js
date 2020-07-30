@@ -163,11 +163,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               </Menu.Item>
               <Menu.Menu position='right'>
                 <Menu.Item>
-                  <Input
-                    transparent
-                    icon={{ name: 'search', link: true }}
-                    placeholder='Search users...'
-                  />
+                  <Icon name='close' size='tiny' />
                 </Menu.Item>
               </Menu.Menu>
             </Menu>
