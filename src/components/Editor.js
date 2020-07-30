@@ -7,6 +7,7 @@ const StyledEditor = styled(CodeMirror)`
   .CodeMirror {
     background-color: rgba(0, 0, 0, 0.4);
     height: inherit;
+    padding: 10px;
   }
 
   .CodeMirror-activeline-background {
