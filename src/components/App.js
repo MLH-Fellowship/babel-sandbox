@@ -67,7 +67,7 @@ function CompiledOutput({
         {compiled?.size}b, {gzip}b
       </FileSize>
       <Toggle onClick={removeConfig} />
-    </Wrapper>
+    </Grid.Row>
   );
 }
 
