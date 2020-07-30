@@ -46,41 +46,39 @@ function CompiledOutput({
     <Grid.Row>
       <Grid.Column width={16}>
         <Segment>
-          <Grid columns={2} relaxed='very'>
-          </Grid>
-        </Segment>
-      </Grid.Column>
-      <Grid.Column width={8}>
-        <Menu attached='top' tabular inverted>
-          <Menu.Item>
-            plugin.js
+          <Grid.Column>
+            <Menu attached='top' tabular inverted>
+              <Menu.Item>
+                plugin.js
                 </Menu.Item>
-          <Menu.Menu position='right'>
-            <Menu.Item>
-              <Icon name='close' size='' />
-            </Menu.Item>
-          </Menu.Menu>
-        </Menu>
-        <Wrapper>
-          <Config
-            value={
-              config === Object(config)
-                ? JSON.stringify(config, null, "\t")
-                : config
-            }
-            onChange={onConfigChange}
-            docName="config.json"
-            config={{ mode: "application/json" }}
-          />
-        </Wrapper>
-      </Grid.Column>
-      <Grid.Column width={8}>
-        <Code
-          value={compiled?.code ?? ""}
-          docName="result.js"
-          config={{ readOnly: true, lineWrapping: true }}
-          isError={compiled?.error ?? false}
-        />
+              <Menu.Menu position='right'>
+                <Menu.Item>
+                  <Icon name='close' size='' />
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu>
+            <Wrapper>
+              <Config
+                value={
+                  config === Object(config)
+                    ? JSON.stringify(config, null, "\t")
+                    : config
+                }
+                onChange={onConfigChange}
+                docName="config.json"
+                config={{ mode: "application/json" }}
+              />
+            </Wrapper>
+          </Grid.Column>
+          <Grid.Column>
+            <Code
+              value={compiled?.code ?? ""}
+              docName="result.js"
+              config={{ readOnly: true, lineWrapping: true }}
+              isError={compiled?.error ?? false}
+            />
+          </Grid.Column>
+        </Segment>
       </Grid.Column>
       <FileSize>
         {compiled?.size}b, {gzip}b
