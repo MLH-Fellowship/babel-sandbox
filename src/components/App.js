@@ -221,14 +221,6 @@ const Config = styled(Editor)`
 `;
 
 const Code = styled(Editor)`
-  padding: 4px;
-  width: 100%;
-
-  ${(p) =>
-    p.isError &&
-    css`
-      background: rgba(234, 76, 137, 0.2);
-    `};
 `;
 
 const FileSize = styled.div`
