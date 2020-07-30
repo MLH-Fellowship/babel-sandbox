@@ -145,7 +145,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               Use Example (WIP)
           </button>
           </Actions>
-        </div>
+        </Grid.Row>
         <div className="one column row">
           <Wrapper className="column">
             <Code
