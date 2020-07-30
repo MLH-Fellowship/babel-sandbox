@@ -56,7 +56,7 @@ function CompiledOutput({
             </Menu.Item>
           </Menu.Menu>
         </Menu>
-        <Segment inverted>
+        <Segment inverted attached='bottom'>
           <Grid columns={2} relaxed='very'>
             <Grid.Column>
               <Wrapper>
