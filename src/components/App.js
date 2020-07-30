@@ -157,7 +157,27 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         <Grid.Row>
 
           <Grid.Column width={16}>
-
+            <Menu attached='top' tabular>
+              <Menu.Item
+                name='bio'
+                active={activeItem === 'bio'}
+                onClick={this.handleItemClick}
+              />
+              <Menu.Item
+                name='photos'
+                active={activeItem === 'photos'}
+                onClick={this.handleItemClick}
+              />
+              <Menu.Menu position='right'>
+                <Menu.Item>
+                  <Input
+                    transparent
+                    icon={{ name: 'search', link: true }}
+                    placeholder='Search users...'
+                  />
+                </Menu.Item>
+              </Menu.Menu>
+            </Menu>
             <Wrapper>
               <Code
                 value={source}
