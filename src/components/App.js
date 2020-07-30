@@ -128,7 +128,13 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             <Dropdown.Item onClick={() => {
               setSource("const hello = 'world';");
             }}>Load Example</Dropdown.Item>
-            <Dropdown.Item>Add Config</Dropdown.Item>
+            <Dropdown.Item
+              onClick={() =>
+                setBabelConfig((configs) => [
+                  ...configs,
+                  configs[configs.length - 1],
+                ])
+              }>Add Config</Dropdown.Item>
             <Dropdown.Item>
 
               <Icon name='dropdown' />
@@ -159,12 +165,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
               <span>Custom Plugin</span>
             </label>
             <button
-              onClick={() =>
-                setBabelConfig((configs) => [
-                  ...configs,
-                  configs[configs.length - 1],
-                ])
-              }
             >
               Add New Config
           </button>
