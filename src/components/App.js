@@ -194,11 +194,9 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                   </Menu.Item>
                 </Menu.Menu>
                 <Menu.Item>
-                  plugin.js
+                  {size}b, {gzip}b
                 </Menu.Item>
               </Menu>
-
-              {size}b, {gzip}b
               <Wrapper>
                 <Code
                   value={customPlugin}
