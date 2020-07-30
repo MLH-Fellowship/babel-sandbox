@@ -186,7 +186,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
               <Menu attached='top' tabular inverted>
                 <Menu.Item>
-                  config.js
+                  plugin.js
               </Menu.Item>
                 <Menu.Menu position='right'>
                   <Menu.Item>
