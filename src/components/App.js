@@ -125,6 +125,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         </Menu.Item>
         <Dropdown item icon='wrench' simple>
           <Dropdown.Menu>
+            <Dropdown.Item>New</Dropdown.Item>
             <Dropdown.Item>
 
               <Icon name='dropdown' />
