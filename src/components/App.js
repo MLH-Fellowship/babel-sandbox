@@ -251,7 +251,6 @@ function useDebounce(value, delay) {
 }
 
 // STYLES
-
 const Root = styled.div`
 `;
 
