@@ -245,29 +245,7 @@ const FileSize = styled.div`
 `;
 
 const ToggleRoot = styled.div`
-  align-items: center;
-  cursor: pointer;
-  display: flex;
-  height: 20px;
-  justify-content: center;
-  padding: 0.25rem;
-  position: absolute;
-  right: 1px;
-  transition: color 0.25s ease-out;
-  top: -1px;
-  width: 20px;
-  z-index: 2;
-
-  &:hover {
-    color: red;
-  }
 `;
 
 const Actions = styled(Wrapper)`
-  border-bottom: 1px solid rgba(36, 40, 42, 1);
-  padding: 1rem;
-
-  button {
-    margin-left: 1rem;
-  }
 `;
