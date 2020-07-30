@@ -82,7 +82,7 @@ function CompiledOutput({
             </Grid.Column>
           </Grid>
           <Divider vertical>
-            <Icon name='arrow right' size='big' />
+            <Icon name='arrow right' size='large' />
           </Divider>
         </Segment>
       </Grid.Column>
