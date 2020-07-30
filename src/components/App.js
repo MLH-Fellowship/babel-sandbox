@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 // import * as Babel from "@babel/standalone";
 import * as Babel from "@babel/core";
-import styled, { css } from "styled-components";
+import styled, { } from "styled-components";
 
 import { Editor } from "./Editor";
 import { processOptions } from "../standalone";
