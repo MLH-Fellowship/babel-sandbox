@@ -1,5 +1,5 @@
 /*******************************
     User Variable Overrides
 *******************************/
-@background: ##191C1D;
-@attachedBorder: ##191C1D;
+@background: #191C1D;
+@attachedBorder: #191C1D;
