@@ -54,15 +54,15 @@ function CompiledOutput({
           docName="config.json"
           config={{ mode: "application/json" }}
         />
-      </div>
-      <div className="six wide column">
+      </Grid.Column>
+      <Grid.Column width={6}>
         <Code
           value={compiled?.code ?? ""}
           docName="result.js"
           config={{ readOnly: true, lineWrapping: true }}
           isError={compiled?.error ?? false}
         />
-      </div>
+      </Grid>
       <FileSize>
         {compiled?.size}b, {gzip}b
       </FileSize>
