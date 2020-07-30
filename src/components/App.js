@@ -161,7 +161,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </Header>
 
           <Segment attached>
-            <Wrapper>
+            <Wrapper className="column">
               <Code
                 value={source}
                 onChange={(val) => setSource(val)}
@@ -176,7 +176,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         </Grid.Row>
         {enableCustomPlugin && (
           <Grid.Row>
-            <Wrapper>
+            <Wrapper className="column">
               <Code
                 value={customPlugin}
                 onChange={(val) => setCustomPlugin(val)}
