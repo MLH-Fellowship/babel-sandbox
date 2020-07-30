@@ -176,6 +176,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
 
 
         {results}
+      </Grid>
     </Root>
   );
 };
@@ -191,11 +192,11 @@ function useDebounce(value, delay) {
 
   React.useEffect(() => {
     const handler = setTimeout(() => {
-        setDebouncedValue(value);
+      setDebouncedValue(value);
     }, delay);
 
     return () => {
-        clearTimeout(handler);
+      clearTimeout(handler);
     };
   }, [delay, value]);
 
