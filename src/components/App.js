@@ -7,7 +7,7 @@ import { Editor } from "./Editor";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
 
-import { Grid, Dropdown, Icon, Menu, Button } from 'semantic-ui-react'
+import { Grid, Dropdown, Icon, Menu } from 'semantic-ui-react'
 
 
 window.babel = Babel;
