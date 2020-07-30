@@ -160,10 +160,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             <Menu attached='top' tabular inverted>
               <Menu.Item>
                 input.js
-                </Menu.Item>
-              <Menu.Item
-                name='photos'
-              />
+              </Menu.Item>
               <Menu.Menu position='right'>
                 <Menu.Item>
                   <Input
