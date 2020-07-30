@@ -127,7 +127,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           <Dropdown.Menu>
             <Dropdown.Item>
 
-              <Dropdown.Item>Load Example</Dropdown.Item>
+              <Dropdown.Item onClick={activateLasers}>Load Example</Dropdown.Item>
 
               <Icon name='dropdown' />
               <span className='text'>Add Plugin</span>
