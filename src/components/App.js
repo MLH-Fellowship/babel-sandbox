@@ -42,8 +42,8 @@ function CompiledOutput({
   }, [source, config, debouncedPlugin]);
 
   return (
-    <Wrapper className="row">
-      <div className="six wide column">
+    <Grid.Row>
+      <Grid.Column width={6}>
         <Config
           value={
             config === Object(config)
