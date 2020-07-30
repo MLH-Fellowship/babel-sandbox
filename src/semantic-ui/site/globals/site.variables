@@ -2,6 +2,6 @@
      User Global Variables
 *******************************/
 @primaryColor: #002f4e;
-@pageBackground: #24282a;
+@pageBackground: red;
 @dividedBorder: red;
 @borderColor: red;
