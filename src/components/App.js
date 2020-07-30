@@ -202,7 +202,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                 />
                 <FileSize>
                   {size}b, {gzip}b
-          </FileSize>
+                </FileSize>
                 {/* <AST source={source}></AST> */}
               </Wrapper>
 
