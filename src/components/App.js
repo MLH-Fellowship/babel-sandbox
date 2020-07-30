@@ -155,66 +155,64 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
         </Menu.Menu>
       </Menu>
 
-      <Segment attached='bottom'>
-        <Grid celled='internally'>
-          <Grid.Row>
-            <Actions>
-              <label>
-                <input
-                  checked={enableCustomPlugin}
-                  onChange={() => toggleCustomPlugin(!enableCustomPlugin)}
-                  type="checkbox"
-                />
-                <span>Custom Plugin</span>
-              </label>
-              <button
-                onClick={() =>
-                  setBabelConfig((configs) => [
-                    ...configs,
-                    configs[configs.length - 1],
-                  ])
-                }
-              >
-                Add New Config
+      <Grid celled='internally'>
+        <Grid.Row>
+          <Actions>
+            <label>
+              <input
+                checked={enableCustomPlugin}
+                onChange={() => toggleCustomPlugin(!enableCustomPlugin)}
+                type="checkbox"
+              />
+              <span>Custom Plugin</span>
+            </label>
+            <button
+              onClick={() =>
+                setBabelConfig((configs) => [
+                  ...configs,
+                  configs[configs.length - 1],
+                ])
+              }
+            >
+              Add New Config
           </button>
-              <button
-                onClick={() => {
-                  setSource("const hello = 'world';");
-                }}
-              >
-                Use Example (WIP)
+            <button
+              onClick={() => {
+                setSource("const hello = 'world';");
+              }}
+            >
+              Use Example (WIP)
           </button>
-            </Actions>
-          </Grid.Row>
+          </Actions>
+        </Grid.Row>
+        <Grid.Row>
+          <Wrapper className="column">
+            <Code
+              value={source}
+              onChange={(val) => setSource(val)}
+              docName="source.js"
+            />
+            <FileSize>
+              {size}b, {gzip}b
+          </FileSize>
+            {/* <AST source={source}></AST> */}
+          </Wrapper>
+        </Grid.Row>
+        {enableCustomPlugin && (
           <Grid.Row>
             <Wrapper className="column">
               <Code
-                value={source}
-                onChange={(val) => setSource(val)}
-                docName="source.js"
+                value={customPlugin}
+                onChange={(val) => setCustomPlugin(val)}
+                docName="plugin.js"
               />
-              <FileSize>
-                {size}b, {gzip}b
-          </FileSize>
-              {/* <AST source={source}></AST> */}
+              <Toggle onClick={() => toggleCustomPlugin(false)} />
             </Wrapper>
           </Grid.Row>
-          {enableCustomPlugin && (
-            <Grid.Row>
-              <Wrapper className="column">
-                <Code
-                  value={customPlugin}
-                  onChange={(val) => setCustomPlugin(val)}
-                  docName="plugin.js"
-                />
-                <Toggle onClick={() => toggleCustomPlugin(false)} />
-              </Wrapper>
-            </Grid.Row>
-          )}
-          {results}
-        </Grid>
+        )}
+        {results}
+      </Grid>
 
-      </Segment>
     </Root>
   );
 };
