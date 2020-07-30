@@ -1,5 +1,4 @@
 /*******************************
     User Variable Overrides
 *******************************/
-@border: none;
 @solidWhiteBorderColor: #1d2025;
