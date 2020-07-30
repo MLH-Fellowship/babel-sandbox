@@ -46,38 +46,40 @@ function CompiledOutput({
     <Grid.Row>
       <Grid.Column width={16}>
         <Segment>
-          <Grid.Column>
-            <Menu attached='top' tabular inverted>
-              <Menu.Item>
-                plugin.js
-                </Menu.Item>
-              <Menu.Menu position='right'>
+          <Grid columns={2} relaxed='very'>
+            <Grid.Column>
+              <Menu attached='top' tabular inverted>
                 <Menu.Item>
-                  <Icon name='close' size='' />
+                  plugin.js
                 </Menu.Item>
-              </Menu.Menu>
-            </Menu>
-            <Wrapper>
-              <Config
-                value={
-                  config === Object(config)
-                    ? JSON.stringify(config, null, "\t")
-                    : config
-                }
-                onChange={onConfigChange}
-                docName="config.json"
-                config={{ mode: "application/json" }}
+                <Menu.Menu position='right'>
+                  <Menu.Item>
+                    <Icon name='close' size='' />
+                  </Menu.Item>
+                </Menu.Menu>
+              </Menu>
+              <Wrapper>
+                <Config
+                  value={
+                    config === Object(config)
+                      ? JSON.stringify(config, null, "\t")
+                      : config
+                  }
+                  onChange={onConfigChange}
+                  docName="config.json"
+                  config={{ mode: "application/json" }}
+                />
+              </Wrapper>
+            </Grid.Column>
+            <Grid.Column>
+              <Code
+                value={compiled?.code ?? ""}
+                docName="result.js"
+                config={{ readOnly: true, lineWrapping: true }}
+                isError={compiled?.error ?? false}
               />
-            </Wrapper>
-          </Grid.Column>
-          <Grid.Column>
-            <Code
-              value={compiled?.code ?? ""}
-              docName="result.js"
-              config={{ readOnly: true, lineWrapping: true }}
-              isError={compiled?.error ?? false}
-            />
-          </Grid.Column>
+            </Grid.Column>
+          </Grid>
         </Segment>
       </Grid.Column>
       <FileSize>
