@@ -6,6 +6,7 @@ import styled, { css } from "styled-components";
 import { Editor } from "./Editor";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
+import REPLState from "../state/REPLState.js";
 
 window.babel = Babel;
 
@@ -149,11 +150,11 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </button>
           <button
             onClick={() => {
-              const toSend = {
+              const state = new REPLState(
                 source,
-                plugin_source: enableCustomPlugin ? customPlugin : "",
-                configs: babelConfig.map((config) => JSON.stringify(config)),
-              };
+                enableCustomPlugin ? customPlugin : "",
+                babelConfig.map((config) => JSON.stringify(config))
+              );
               const url = "/api/v1/blobs/create";
               fetch(url, {
                 method: "POST",
@@ -161,7 +162,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                   Accept: "application/json",
                   "Content-Type": "application/json",
                 },
-                body: JSON.stringify(toSend),
+                body: state.Encode(),
               })
                 .then((resp) => resp.text())
                 .then((text) => {
