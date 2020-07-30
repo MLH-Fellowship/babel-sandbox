@@ -40,33 +40,31 @@ function CompiledOutput({
   }, [source, config, debouncedPlugin]);
 
   return (
-    <Wrapper>
-      <div className="row">
-        <div className="six wide column">
-          <Config
-            value={
-              config === Object(config)
-                ? JSON.stringify(config, null, "\t")
-                : config
-            }
-            onChange={onConfigChange}
-            docName="config.json"
-            config={{ mode: "application/json" }}
-          />
-        </div>
-        <div className="six wide column">
-          <Code
-            value={compiled?.code ?? ""}
-            docName="result.js"
-            config={{ readOnly: true, lineWrapping: true }}
-            isError={compiled?.error ?? false}
-          />
-        </div>
-        <FileSize>
-          {compiled?.size}b, {gzip}b
-      </FileSize>
-        <Toggle onClick={removeConfig} />
+    <Wrapper className="row">
+      <div className="six wide column">
+        <Config
+          value={
+            config === Object(config)
+              ? JSON.stringify(config, null, "\t")
+              : config
+          }
+          onChange={onConfigChange}
+          docName="config.json"
+          config={{ mode: "application/json" }}
+        />
       </div>
+      <div className="six wide column">
+        <Code
+          value={compiled?.code ?? ""}
+          docName="result.js"
+          config={{ readOnly: true, lineWrapping: true }}
+          isError={compiled?.error ?? false}
+        />
+      </div>
+      <FileSize>
+        {compiled?.size}b, {gzip}b
+      </FileSize>
+      <Toggle onClick={removeConfig} />
     </Wrapper>
   );
 }
