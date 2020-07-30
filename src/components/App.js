@@ -51,7 +51,7 @@ function CompiledOutput({
             plugin.js
                 </Menu.Item>
           <Menu.Menu position='right'>
-            <Menu.Item onClick={() => toggleCustomPlugin(false)}>
+            <Menu.Item>
               <Icon name='close' size='' />
             </Menu.Item>
           </Menu.Menu>
