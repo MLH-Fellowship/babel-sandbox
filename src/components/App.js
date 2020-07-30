@@ -80,6 +80,7 @@ function CompiledOutput({
                 isError={compiled?.error ?? false}
               />
             </Grid.Column>
+            <Divider vertical>And</Divider>
           </Grid>
         </Segment>
       </Grid.Column>
