@@ -146,20 +146,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             <Dropdown.Item>Share</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
-
-        <Menu.Menu position='right'>
-          <div className='ui right aligned category search item'>
-            <div className='ui transparent icon input'>
-              <input
-                className='prompt'
-                type='text'
-                placeholder='Search animals...'
-              />
-              <i className='search link icon' />
-            </div>
-            <div className='results' />
-          </div>
-        </Menu.Menu>
       </Menu>
 
       <Grid celled='internally'>
