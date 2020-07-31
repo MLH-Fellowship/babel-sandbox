@@ -3,6 +3,7 @@ import React, { useState, useCallback, useEffect } from "react";
 import * as Babel from "@babel/core";
 import styled, { } from "styled-components";
 
+import { ASTOutput } from "./ASTExplorer/ASTOutput"
 import { Editor } from "./Editor";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
@@ -219,10 +220,12 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
                   docName="plugin.js"
                 />
               </Wrapper>
+
             </Grid.Column>
           </Grid.Row>
         )}
         {results}
+        <ASTOutput code={source} />
       </Grid>
 
     </Root >
