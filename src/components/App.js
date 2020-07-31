@@ -1,13 +1,20 @@
 import React, { useState, useCallback, useEffect } from "react";
-// import * as Babel from "@babel/standalone";
-import * as Babel from "@babel/core";
+import * as Babel from "@babel/standalone";
+import { processOptions } from "../standalone";
+// import * as Babel from "@babel/core";
 import styled, { css } from "styled-components";
 
 import { Editor } from "./Editor";
-import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
 
 window.babel = Babel;
+
+function convertToBabelConfig(jsonConfig) {
+  let result = {plugins: [], presets: []};
+  result.plugins = jsonConfig.plugins?.map(plugin => [plugin.fileLocation, plugin.defaultConfig]);
+  result.presets = jsonConfig.presets?.map(preset => [preset.fileLocation, preset.defaultConfig]);
+  return result;
+}
 
 function CompiledOutput({
   source,
@@ -20,18 +27,27 @@ function CompiledOutput({
   const [gzip, setGzip] = useState(null);
   const debouncedPlugin = useDebounce(customPlugin, 125);
 
+  console.log("test");
+  console.log(config);
+  console.log(debouncedPlugin);
+
   useEffect(() => {
     try {
+      console.log("test1");
       const { code } = Babel.transform(
         source,
         processOptions(config, debouncedPlugin)
+        // config
       );
+      console.log("test2");
       gzipSize(code).then((s) => setGzip(s));
+      console.log("test3");
       setCompiled({
         code,
         size: new Blob([code], { type: "text/plain" }).size,
       });
     } catch (e) {
+      console.log(e.message);
       setCompiled({
         code: e.message,
         error: true,
@@ -42,16 +58,16 @@ function CompiledOutput({
   return (
     <Wrapper>
       <Section>
-        <Config
-          value={
-            config === Object(config)
-              ? JSON.stringify(config, null, "\t")
-              : config
-          }
-          onChange={onConfigChange}
-          docName="config.json"
-          config={{ mode: "application/json" }}
-        />
+          {/* <Config
+            value={
+              config === Object(config)
+                ? JSON.stringify(config, null, "\t")
+                : config
+            }
+            onChange={onConfigChange}
+            docName="config.json"
+            config={{ mode: "application/json" }}
+          /> */}
       </Section>
       <Section>
         <Code
@@ -91,11 +107,15 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
     });
   }, []);
 
+  // Babel.registerPreset('@babel/preset-env', window.babel)
+  // console.log(window);
+
   const removeBabelConfig = useCallback((index) => {
     setBabelConfig((configs) => configs.filter((c, i) => index !== i));
   }, []);
 
-  let results = babelConfig.map((config, index) => {
+  let results = babelConfig.map((configJson, index) => {
+    const config = convertToBabelConfig(configJson);
     return (
       <CompiledOutput
         source={debouncedSource}
@@ -113,6 +133,14 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
     setSize(size);
     gzipSize(debouncedSource).then((s) => setGzip(s));
   }, [debouncedSource]);
+
+  //Register default plugins
+  // useEffect(() => {
+  //   Babel.registerPlugin(
+  //     "babel-plugin-polyfill-corejs3",
+  //     window.babelPluginPolyfillCorejs3
+  //   );
+  // });
 
   return (
     <Root>

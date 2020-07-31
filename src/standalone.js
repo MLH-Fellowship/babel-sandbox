@@ -1,10 +1,7 @@
 import * as Babel from "@babel/core";
 
 // take from @babel/standalone
-import {
-  presets as availablePresets,
-  plugins as availablePlugins,
-} from "./plugins-list";
+import { availablePlugins, availablePresets } from './plugins-list';
 
 export function transpilePlugin(pluginString) {
   return Babel.transform(pluginString, {
