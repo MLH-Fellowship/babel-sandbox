@@ -6,42 +6,91 @@ import styled, { css } from "styled-components";
 
 import { Editor } from "./Editor";
 import { gzipSize } from "../gzip";
+import {plugins} from "../plugins-list";
 
 window.babel = Babel;
 
+/**
+ * Converts internal json plugin/preset config to babel form
+ * @param {Object} jsonConfig 
+ */
 function convertToBabelConfig(jsonConfig) {
   let result = {plugins: [], presets: []};
-  result.plugins = jsonConfig.plugins?.map(plugin => [plugin.fileLocation, plugin.defaultConfig]);
-  result.presets = jsonConfig.presets?.map(preset => [preset.fileLocation, preset.defaultConfig]);
+  result.plugins = jsonConfig.plugins?.map(plugin => [plugin.name, plugin.defaultConfig]);
+  result.presets = jsonConfig.presets?.map(preset => [preset.name, preset.defaultConfig]);
   return result;
+}
+
+function convertToJsonConfig(babelConfig) {
+  let result = {plugins: [], presets: []}
+  result.plugins = babelConfig.plugins?.map((plugin) => {
+    return {
+      name: plugin[0],
+      description: plugins[plugin[0]].description,
+      fileLocation: plugins[plugin[0]].fileLocation,
+      defaultConfig: plugin[1],
+    };
+  });
+}
+
+function importDefaultPlugins() {
+  Object.keys(plugins).forEach((pluginName) => {
+    const script = document.createElement("script");
+    script.src = plugins[pluginName].fileLocation;
+    script.async = false;
+    document.head.appendChild(script);
+  });
+  console.log(window);
+}
+
+function registerDefaultPlugins() {
+  Babel.registerPlugin(
+    "babel-plugin-polyfill-corejs3",
+    window.babelPluginPolyfillCorejs3
+  );
+  Babel.registerPlugin(
+    "babel-plugin-polyfill-corejs2",
+    window.babelPluginPolyfillCorejs2
+  );
+  Babel.registerPlugin(
+    "@babel/plugin-external-helpers",
+    window._babel_pluginExternalHelpers
+  );
+  Babel.registerPlugin(
+    "babel-plugin-polyfill-es-shims",
+    window.babelPluginPolyfillEsShims
+  );
+  Babel.registerPlugin(
+    "babel-plugin-polyfill-regenerator",
+    window.babelPluginPolyfillRegenerator
+  );
 }
 
 function CompiledOutput({
   source,
   customPlugin,
-  config,
+  config, //JSON config
   onConfigChange,
+  setConfig,
   removeConfig,
 }) {
   const [compiled, setCompiled] = useState(null);
   const [gzip, setGzip] = useState(null);
   const debouncedPlugin = useDebounce(customPlugin, 125);
 
-  console.log("test");
-  console.log(config);
-  console.log(debouncedPlugin);
+  // const configBabel = convertToBabelConfig(config);
+
+  const [configVisible, setConfigVisible] = useState(false);
+  const [babelConfig, setBabelConfig] = useState(convertToBabelConfig(config));
 
   useEffect(() => {
     try {
-      console.log("test1");
       const { code } = Babel.transform(
         source,
-        processOptions(config, debouncedPlugin)
+        processOptions(babelConfig, debouncedPlugin)
         // config
       );
-      console.log("test2");
       gzipSize(code).then((s) => setGzip(s));
-      console.log("test3");
       setCompiled({
         code,
         size: new Blob([code], { type: "text/plain" }).size,
@@ -53,21 +102,73 @@ function CompiledOutput({
         error: true,
       });
     }
-  }, [source, config, debouncedPlugin]);
+  }, [source, babelConfig, debouncedPlugin]);
+
+  useEffect(() => {
+    importDefaultPlugins();
+    registerDefaultPlugins();
+  })
+
+  function toggleConfigVisible() {
+    setConfigVisible(!configVisible);
+  }
+
+  function handlePluginChange(event) {
+    const checkbox = event.target;
+    if (checkbox.checked) {
+      config.plugins.push(plugins[checkbox.name]);
+      onConfigChange(config);
+      setBabelConfig(convertToBabelConfig(config));
+    } else {
+      config.plugins = config.plugins.filter((plugin) => {
+        return plugin.name !== checkbox.name;
+      });
+      onConfigChange(config);
+      setBabelConfig(convertToBabelConfig(config));
+    }
+    console.log(config);
+    console.log(babelConfig);
+  }
+
+  function displayAvailablePlugins() {
+    return Object.keys(plugins).map((pluginName) => {
+      const plugin = plugins[pluginName];
+      return (
+        <div>
+          <label>
+            <input name={pluginName} type="checkbox" onChange={handlePluginChange}/>
+            {plugin.name}
+          </label>
+        </div>
+      );
+    })
+  }
 
   return (
     <Wrapper>
       <Section>
-          {/* <Config
-            value={
-              config === Object(config)
-                ? JSON.stringify(config, null, "\t")
-                : config
-            }
-            onChange={onConfigChange}
-            docName="config.json"
-            config={{ mode: "application/json" }}
-          /> */}
+        {displayAvailablePlugins()}
+        <button onClick={toggleConfigVisible}>View/Hide config</button>
+        { configVisible && (<Config
+          value={
+            babelConfig === Object(babelConfig)
+              ? JSON.stringify(babelConfig, null, "\t")
+              : babelConfig
+          }
+          onChange={(value) => onConfigChange(convertToJsonConfig(value))}
+          docName="config.json"
+          config={{ mode: "application/json" }}
+        />)}
+        <Config
+          value={
+            config === Object(config)
+              ? JSON.stringify(config, null, "\t")
+              : config
+          }
+          onChange={(value) => {return 0}}
+          docName="config.json"
+          config={{ mode: "application/json" }}
+        />
       </Section>
       <Section>
         <Code
@@ -85,21 +186,21 @@ function CompiledOutput({
   );
 }
 
-export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
+export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
   const [source, setSource] = React.useState(defaultSource);
   const [enableCustomPlugin, toggleCustomPlugin] = React.useState(true);
   const [customPlugin, setCustomPlugin] = React.useState(defCustomPlugin);
-  const [babelConfig, setBabelConfig] = useState(
-    Array.isArray(defaultBabelConfig)
-      ? defaultBabelConfig
-      : [defaultBabelConfig]
+  const [jsonConfig, setJsonConfig] = useState(
+    Array.isArray(defaultConfig)
+      ? defaultConfig
+      : [defaultConfig]
   );
   const [size, setSize] = useState(null);
   const [gzip, setGzip] = useState(null);
   const debouncedSource = useDebounce(source, 125);
 
   const updateBabelConfig = useCallback((config, index) => {
-    setBabelConfig((configs) => {
+    setJsonConfig((configs) => {
       const newConfigs = [...configs];
       newConfigs[index] = config;
 
@@ -111,18 +212,19 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   // console.log(window);
 
   const removeBabelConfig = useCallback((index) => {
-    setBabelConfig((configs) => configs.filter((c, i) => index !== i));
+    setJsonConfig((configs) => configs.filter((c, i) => index !== i));
   }, []);
 
-  let results = babelConfig.map((configJson, index) => {
-    const config = convertToBabelConfig(configJson);
+  let results = jsonConfig.map((configJson, index) => {
+    // const config = convertToBabelConfig(configJson);
     return (
       <CompiledOutput
         source={debouncedSource}
         customPlugin={enableCustomPlugin ? customPlugin : undefined}
-        config={config}
+        config={configJson}
         key={index}
         onConfigChange={(config) => updateBabelConfig(config, index)}
+        setConfig={setJsonConfig}
         removeConfig={() => removeBabelConfig(index)}
       />
     );
@@ -158,7 +260,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           </label>
           <button
             onClick={() =>
-              setBabelConfig((configs) => [
+              setJsonConfig((configs) => [
                 ...configs,
                 configs[configs.length - 1],
               ])

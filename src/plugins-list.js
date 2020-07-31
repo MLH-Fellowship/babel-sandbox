@@ -3,57 +3,67 @@
 
 // Default list of plugins, for internal use only
 export const plugins = {
-  "@babel/plugin-external-helpers": {
-    name: "@babel/plugin-external-helpers",
-    ref: require("@babel/plugin-external-helpers"),
-    description: "does this",
-    fileLocation: "../static/plugins/@babel/plugin-external-helpers",
-    defaultConfig: {
-      module: "bluebird",
-      method: "coroutine",
-    },
-  },
-  "babel-plugin-polyfill-corejs2": {
-    name: "babel-plugin-polyfill-corejs2",
-    ref: require("babel-plugin-polyfill-corejs2"),
-    description: "does this",
-    fileLocation: "../static/plugins/babel-plugin-polyfill-corejs2",
-    defaultConfig: {
-      module: "bluebird",
-      method: "coroutine",
-    },
-  },
-  "babel-plugin-polyfill-corejs3": {
-    name: "babel-plugin-polyfill-corejs3",
-    ref: require("babel-plugin-polyfill-corejs3"),
-    description: "does this",
-    fileLocation: "babel-plugin-polyfill-corejs3",
-    defaultConfig: {
-      module: "bluebird",
-      method: "coroutine",
-    },
-  },
-  "babel-plugin-polyfill-es-shims": {
-    name: "babel-plugin-polyfill-es-shims",
-    ref: require("babel-plugin-polyfill-es-shims"),
-    description: "does this",
-    fileLocation: "../static/plugins/babel-plugin-polyfill-es-shims",
-    defaultConfig: {
-      module: "bluebird",
-      method: "coroutine",
-    },
-  },
-  "babel-plugin-polyfill-regenerator": {
-    name: "babel-plugin-polyfill-regenerator",
-    ref: require("babel-plugin-polyfill-regenerator"),
-    description: "does this",
-    fileLocation: "../plugins/babel-plugin-polyfill-regenerator",
-    defaultConfig: {
-      module: "bluebird",
-      method: "coroutine",
-    },
-  },
-};
+         "@babel/plugin-external-helpers": {
+           name: "@babel/plugin-external-helpers",
+           ref: require("@babel/plugin-external-helpers"),
+           description: "does this",
+           fileLocation: "/static/plugins/@babel/plugin-external-helpers.js",
+           defaultConfig: {
+             method: "usage-global",
+             targets: {
+               edge: 16,
+             },
+           },
+         },
+         "babel-plugin-polyfill-corejs2": {
+           name: "babel-plugin-polyfill-corejs2",
+           ref: require("babel-plugin-polyfill-corejs2"),
+           description: "does this",
+           fileLocation: "/static/plugins/babel-plugin-polyfill-corejs2.js",
+           defaultConfig: {
+             method: "usage-global",
+             targets: {
+               edge: 16,
+             },
+           },
+         },
+         "babel-plugin-polyfill-corejs3": {
+           name: "babel-plugin-polyfill-corejs3",
+           ref: require("babel-plugin-polyfill-corejs3"),
+           description: "does this",
+           fileLocation: "/static/plugins/babel-plugin-polyfill-corejs3.js",
+           defaultConfig: {
+             method: "usage-global",
+             targets: {
+               edge: 16,
+             },
+           },
+         },
+         "babel-plugin-polyfill-es-shims": {
+           name: "babel-plugin-polyfill-es-shims",
+           ref: require("babel-plugin-polyfill-es-shims"),
+           description: "does this",
+           fileLocation: "/static/plugins/babel-plugin-polyfill-es-shims.js",
+           defaultConfig: {
+             method: "usage-global",
+             targets: {
+               edge: 16,
+             },
+           },
+         },
+         "babel-plugin-polyfill-regenerator": {
+           name: "babel-plugin-polyfill-regenerator",
+           ref: require("babel-plugin-polyfill-regenerator"),
+           description: "does this",
+           fileLocation: "/static/plugins/babel-plugin-polyfill-regenerator.js",
+           defaultConfig: {
+             method: "usage-global",
+             targets: {
+               edge: 16,
+             },
+           },
+         },
+       };
 
 // Default list of presets, internal use only
 export const presets = {
@@ -85,9 +95,6 @@ Object.keys(presets).forEach((presetName) => {
   const preset = presets[presetName];
   availablePresets[presetName] = preset.ref;
 });
-
-console.log(availablePlugins);
-console.log(availablePresets);
 
 
 

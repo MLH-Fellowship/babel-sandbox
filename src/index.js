@@ -24,17 +24,17 @@ const CONFIG = [
       //     },
       //   },
       // ],
-      {
-        name: "babel-plugin-polyfill-corejs3",
-        description: "does this",
-        fileLocation: "babel-plugin-polyfill-corejs3",
-        defaultConfig: {
-          method: "usage-global",
-          targets: {
-            edge: 16,
-          }
-        },
-      },
+      // {
+      //   name: "babel-plugin-polyfill-corejs3",
+      //   description: "does this",
+      //   fileLocation: "babel-plugin-polyfill-corejs3",
+      //   defaultConfig: {
+      //     method: "usage-global",
+      //     targets: {
+      //       edge: 16,
+      //     }
+      //   },
+      // },
     ],
   },
   // {},
@@ -53,7 +53,7 @@ const PLUGIN = `export default function customPlugin(babel) {
 
 render(
   <App
-    defaultBabelConfig={CONFIG}
+    defaultConfig={CONFIG}
     defaultSource={SOURCE}
     defCustomPlugin={PLUGIN}
   />,
