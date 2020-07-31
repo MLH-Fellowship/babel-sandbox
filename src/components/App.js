@@ -10,6 +10,7 @@ import UglyPopup from "./Popup";
 
 import { Grid, Dropdown, Icon, Menu, Segment, Divider } from 'semantic-ui-react'
 
+import { parse } from '@babel/parser'
 
 window.babel = Babel;
 
@@ -25,6 +26,9 @@ function CompiledOutput({
   const debouncedPlugin = useDebounce(customPlugin, 125);
 
   useEffect(() => {
+
+    console.log('ast raw value', parse(source))
+
     try {
       const { code } = Babel.transform(
         source,
