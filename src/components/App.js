@@ -149,32 +149,15 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             Use Example (WIP)
           </button>
           <button
-            onClick={() => {
+            onClick={async () => {
               const state = new REPLState(
                 source,
                 enableCustomPlugin ? customPlugin : "",
                 babelConfig.map((config) => JSON.stringify(config))
               );
-              const url = "/api/v1/blobs/create";
-              fetch(url, {
-                method: "POST",
-                headers: {
-                  Accept: "application/json",
-                  "Content-Type": "application/json",
-                },
-                body: state.Encode(),
-              })
-                .then((resp) => resp.text())
-                .then((text) => {
-                  setShareLink(text);
-                  setShowShareLink(true);
-                })
-                .catch((err) => {
-                  setShareLink(
-                    "failed to get response from the server, our bad :("
-                  );
-                  setShowShareLink(true);
-                });
+              const link = await state.Link();
+              setShareLink(link);
+              setShowShareLink(true);
             }}
           >
             Share

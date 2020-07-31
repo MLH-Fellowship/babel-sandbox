@@ -69,6 +69,24 @@ class REPLState {
   }
 
   /**
+   * Link gets the sharing the sharing link
+   * for the given REPL state.
+   * @returns {Promise<string>} String URL.
+   */
+  async Link() {
+    const url = "/api/v1/blobs/create";
+    const resp = await fetch(url, {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: this.Encode(),
+    });
+    return resp.text();
+  }
+
+  /**
    * Decode decodes the json string.
    * @param {string} encodedState
    * @returns {REPLState}
