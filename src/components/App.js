@@ -6,6 +6,7 @@ import styled, { } from "styled-components";
 import { Editor } from "./Editor";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
+import UglyPopup from "./Popup";
 
 import { Grid, Dropdown, Icon, Menu, Segment, Divider } from 'semantic-ui-react'
 

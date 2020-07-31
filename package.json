@@ -16,6 +16,7 @@
     "react": "16.11.0",
     "react-codemirror2": "^7.2.0",
     "react-dom": "16.11.0",
+    "react-markdown": "^4.3.1",
     "semantic-ui-react": "^1.0.0",
     "styled-components": "4.4.1"
   },
@@ -23,9 +24,11 @@
     "start": "craco start",
     "build": "craco build",
     "test": "craco test",
-    "eject": "craco eject"
+    "eject": "craco eject",
+    "generate-spec": "node scripts/generate-spec.js"
   },
   "devDependencies": {
+    "markdown-toc": "^1.2.0",
     "@craco/craco": "^5.6.4",
     "@semantic-ui-react/craco-less": "^1.2.1",
     "prettier": "~2.0.5",
