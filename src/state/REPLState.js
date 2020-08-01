@@ -74,7 +74,7 @@ class REPLState {
    * @returns {Promise<string>} String URL.
    */
   async Link() {
-    const url = "/api/v1/blobs/create";
+    const url = "http://localhost:1337/api/v1/blobs/create";
     const resp = await fetch(url, {
       method: "POST",
       headers: {
