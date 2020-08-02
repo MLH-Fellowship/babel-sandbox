@@ -42,6 +42,7 @@
     "react-scripts": "3.4.1",
     "semantic-ui-less": "^2.4.1"
   },
+  "homepage": "/app",
   "browserslist": {
     "production": [
       "edge 16"
