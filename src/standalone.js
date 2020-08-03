@@ -1,15 +1,15 @@
 import * as Babel from "@babel/standalone";
 
 // take from @babel/standalone
-import {availablePlugins, availablePresets} from './plugins-list';
+import {availablePlugins, availablePresets} from '@babel/standalone';
 
-export function transpilePlugin(pluginString) {
+export function transpilePlugin(pluginString, presets) {
   return Babel.transform(pluginString, {
     babelrc: false,
     configFile: false,
     ast: false,
     highlightCode: false,
-    presets: [availablePresets["@babel/preset-env"]],
+    presets: presets
   }).code;
 }
 
@@ -77,7 +77,7 @@ export function processOptions(options, customPlugin) {
   });
 
   if (customPlugin) {
-    customPlugin = transpilePlugin(customPlugin);
+    customPlugin = transpilePlugin(customPlugin, presets);
     plugins.unshift(compileModule(customPlugin));
   }
 

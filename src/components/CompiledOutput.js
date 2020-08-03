@@ -11,7 +11,7 @@ import {
   //   registerDefaultPlugins
 } from "./App";
 
-import { plugins } from "../plugins-list";
+import { plugins, presets } from "../plugins-list";
 
 import { Grid, Icon, Menu, Segment, Divider } from "semantic-ui-react";
 
@@ -64,6 +64,22 @@ export function CompiledOutput({
     });
   }
 
+  function displayAvailablePresets() {
+    return Object.keys(presets).map(presetName => {
+      const preset = presets[presetName];
+      return (
+        <div className="ui checkbox">
+          <input
+            name={presetName}
+            type="checkbox"
+            onChange={handlePresetChange}
+          />
+          <label>{presetName}</label>
+        </div>
+      );
+    });
+  }
+
   function toggleConfigVisible() {
     setConfigVisible(!configVisible);
   }
@@ -84,8 +100,21 @@ export function CompiledOutput({
     console.log(config);
     console.log(babelConfig);
   }
-  // importDefaultPlugins();
-  // registerDefaultPlugins();
+
+  function handlePresetChange(event) {
+    const checkbox = event.target;
+    if (checkbox.checked) {
+      config.presets.push(presets[checkbox.name]);
+      onConfigChange(config);
+      setBabelConfig(convertToBabelConfig(config));
+    } else {
+      config.presets = config.presets.filter(preset => {
+        return preset.name !== checkbox.name;
+      });
+      onConfigChange(config);
+      setBabelConfig(convertToBabelConfig(config));
+    }
+  }
 
   return (
     <Grid.Row>
@@ -104,7 +133,8 @@ export function CompiledOutput({
         <Segment inverted attached="bottom">
           <Grid columns={2} relaxed="very">
             <Grid.Column>
-              <Grid.Column>{displayAvailablePlugins()}</Grid.Column>
+              {displayAvailablePlugins()}
+              {displayAvailablePresets()}
               <Wrapper>
                 <Config
                   value={
