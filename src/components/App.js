@@ -23,14 +23,14 @@ window.babel = Babel;
  * Converts internal json plugin/preset config to babel form
  * @param {Object} jsonConfig 
  */
-function convertToBabelConfig(jsonConfig) {
+export function convertToBabelConfig(jsonConfig) {
   let result = {plugins: [], presets: []};
   result.plugins = jsonConfig.plugins?.map(plugin => [plugin.name, plugin.defaultConfig]);
   result.presets = jsonConfig.presets?.map(preset => [preset.name, preset.defaultConfig]);
   return result;
 }
 
-function convertToJsonConfig(babelConfig) {
+export function convertToJsonConfig(babelConfig) {
   let result = {plugins: [], presets: []}
   result.plugins = babelConfig.plugins?.map((plugin) => {
     return {
@@ -42,7 +42,7 @@ function convertToJsonConfig(babelConfig) {
   });
 }
 
-function importDefaultPlugins() {
+export function importDefaultPlugins() {
   Object.keys(plugins).forEach((pluginName) => {
     const script = document.createElement("script");
     script.src = plugins[pluginName].fileLocation;
@@ -52,7 +52,7 @@ function importDefaultPlugins() {
   console.log(window);
 }
 
-function registerDefaultPlugins() {
+export function registerDefaultPlugins() {
   Babel.registerPlugin(
     "babel-plugin-polyfill-corejs3",
     window.babelPluginPolyfillCorejs3
@@ -107,20 +107,20 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
     setJsonConfig((configs) => configs.filter((c, i) => index !== i));
   }, []);
 
-  let results = jsonConfig.map((configJson, index) => {
-    // const config = convertToBabelConfig(configJson);
-    return (
-      <CompiledOutput
-        source={debouncedSource}
-        customPlugin={enableCustomPlugin ? customPlugin : undefined}
-        config={configJson}
-        key={index}
-        onConfigChange={(config) => updateBabelConfig(config, index)}
-        setConfig={setJsonConfig}
-        removeConfig={() => removeBabelConfig(index)}
-      />
-    );
-  });
+  // let results = jsonConfig.map((configJson, index) => {
+  //   // const config = convertToBabelConfig(configJson);
+  //   return (
+  //     <CompiledOutput
+  //       source={debouncedSource}
+  //       customPlugin={enableCustomPlugin ? customPlugin : undefined}
+  //       config={configJson}
+  //       key={index}
+  //       onConfigChange={(config) => updateBabelConfig(config, index)}
+  //       setConfig={setJsonConfig}
+  //       removeConfig={() => removeBabelConfig(index)}
+  //     />
+  //   );
+  // });
 
   useEffect(() => {
     let size = new Blob([debouncedSource], { type: "text/plain" }).size;
@@ -140,7 +140,7 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
     <Root>
       <MainMenu
         setSource={setSource}
-        setBabelConfig={setBabelConfig}
+        setBabelConfig={setJsonConfig}
         toggleCustomPlugin={toggleCustomPlugin}
         enableCustomPlugin={enableCustomPlugin}
       />
@@ -150,7 +150,7 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
           const state = new REPLState(
             source,
             enableCustomPlugin ? customPlugin : "",
-            babelConfig.map((config) => JSON.stringify(config))
+            jsonConfig.map((config) => JSON.stringify(config))
           );
           const link = await state.Link();
           setShareLink(link);
@@ -172,7 +172,7 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
           />
         )}
         <Output
-          babelConfig={babelConfig}
+          babelConfig={jsonConfig}
           debouncedSource={debouncedSource}
           enableCustomPlugin={enableCustomPlugin}
           customPlugin={customPlugin}
