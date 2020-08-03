@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import * as Babel from "@babel/core";
+import * as Babel from "@babel/standalone";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
 import { Wrapper, Code, Config } from "./styles";
@@ -7,11 +7,11 @@ import { useDebounce } from "../utils/useDebounce";
 
 import {
   convertToBabelConfig,
-  importDefaultPlugins,
-  registerDefaultPlugins
-} from './App';
+  //   importDefaultPlugins,
+  //   registerDefaultPlugins
+} from "./App";
 
-import {plugins} from '../plugins-list';
+import { plugins } from "../plugins-list";
 
 import { Grid, Icon, Menu, Segment, Divider } from "semantic-ui-react";
 
@@ -48,23 +48,20 @@ export function CompiledOutput({
     }
   }, [source, babelConfig, debouncedPlugin]);
 
-  useEffect(() => {
-    importDefaultPlugins();
-    registerDefaultPlugins();
-  })
-
   function displayAvailablePlugins() {
-    return Object.keys(plugins).map((pluginName) => {
+    return Object.keys(plugins).map(pluginName => {
       const plugin = plugins[pluginName];
       return (
-        <div>
-          <label>
-            <input name={pluginName} type="checkbox" onChange={handlePluginChange}/>
-            {plugin.name}
-          </label>
+        <div className="ui checkbox">
+            <input
+              name={pluginName}
+              type="checkbox"
+              onChange={handlePluginChange}
+            />
+            <label>{plugin.name}</label>
         </div>
       );
-    })
+    });
   }
 
   function toggleConfigVisible() {
@@ -78,7 +75,7 @@ export function CompiledOutput({
       onConfigChange(config);
       setBabelConfig(convertToBabelConfig(config));
     } else {
-      config.plugins = config.plugins.filter((plugin) => {
+      config.plugins = config.plugins.filter(plugin => {
         return plugin.name !== checkbox.name;
       });
       onConfigChange(config);
@@ -87,6 +84,8 @@ export function CompiledOutput({
     console.log(config);
     console.log(babelConfig);
   }
+  // importDefaultPlugins();
+  // registerDefaultPlugins();
 
   return (
     <Grid.Row>
@@ -105,12 +104,13 @@ export function CompiledOutput({
         <Segment inverted attached="bottom">
           <Grid columns={2} relaxed="very">
             <Grid.Column>
+              <Grid.Column>{displayAvailablePlugins()}</Grid.Column>
               <Wrapper>
                 <Config
                   value={
-                    config === Object(config)
-                      ? JSON.stringify(config, null, "\t")
-                      : config
+                    babelConfig === Object(babelConfig)
+                      ? JSON.stringify(babelConfig, null, "\t")
+                      : babelConfig
                   }
                   onChange={onConfigChange}
                   docName="config.json"

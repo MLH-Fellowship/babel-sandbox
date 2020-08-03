@@ -1,10 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import * as Babel from "@babel/standalone";
-import { processOptions } from "../standalone";
-// import * as Babel from "@babel/core";
-import styled, { css } from "styled-components";
 
-import { Editor } from "./Editor";
 import { CustomPlugin } from "./CustomPlugin";
 import { MainMenu } from "./MainMenu";
 import { Input } from "./Input";
@@ -42,8 +38,8 @@ export function convertToJsonConfig(babelConfig) {
   });
 }
 
-export function importDefaultPlugins() {
-  Object.keys(plugins).forEach((pluginName) => {
+function importDefaultPlugins() {
+  Object.keys(plugins).forEach(pluginName => {
     const script = document.createElement("script");
     script.src = plugins[pluginName].fileLocation;
     script.async = false;
@@ -52,7 +48,7 @@ export function importDefaultPlugins() {
   console.log(window);
 }
 
-export function registerDefaultPlugins() {
+function registerDefaultPlugins() {
   Babel.registerPlugin(
     "babel-plugin-polyfill-corejs3",
     window.babelPluginPolyfillCorejs3
@@ -74,6 +70,7 @@ export function registerDefaultPlugins() {
     window.babelPluginPolyfillRegenerator
   );
 }
+
 
 
 export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
@@ -100,27 +97,9 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
     });
   }, []);
 
-  // Babel.registerPreset('@babel/preset-env', window.babel)
-  // console.log(window);
-
   const removeBabelConfig = useCallback((index) => {
     setJsonConfig((configs) => configs.filter((c, i) => index !== i));
   }, []);
-
-  // let results = jsonConfig.map((configJson, index) => {
-  //   // const config = convertToBabelConfig(configJson);
-  //   return (
-  //     <CompiledOutput
-  //       source={debouncedSource}
-  //       customPlugin={enableCustomPlugin ? customPlugin : undefined}
-  //       config={configJson}
-  //       key={index}
-  //       onConfigChange={(config) => updateBabelConfig(config, index)}
-  //       setConfig={setJsonConfig}
-  //       removeConfig={() => removeBabelConfig(index)}
-  //     />
-  //   );
-  // });
 
   useEffect(() => {
     let size = new Blob([debouncedSource], { type: "text/plain" }).size;
@@ -128,13 +107,8 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
     gzipSize(debouncedSource).then(s => setGzip(s));
   }, [debouncedSource]);
 
-  //Register default plugins
-  // useEffect(() => {
-  //   Babel.registerPlugin(
-  //     "babel-plugin-polyfill-corejs3",
-  //     window.babelPluginPolyfillCorejs3
-  //   );
-  // });
+  importDefaultPlugins();
+  registerDefaultPlugins();
 
   return (
     <Root>
