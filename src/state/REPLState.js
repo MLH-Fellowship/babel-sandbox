@@ -39,7 +39,26 @@ function decodeBase64(base64String) {
   return fromBinary(decoded);
 }
 
+/**
+ * Returns the base link such that
+ * if the current link is https://example.com/foo/bar
+ * it just returns https://example.com
+ *
+ * Modified from:
+ * https://stackoverflow.com/questions/25203124/how-to-get-base-url-with-jquery-or-javascript
+ *
+ * @returns {string}
+ */
+function baseLink() {
+  const getURL = window.location;
+  const baseURL =
+    getURL.protocol + "//" + getURL.host + "/" + getURL.pathname.split("/")[1];
+  return baseURL.substr(0, baseURL.length - 1);
+}
+
 class REPLState {
+  static baseURL = "http://localhost:1337";
+
   /**
    * The REPLState constructor takes in what the App component provides with the exception of the configs.
    * Those must be turned into strings before calling the constructor.
@@ -62,28 +81,10 @@ class REPLState {
     return JSON.stringify({
       source: encodeToBase64(this.jsSource),
       plugin: encodeToBase64(this.pluginSource),
-      configs: this.configs.map((configSrc) => {
+      configs: this.configs.map(configSrc => {
         return encodeToBase64(configSrc);
       }),
     });
-  }
-
-  /**
-   * Link gets the sharing the sharing link
-   * for the given REPL state.
-   * @returns {Promise<string>} String URL.
-   */
-  async Link() {
-    const url = "http://localhost:1337/api/v1/blobs/create";
-    const resp = await fetch(url, {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: this.Encode(),
-    });
-    return resp.text();
   }
 
   /**
@@ -94,12 +95,53 @@ class REPLState {
   static Decode(encodedState) {
     let jsonState = JSON.parse(encodedState);
     return new REPLState(
-      decodeBase64(jsonState.source),
-      decodeBase64(jsonState.plugin),
-      jsonState.configs.map((configs) => {
+      decodeBase64(jsonState.base64SourceKey),
+      decodeBase64(jsonState.base64PluginKey),
+      jsonState.configIDs.map(configs => {
         return decodeBase64(configs);
       })
     );
+  }
+
+  /**
+   * Link gets the sharing the sharing link
+   * for the given REPL state.
+   * @returns {Promise<string>} String URL.
+   */
+  async Link() {
+    const url = `${REPLState.baseURL}/api/v1/blobs/create`;
+    try {
+      const resp = await fetch(url, {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+        body: this.Encode(),
+      });
+      const message = await resp.json();
+      return `${baseLink()}/share/${message?.id}`;
+    } catch (err) {
+      console.error(err);
+      return err;
+    }
+  }
+
+  /**
+   * REPLState.FromID returns a REPLState given a unique identifier.
+   * @param {string} ID
+   * @returns {Promise<REPLState | null>}
+   */
+  static async FromID(ID) {
+    const url = `${REPLState.baseURL}/api/v1/blobs/get-blob/${ID}`;
+    try {
+      const resp = await fetch(url);
+      const text = await resp.text();
+      return REPLState.Decode(text);
+    } catch (err) {
+      console.error(err);
+      return null;
+    }
   }
 }
 

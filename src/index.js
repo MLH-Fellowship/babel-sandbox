@@ -1,6 +1,7 @@
 import React from "react";
 import { render } from "react-dom";
 import { App } from "./components/App";
+import { extractID, isShareLink, REPLState } from "./state";
 
 // css
 import "semantic-ui-less/semantic.less";
@@ -42,11 +43,31 @@ const PLUGIN = `export default function customPlugin(babel) {
 }
 `;
 
-render(
-  <App
-    defaultBabelConfig={CONFIG}
-    defaultSource={SOURCE}
-    defCustomPlugin={PLUGIN}
-  />,
-  document.getElementById("root")
+const defaultState = new REPLState(
+  SOURCE,
+  PLUGIN,
+  CONFIG.map(conf => JSON.stringify(conf))
 );
+
+/**
+ * @returns {Promise<REPLState>}
+ */
+async function getState() {
+  if (!isShareLink()) {
+    return defaultState;
+  }
+  const state = await REPLState.FromID(extractID());
+  return state === null ? defaultState : state;
+}
+
+(async () => {
+  const state = await getState();
+  render(
+    <App
+      defaultBabelConfig={state.configs.map(conf => JSON.parse(conf))}
+      defaultSource={state.jsSource}
+      defCustomPlugin={state.pluginSource}
+    />,
+    document.getElementById("root")
+  );
+})();
