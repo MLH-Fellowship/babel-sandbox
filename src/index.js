@@ -83,7 +83,7 @@ async function getState() {
   const state = await getState();
   render(
     <App
-      defaultBabelConfig={state.configs.map(conf => JSON.parse(conf))}
+      defaultConfig={state.configs.map(conf => JSON.parse(conf))}
       defaultSource={state.jsSource}
       defCustomPlugin={state.pluginSource}
     />,
