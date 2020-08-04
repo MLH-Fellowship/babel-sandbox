@@ -53,6 +53,7 @@ export function CompiledOutput({
       const plugin = plugins[pluginName];
 
       return (
+<<<<<<< HEAD
         <Segment>
           <Checkbox toggle
             name={pluginName}
@@ -60,6 +61,16 @@ export function CompiledOutput({
             onChange={handlePluginChange}
             label={pluginName} />
         </Segment>
+=======
+        <div className="ui checkbox" key={pluginName}>
+          <input
+            name={pluginName}
+            type="checkbox"
+            onChange={handlePluginChange}
+          />
+          <label>{plugin.name}</label>
+        </div>
+>>>>>>> master
       );
     });
   }
@@ -68,12 +79,23 @@ export function CompiledOutput({
     return Object.keys(presets).map(presetName => {
       const preset = presets[presetName];
       return (
+<<<<<<< HEAD
         <Segment><Checkbox toggle
           name={presetName}
           type="checkbox"
           onChange={handlePresetChange}
           label={presetName} />
         </Segment>
+=======
+        <div className="ui checkbox" key={presetName}>
+          <input
+            name={presetName}
+            type="checkbox"
+            onChange={handlePresetChange}
+          />
+          <label>{presetName}</label>
+        </div>
+>>>>>>> master
       );
     });
   }
@@ -122,7 +144,7 @@ export function CompiledOutput({
               {compiled?.size}b, {gzip}b
             </Menu.Item>
             <Menu.Item onClick={removeConfig}>
-              <Icon name="close" size="" />
+              <Icon name="close" />
             </Menu.Item>
           </Menu.Menu>
         </Menu>
