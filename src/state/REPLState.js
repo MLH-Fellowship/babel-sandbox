@@ -40,7 +40,7 @@ function decodeBase64(base64String) {
 }
 
 class REPLState {
-  static baseURL = "http://localhost:1337";
+  static baseURL = "http://localhost:3005";
 
   /**
    * The REPLState constructor takes in what the App component provides with the exception of the configs.
@@ -105,8 +105,9 @@ class REPLState {
       const message = await resp.json();
 
       // https://stackoverflow.com/questions/6941533/get-protocol-domain-and-port-from-url
-      return window.location.href.split('/').slice(0, 3).join('/') + message.url;
-
+      return (
+        window.location.href.split("/").slice(0, 3).join("/") + message.url
+      );
     } catch (err) {
       console.error(err);
       return err;
@@ -119,7 +120,7 @@ class REPLState {
    * @returns {Promise<REPLState | null>}
    */
   static async FromID(ID) {
-    const url = `${REPLState.baseURL}/api/v1/blobs/get-blob/${ID}`;
+    const url = `${REPLState.baseURL}/api/v1/blobs/${ID}`;
     try {
       const resp = await fetch(url);
       const text = await resp.text();
