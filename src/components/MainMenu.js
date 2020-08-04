@@ -77,11 +77,6 @@ export function MainMenu({
           />
         </Dropdown.Menu>
       </Dropdown>
-      {/* <Menu.Item>
-        {showShareLink && (
-          <input type="text" value={shareLink} readOnly></input>
-        )}
-      </Menu.Item> */}
     </Menu>
   );
 }
