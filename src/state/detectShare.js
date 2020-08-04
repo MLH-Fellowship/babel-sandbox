@@ -12,8 +12,10 @@ function extractID() {
 
   // Attempt to capture :key from http://example.com/share/:key/
   const pathParts = window.location.pathname.split('/');
-  if (pathParts.length > 1 && pathParts[2]) {
+  if (pathParts.length > 1) {
     return pathParts[2];
+  } else {
+    throw new Error("Trying to extract ID from a share link that doesn't have one.")
   }
 }
 
