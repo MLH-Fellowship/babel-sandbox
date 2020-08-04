@@ -40,8 +40,6 @@ function decodeBase64(base64String) {
 }
 
 class REPLState {
-  static baseURL = "http://localhost:3005";
-
   /**
    * The REPLState constructor takes in what the App component provides with the exception of the configs.
    * Those must be turned into strings before calling the constructor.
@@ -92,7 +90,7 @@ class REPLState {
    * @returns {Promise<string>} String URL.
    */
   async Link() {
-    const url = `${REPLState.baseURL}/api/v1/blobs/create`;
+    const url = `/api/v1/blobs/create`;
     try {
       const resp = await fetch(url, {
         method: "POST",
@@ -120,7 +118,7 @@ class REPLState {
    * @returns {Promise<REPLState | null>}
    */
   static async FromID(ID) {
-    const url = `${REPLState.baseURL}/api/v1/blobs/${ID}`;
+    const url = `/api/v1/blobs/${ID}`;
     try {
       const resp = await fetch(url);
       const text = await resp.text();
