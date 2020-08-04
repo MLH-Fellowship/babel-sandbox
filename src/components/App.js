@@ -9,7 +9,7 @@ import { gzipSize } from "../gzip";
 import { Root } from "./styles";
 import { useDebounce } from "../utils/useDebounce";
 import REPLState from "../state/REPLState.js";
-import { Viz } from "./AST/Viz";
+import VizOutput from "./AST/Viz";
 
 import { Grid } from "semantic-ui-react";
 
@@ -90,7 +90,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           updateBabelConfig={updateBabelConfig}
           removeBabelConfig={removeBabelConfig}
         />
-        <Viz code={source} />
+        <VizOutput code={debouncedSource} />
       </Grid>
     </Root>
   );
