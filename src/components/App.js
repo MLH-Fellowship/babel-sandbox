@@ -65,6 +65,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
             babelConfig.map(config => JSON.stringify(config))
           );
           const link = await state.Link();
+
           setShareLink(link);
           setShowShareLink(true);
         }}

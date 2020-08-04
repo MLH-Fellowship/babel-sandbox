@@ -39,23 +39,6 @@ function decodeBase64(base64String) {
   return fromBinary(decoded);
 }
 
-/**
- * Returns the base link such that
- * if the current link is https://example.com/foo/bar
- * it just returns https://example.com
- *
- * Modified from:
- * https://stackoverflow.com/questions/25203124/how-to-get-base-url-with-jquery-or-javascript
- *
- * @returns {string}
- */
-function baseLink() {
-  const getURL = window.location;
-  const baseURL =
-    getURL.protocol + "//" + getURL.host + "/" + getURL.pathname.split("/")[1];
-  return baseURL.substr(0, baseURL.length - 1);
-}
-
 class REPLState {
   static baseURL = "http://localhost:1337";
 
@@ -120,7 +103,10 @@ class REPLState {
         body: this.Encode(),
       });
       const message = await resp.json();
-      return `${baseLink()}/share/${message?.id}`;
+
+      // https://stackoverflow.com/questions/6941533/get-protocol-domain-and-port-from-url
+      return window.location.href.split('/').slice(0, 3).join('/') + message.url;
+
     } catch (err) {
       console.error(err);
       return err;

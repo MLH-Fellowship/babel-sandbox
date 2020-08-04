@@ -9,13 +9,12 @@ function isShareLink() {
 }
 
 function extractID() {
-  const path = window.location.pathname;
-  // Attempt to capture everything after the /share/
-  // that's not a URL reserved character as defined here:
-  // https://en.wikipedia.org/wiki/Percent-encoding#Percent-encoding_reserved_characters
-  const re = /\/share\/([^!*'();:@&=+$,/?#[\]]+)/g;
 
-  return path.replace(re, "$1");
+  // Attempt to capture :key from http://example.com/share/:key/
+  const pathParts = window.location.pathname.split('/');
+  if (pathParts.length > 1 && pathParts[2]) {
+    return pathParts[2];
+  }
 }
 
 export { isShareLink, extractID };
