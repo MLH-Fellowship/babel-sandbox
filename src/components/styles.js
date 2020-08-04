@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Editor } from "./Editor";
-import { Segment } from "semantic-ui-react";
 
 const Root = styled.div``;
 
@@ -12,15 +11,4 @@ const Config = styled(Editor)`
 
 const Code = styled(Editor)``;
 
-const ASTButton = styled.button`
-  border: none;
-  background: none;
-  width: 2em;
-`;
-
-const ASTSegment = styled(Segment)`
-  border-color: white !important;
-  box-shadow: none !important;
-`;
-
-export { Root, Wrapper, Config, Code, ASTButton, ASTSegment };
+export { Root, Wrapper, Config, Code };
