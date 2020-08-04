@@ -58,7 +58,8 @@ export function CompiledOutput({
             name={pluginName}
             type="checkbox"
             onChange={handlePluginChange}
-            label={pluginName} /></Segment>
+            label={pluginName} />
+        </Segment>
       );
     });
   }
@@ -71,7 +72,8 @@ export function CompiledOutput({
           name={presetName}
           type="checkbox"
           onChange={handlePresetChange}
-          label={presetName} /></Segment>
+          label={presetName} />
+        </Segment>
       );
     });
   }
