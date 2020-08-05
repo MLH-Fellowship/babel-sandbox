@@ -19,12 +19,16 @@ const StyledEditor = styled(CodeMirror)`
   }
 `;
 
-export function Editor({ className, onChange, style, ...options }) {
+export function Editor({ className, onChange, onCursor, style, ...options }) {
   return (
     <StyledEditor
       className={className}
       onBeforeChange={(editor, data, value) => {
         onChange(value);
+      }}
+      onCursorActivity={e => {
+        const { line, ch } = e.getCursor();
+        onCursor && onCursor({ line, ch });
       }}
       options={{
         scrollbarStyle: null,
