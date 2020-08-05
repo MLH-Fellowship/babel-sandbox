@@ -19,10 +19,24 @@ const StyledEditor = styled(CodeMirror)`
   }
 `;
 
-export function Editor({ className, onChange, onCursor, style, ...options }) {
+export function Editor({
+  className,
+  cursorAST,
+  onChange,
+  onCursor,
+  style,
+  ...options
+}) {
+  const selection = cursorAST
+    ? {
+        ranges: [cursorAST],
+        focus: true,
+      }
+    : null;
   return (
     <StyledEditor
       className={className}
+      selection={selection}
       onBeforeChange={(editor, data, value) => {
         onChange(value);
       }}

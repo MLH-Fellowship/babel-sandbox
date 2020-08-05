@@ -27,10 +27,14 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   const [size, setSize] = useState(null);
   const [gzip, setGzip] = useState(null);
   const debouncedSource = useDebounce(source, 125);
-  const [shareLink, setShareLink] = React.useState("");
-  const [showShareLink, setShowShareLink] = React.useState(false);
+  const [shareLink, setShareLink] = useState("");
+  const [showShareLink, setShowShareLink] = useState(false);
 
   const [cursor, setCursor] = useState({ line: 0, ch: 0 });
+  const [cursorAST, setCursorAST] = useState({
+    anchor: { line: 0, ch: 0 },
+    head: { line: 3, ch: 0 },
+  });
 
   const updateBabelConfig = useCallback((config, index) => {
     setBabelConfig(configs => {
@@ -82,6 +86,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           source={source}
           setSource={setSource}
           setCursor={setCursor}
+          cursorAST={cursorAST}
         />
         {enableCustomPlugin && (
           <CustomPlugin
@@ -98,7 +103,11 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           updateBabelConfig={updateBabelConfig}
           removeBabelConfig={removeBabelConfig}
         />
-        <VizOutput code={debouncedSource} cursor={cursor} />
+        <VizOutput
+          code={debouncedSource}
+          cursor={cursor}
+          setCursorAST={setCursorAST}
+        />
       </Grid>
     </Root>
   );
