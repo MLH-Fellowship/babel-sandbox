@@ -30,6 +30,8 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   const [shareLink, setShareLink] = React.useState("");
   const [showShareLink, setShowShareLink] = React.useState(false);
 
+  const [cursor, setCursor] = useState({ line: 0, ch: 0 });
+
   const updateBabelConfig = useCallback((config, index) => {
     setBabelConfig(configs => {
       const newConfigs = [...configs];
@@ -74,7 +76,13 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
       </button>
       {showShareLink && <input type="text" value={shareLink} readOnly></input>}
       <Grid celled="internally">
-        <Input size={size} gzip={gzip} source={source} setSource={setSource} />
+        <Input
+          size={size}
+          gzip={gzip}
+          source={source}
+          setSource={setSource}
+          setCursor={setCursor}
+        />
         {enableCustomPlugin && (
           <CustomPlugin
             toggleCustomPlugin={toggleCustomPlugin}
@@ -90,7 +98,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           updateBabelConfig={updateBabelConfig}
           removeBabelConfig={removeBabelConfig}
         />
-        <VizOutput code={debouncedSource} />
+        <VizOutput code={debouncedSource} cursor={cursor} />
       </Grid>
     </Root>
   );
