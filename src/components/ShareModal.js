@@ -5,7 +5,7 @@ export function ShareModal({ trigger, shareLink }) {
   // State to track open vs closed
   const [open, setOpen] = useState(false);
   // React ref to the input object
-  let textArea; 
+  let textArea;
   return (
     <Modal
       size="mini"
