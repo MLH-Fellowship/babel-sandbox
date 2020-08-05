@@ -99,7 +99,6 @@ function Viz({ code, cursor }) {
 }
 
 export default function VizOutput({ code, cursor }) {
-  console.log(cursor);
   return (
     <Grid.Row>
       <Grid.Column>
