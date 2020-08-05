@@ -112,6 +112,7 @@ function Viz({ code, cursor }) {
 
 export default function VizOutput({ code, cursor }) {
   const cs = { line: cursor.line + 1, ch: cursor.ch + 1 };
+  console.log(cs);
   return (
     <Grid.Row>
       <Grid.Column>
@@ -137,11 +138,11 @@ function isBound(cursor, bounds) {
   const { line, ch } = cursor;
   const { start, end } = bounds;
 
-  const allRows = start.line + end.line === 0;
-  const allCols = start.column + start.column === 0;
+  const cols = start.column + end.column === 0;
 
-  if ((start.line > line || end.line < line) && !allRows) return false;
-  if ((start.column > ch || end.column < ch) && !allCols) return false;
+  if (line === start.line && ch >= start.column) return true;
+  if (line === end.line && (ch <= start.column || cols)) return true;
+  if (start.line < line && line < end.line) return true;
 
-  return true;
+  return false;
 }
