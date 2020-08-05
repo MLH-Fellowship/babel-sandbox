@@ -21,6 +21,7 @@ window.babel = Babel;
  */
 export function convertToBabelConfig(jsonConfig) {
   let result = { plugins: [], presets: [] };
+<<<<<<< HEAD
   result.plugins = jsonConfig.plugins?.map(plugin => [
     plugin.name,
     plugin.defaultConfig,
@@ -29,12 +30,21 @@ export function convertToBabelConfig(jsonConfig) {
     preset.name,
     preset.defaultConfig,
   ]);
+=======
+  result.plugins = jsonConfig.plugins?.map(plugin => [plugin.name, plugin.defaultConfig]);
+  result.presets = jsonConfig.presets?.map(preset => [preset.name, preset.defaultConfig]);
+>>>>>>> master
   return result;
 }
 
 export function convertToJsonConfig(babelConfig) {
+<<<<<<< HEAD
   let result = { plugins: [], presets: [] };
   result.plugins = babelConfig.plugins?.map(plugin => {
+=======
+  let result = { plugins: [], presets: [] }
+  result.plugins = babelConfig.plugins?.map((plugin) => {
+>>>>>>> master
     return {
       name: plugin[0],
       description: plugins[plugin[0]].description,
@@ -79,7 +89,7 @@ function registerDefaultPlugins() {
 
 export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
   const [source, setSource] = React.useState(defaultSource);
-  const [enableCustomPlugin, toggleCustomPlugin] = React.useState(true);
+  const [enableCustomPlugin, toggleCustomPlugin] = React.useState(false);
   const [customPlugin, setCustomPlugin] = React.useState(defCustomPlugin);
   const [jsonConfig, setJsonConfig] = useState(
     Array.isArray(defaultConfig) ? defaultConfig : [defaultConfig]
