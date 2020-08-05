@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment } from "react";
 import { parse } from "@babel/parser";
 import { Grid, Menu, Accordion, Segment } from "semantic-ui-react";
 
@@ -20,7 +20,11 @@ function CompositeArr({ k, arr }) {
   return arr.length ? (
     <Accordion.Accordion
       panels={[
-        { title: `${k} : [ ${arr.length} element ]`, content: components },
+        {
+          key: 0,
+          title: `${k} : [ ${arr.length} element ]`,
+          content: components,
+        },
       ]}
     />
   ) : (
@@ -47,7 +51,11 @@ function CompositeObj({ k, obj }) {
   return keys.length ? (
     <Accordion.Accordion
       panels={[
-        { title: `${label} : { ${keys.join(", ")} }`, content: components },
+        {
+          key: 0,
+          title: `${label} : { ${keys.join(", ")} }`,
+          content: components,
+        },
       ]}
     />
   ) : (
@@ -79,7 +87,7 @@ function Viz({ code, cursor }) {
       <Segment attached="bottom">
         <Accordion
           defaultActiveIndex={0}
-          panels={[{ content: <Composite k={""} ast={ast} /> }]}
+          panels={[{ key: 0, content: <Composite k={""} ast={ast} /> }]}
           fluid
           styled
         />
@@ -91,6 +99,7 @@ function Viz({ code, cursor }) {
 }
 
 export default function VizOutput({ code, cursor }) {
+  console.log(cursor);
   return (
     <Grid.Row>
       <Grid.Column>
