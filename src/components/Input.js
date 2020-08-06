@@ -1,8 +1,9 @@
-import React from "react";
+import React, { forwardRef } from "react";
 import { Grid, Menu, Segment } from "semantic-ui-react";
 import { Code } from "./styles";
 
-export function Input({ size, gzip, source, setSource, setCursor }) {
+export const Input = forwardRef((props, ref) => {
+  const { size, gzip, source, setSource, setCursor } = props;
   return (
     <Grid.Row>
       <Grid.Column width={16}>
@@ -16,6 +17,7 @@ export function Input({ size, gzip, source, setSource, setCursor }) {
         </Menu>
         <Segment inverted attached="bottom">
           <Code
+            ref={ref}
             value={source}
             onChange={val => setSource(val)}
             onCursor={cursor => setCursor(cursor)}
@@ -25,4 +27,4 @@ export function Input({ size, gzip, source, setSource, setCursor }) {
       </Grid.Column>
     </Grid.Row>
   );
-}
+});

@@ -1,5 +1,5 @@
 import "codemirror/mode/javascript/javascript";
-import React from "react";
+import React, { forwardRef } from "react";
 import styled from "styled-components";
 import { Controlled as CodeMirror } from "react-codemirror2";
 
@@ -19,9 +19,11 @@ const StyledEditor = styled(CodeMirror)`
   }
 `;
 
-export function Editor({ className, onChange, onCursor, style, ...options }) {
+export const Editor = forwardRef((props, ref) => {
+  const { className, onChange, onCursor, style, ...options } = props;
   return (
     <StyledEditor
+      ref={ref}
       className={className}
       onBeforeChange={(editor, data, value) => {
         onChange(value);
@@ -39,4 +41,4 @@ export function Editor({ className, onChange, onCursor, style, ...options }) {
       value={options.value}
     />
   );
-}
+});
