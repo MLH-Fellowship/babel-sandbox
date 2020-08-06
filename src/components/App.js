@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 // import * as Babel from "@babel/standalone";
 import * as Babel from "@babel/core";
 import { CustomPlugin } from "./CustomPlugin";
@@ -35,6 +35,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
     anchor: { line: 0, ch: 0 },
     head: { line: 0, ch: 0 },
   });
+  const editorRef = useRef(null);
 
   const updateBabelConfig = useCallback((config, index) => {
     setBabelConfig(configs => {
@@ -54,6 +55,12 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
     setSize(size);
     gzipSize(debouncedSource).then(s => setGzip(s));
   }, [debouncedSource]);
+
+  useEffect(() => {
+    editorRef.current.editor.setSelection(cursorAST.anchor, cursorAST.head, {
+      scroll: false,
+    });
+  }, [editorRef, cursorAST]);
 
   return (
     <Root>
@@ -81,6 +88,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
       {showShareLink && <input type="text" value={shareLink} readOnly></input>}
       <Grid celled="internally">
         <Input
+          ref={editorRef}
           size={size}
           gzip={gzip}
           source={source}
