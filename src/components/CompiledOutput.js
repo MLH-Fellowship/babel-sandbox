@@ -13,7 +13,14 @@ import {
 
 import { plugins, presets } from "../plugins-list";
 
-import { Grid, Icon, Menu, Segment, Divider, Checkbox } from "semantic-ui-react";
+import {
+  Grid,
+  Icon,
+  Menu,
+  Segment,
+  Divider,
+  Checkbox,
+} from "semantic-ui-react";
 
 export function CompiledOutput({
   source,
@@ -26,7 +33,6 @@ export function CompiledOutput({
   const [gzip, setGzip] = useState(null);
   const debouncedPlugin = useDebounce(customPlugin, 125);
 
-  const [configVisible, setConfigVisible] = useState(false);
   const [babelConfig, setBabelConfig] = useState(convertToBabelConfig(config));
 
   useEffect(() => {
@@ -50,15 +56,15 @@ export function CompiledOutput({
 
   function displayAvailablePlugins() {
     return Object.keys(plugins).map(pluginName => {
-      const plugin = plugins[pluginName];
-
       return (
         <Segment>
-          <Checkbox toggle
+          <Checkbox
+            toggle
             name={pluginName}
             type="checkbox"
             onChange={handlePluginChange}
-            label={pluginName} />
+            label={pluginName}
+          />
         </Segment>
       );
     });
@@ -66,20 +72,18 @@ export function CompiledOutput({
 
   function displayAvailablePresets() {
     return Object.keys(presets).map(presetName => {
-      const preset = presets[presetName];
       return (
-        <Segment><Checkbox toggle
-          name={presetName}
-          type="checkbox"
-          onChange={handlePresetChange}
-          label={presetName} />
+        <Segment>
+          <Checkbox
+            toggle
+            name={presetName}
+            type="checkbox"
+            onChange={handlePresetChange}
+            label={presetName}
+          />
         </Segment>
       );
     });
-  }
-
-  function toggleConfigVisible() {
-    setConfigVisible(!configVisible);
   }
 
   function handlePluginChange(reactEvent, checkbox) {
@@ -129,12 +133,8 @@ export function CompiledOutput({
         <Segment inverted attached="bottom">
           <Grid columns={2} relaxed="very">
             <Grid.Column>
-              <Segment.Group piled>
-                {displayAvailablePlugins()}
-              </Segment.Group>
-              <Segment.Group piled>
-                {displayAvailablePresets()}
-              </Segment.Group>
+              <Segment.Group piled>{displayAvailablePlugins()}</Segment.Group>
+              <Segment.Group piled>{displayAvailablePresets()}</Segment.Group>
               <Wrapper>
                 <Config
                   value={
