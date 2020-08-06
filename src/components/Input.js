@@ -2,7 +2,7 @@ import React from "react";
 import { Grid, Menu, Segment } from "semantic-ui-react";
 import { Code } from "./styles";
 
-export function Input({ size, gzip, source, setSource, setCursor, cursorAST }) {
+export function Input({ size, gzip, source, setSource, setCursor }) {
   return (
     <Grid.Row>
       <Grid.Column width={16}>
@@ -19,7 +19,6 @@ export function Input({ size, gzip, source, setSource, setCursor, cursorAST }) {
             value={source}
             onChange={val => setSource(val)}
             onCursor={cursor => setCursor(cursor)}
-            cursorAST={cursorAST}
             docName="source.js"
           />
         </Segment>

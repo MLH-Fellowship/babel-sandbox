@@ -33,7 +33,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   const [cursor, setCursor] = useState({ line: 0, ch: 0 });
   const [cursorAST, setCursorAST] = useState({
     anchor: { line: 0, ch: 0 },
-    head: { line: 3, ch: 0 },
+    head: { line: 0, ch: 0 },
   });
 
   const updateBabelConfig = useCallback((config, index) => {
@@ -86,7 +86,6 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           source={source}
           setSource={setSource}
           setCursor={setCursor}
-          cursorAST={cursorAST}
         />
         {enableCustomPlugin && (
           <CustomPlugin
