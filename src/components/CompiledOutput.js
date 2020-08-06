@@ -1,11 +1,19 @@
 import React, { useEffect, useState } from "react";
-import * as Babel from "@babel/core";
+import * as Babel from "@babel/standalone";
 import { processOptions } from "../standalone";
 import { gzipSize } from "../gzip";
 import { Wrapper, Code, Config } from "./styles";
 import { useDebounce } from "../utils/useDebounce";
 
-import { Grid, Icon, Menu, Segment, Divider } from "semantic-ui-react";
+import {
+  convertToBabelConfig,
+  //   importDefaultPlugins,
+  //   registerDefaultPlugins
+} from "./App";
+
+import { plugins, presets } from "../plugins-list";
+
+import { Grid, Icon, Menu, Segment, Divider, Checkbox } from "semantic-ui-react";
 
 export function CompiledOutput({
   source,
@@ -18,11 +26,14 @@ export function CompiledOutput({
   const [gzip, setGzip] = useState(null);
   const debouncedPlugin = useDebounce(customPlugin, 125);
 
+  const [configVisible, setConfigVisible] = useState(false);
+  const [babelConfig, setBabelConfig] = useState(convertToBabelConfig(config));
+
   useEffect(() => {
     try {
       const { code } = Babel.transform(
         source,
-        processOptions(config, debouncedPlugin)
+        processOptions(babelConfig, debouncedPlugin)
       );
       gzipSize(code).then(s => setGzip(s));
       setCompiled({
@@ -35,31 +46,101 @@ export function CompiledOutput({
         error: true,
       });
     }
-  }, [source, config, debouncedPlugin]);
+  }, [source, babelConfig, debouncedPlugin]);
+
+  function displayAvailablePlugins() {
+    return Object.keys(plugins).map(pluginName => {
+      const plugin = plugins[pluginName];
+
+      return (
+        <Segment>
+          <Checkbox toggle
+            name={pluginName}
+            type="checkbox"
+            onChange={handlePluginChange}
+            label={pluginName} />
+        </Segment>
+      );
+    });
+  }
+
+  function displayAvailablePresets() {
+    return Object.keys(presets).map(presetName => {
+      const preset = presets[presetName];
+      return (
+        <Segment><Checkbox toggle
+          name={presetName}
+          type="checkbox"
+          onChange={handlePresetChange}
+          label={presetName} />
+        </Segment>
+      );
+    });
+  }
+
+  function toggleConfigVisible() {
+    setConfigVisible(!configVisible);
+  }
+
+  function handlePluginChange(reactEvent, checkbox) {
+    if (checkbox.checked) {
+      config.plugins.push(plugins[checkbox.name]);
+      onConfigChange(config);
+      setBabelConfig(convertToBabelConfig(config));
+    } else {
+      config.plugins = config.plugins.filter(plugin => {
+        return plugin.name !== checkbox.name;
+      });
+      onConfigChange(config);
+      setBabelConfig(convertToBabelConfig(config));
+    }
+    console.log(config);
+    console.log(babelConfig);
+  }
+
+  function handlePresetChange(reactEvent, checkbox) {
+    if (checkbox.checked) {
+      config.presets.push(presets[checkbox.name]);
+      onConfigChange(config);
+      setBabelConfig(convertToBabelConfig(config));
+    } else {
+      config.presets = config.presets.filter(preset => {
+        return preset.name !== checkbox.name;
+      });
+      onConfigChange(config);
+      setBabelConfig(convertToBabelConfig(config));
+    }
+  }
 
   return (
     <Grid.Row>
       <Grid.Column width={16}>
         <Menu attached="top" tabular inverted>
-          <Menu.Item>plugin.js</Menu.Item>
+          <Menu.Item>input.json</Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item>
               {compiled?.size}b, {gzip}b
             </Menu.Item>
             <Menu.Item onClick={removeConfig}>
-              <Icon name="close" size="" />
+              <Icon name="close" />
             </Menu.Item>
           </Menu.Menu>
         </Menu>
         <Segment inverted attached="bottom">
           <Grid columns={2} relaxed="very">
             <Grid.Column>
+              <Segment.Group piled>
+                {displayAvailablePlugins()}
+              </Segment.Group>
+              <Segment.Group piled>
+                {displayAvailablePresets()}
+              </Segment.Group>
               <Wrapper>
                 <Config
                   value={
-                    config === Object(config)
-                      ? JSON.stringify(config, null, "\t")
-                      : config
+                    babelConfig === Object(babelConfig)
+                      ? JSON.stringify(babelConfig, null, "\t")
+                      : babelConfig
                   }
                   onChange={onConfigChange}
                   docName="config.json"

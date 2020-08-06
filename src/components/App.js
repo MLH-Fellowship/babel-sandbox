@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
-// import * as Babel from "@babel/standalone";
-import * as Babel from "@babel/core";
+import * as Babel from "@babel/standalone";
+
 import { CustomPlugin } from "./CustomPlugin";
 import { MainMenu } from "./MainMenu";
 import { Input } from "./Input";
@@ -8,27 +8,84 @@ import { Output } from "./Output";
 import { gzipSize } from "../gzip";
 import { Root } from "./styles";
 import { useDebounce } from "../utils/useDebounce";
-import REPLState from "../state/REPLState.js";
 import VizOutput from "./AST/Viz";
 
 import { Grid } from "semantic-ui-react";
+import { plugins } from "../plugins-list";
 
 window.babel = Babel;
 
-export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
-  const [source, setSource] = useState(defaultSource);
-  const [enableCustomPlugin, toggleCustomPlugin] = useState(true);
-  const [customPlugin, setCustomPlugin] = useState(defCustomPlugin);
-  const [babelConfig, setBabelConfig] = useState(
-    Array.isArray(defaultBabelConfig)
-      ? defaultBabelConfig
-      : [defaultBabelConfig]
+/**
+ * Converts internal json plugin/preset config to babel form
+ * @param {Object} jsonConfig
+ */
+export function convertToBabelConfig(jsonConfig) {
+  let result = { plugins: [], presets: [] };
+  result.plugins = jsonConfig.plugins?.map(plugin => [
+    plugin.name,
+    plugin.defaultConfig,
+  ]);
+  result.presets = jsonConfig.presets?.map(preset => [
+    preset.name,
+    preset.defaultConfig,
+  ]);
+  return result;
+}
+
+export function convertToJsonConfig(babelConfig) {
+  let result = { plugins: [], presets: [] };
+  result.plugins = babelConfig.plugins?.map(plugin => {
+    return {
+      name: plugin[0],
+      description: plugins[plugin[0]].description,
+      fileLocation: plugins[plugin[0]].fileLocation,
+      defaultConfig: plugin[1],
+    };
+  });
+}
+
+function importDefaultPlugins() {
+  Object.keys(plugins).forEach(pluginName => {
+    const script = document.createElement("script");
+    script.src = plugins[pluginName].fileLocation;
+    script.async = false;
+    document.head.appendChild(script);
+  });
+}
+
+function registerDefaultPlugins() {
+  Babel.registerPlugin(
+    "babel-plugin-polyfill-corejs3",
+    window.babelPluginPolyfillCorejs3
+  );
+  Babel.registerPlugin(
+    "babel-plugin-polyfill-corejs2",
+    window.babelPluginPolyfillCorejs2
+  );
+  Babel.registerPlugin(
+    "@babel/plugin-external-helpers",
+    window._babel_pluginExternalHelpers
+  );
+  Babel.registerPlugin(
+    "babel-plugin-polyfill-es-shims",
+    window.babelPluginPolyfillEsShims
+  );
+  Babel.registerPlugin(
+    "babel-plugin-polyfill-regenerator",
+    window.babelPluginPolyfillRegenerator
+  );
+}
+
+export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
+  const [source, setSource] = React.useState(defaultSource);
+  const [enableCustomPlugin, toggleCustomPlugin] = React.useState(false);
+  const [customPlugin, setCustomPlugin] = React.useState(defCustomPlugin);
+  const [jsonConfig, setJsonConfig] = useState(
+    Array.isArray(defaultConfig) ? defaultConfig : [defaultConfig]
   );
   const [size, setSize] = useState(null);
   const [gzip, setGzip] = useState(null);
   const debouncedSource = useDebounce(source, 125);
-  const [shareLink, setShareLink] = useState("");
-  const [showShareLink, setShowShareLink] = useState(false);
 
   const [cursor, setCursor] = useState({ line: 0, ch: 0 });
   const [cursorAST, setCursorAST] = useState({
@@ -38,7 +95,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   const editorRef = useRef(null);
 
   const updateBabelConfig = useCallback((config, index) => {
-    setBabelConfig(configs => {
+    setJsonConfig(configs => {
       const newConfigs = [...configs];
       newConfigs[index] = config;
 
@@ -47,7 +104,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
   }, []);
 
   const removeBabelConfig = useCallback(index => {
-    setBabelConfig(configs => configs.filter((c, i) => index !== i));
+    setJsonConfig(configs => configs.filter((c, i) => index !== i));
   }, []);
 
   useEffect(() => {
@@ -62,30 +119,21 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
     });
   }, [editorRef, cursorAST]);
 
+  importDefaultPlugins();
+  registerDefaultPlugins();
+
   return (
     <Root>
       <MainMenu
+        source={source}
         setSource={setSource}
-        setBabelConfig={setBabelConfig}
+        jsonConfig={jsonConfig}
+        setBabelConfig={setJsonConfig}
+        customPlugin={customPlugin}
         toggleCustomPlugin={toggleCustomPlugin}
         enableCustomPlugin={enableCustomPlugin}
       />
 
-      <button
-        onClick={async () => {
-          const state = new REPLState(
-            source,
-            enableCustomPlugin ? customPlugin : "",
-            babelConfig.map(config => JSON.stringify(config))
-          );
-          const link = await state.Link();
-          setShareLink(link);
-          setShowShareLink(true);
-        }}
-      >
-        Share
-      </button>
-      {showShareLink && <input type="text" value={shareLink} readOnly></input>}
       <Grid celled="internally">
         <Input
           ref={editorRef}
@@ -103,7 +151,7 @@ export const App = ({ defaultSource, defaultBabelConfig, defCustomPlugin }) => {
           />
         )}
         <Output
-          babelConfig={babelConfig}
+          babelConfig={jsonConfig}
           debouncedSource={debouncedSource}
           enableCustomPlugin={enableCustomPlugin}
           customPlugin={customPlugin}
