@@ -53,8 +53,6 @@ function CompositeObj({ k, obj, cursor, setPos }) {
                 <Popup
                   header={type}
                   content={<UglyPopup def={popup} />}
-                  mouseEnterDelay={100}
-                  mouseLeaveDelay={100}
                   on={"hover"}
                   trigger={<span>{title}</span>}
                 />
