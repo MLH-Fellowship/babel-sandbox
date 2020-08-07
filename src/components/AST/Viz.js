@@ -189,7 +189,7 @@ function Primitive({ k, val }) {
 function Viz({ code, cursor, setCursorAST }) {
   const setPos = useCallback(setCursorAST);
   try {
-    const ast = parse(code);
+    const ast = useMemo(() => parse(code), [code]);
     const panels = [
       {
         key: 0,
