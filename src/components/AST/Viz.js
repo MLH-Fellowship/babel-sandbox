@@ -96,11 +96,7 @@ function CompositeObj({ k, obj, cursor, setPos }) {
   const props = {
     highlight: highlight ? 1 : 0,
     onTitleClick: () => {
-      loc &&
-        setPos({
-          anchor: fixLoc(loc).end,
-          head: fixLoc(loc).start,
-        });
+      loc && setPos(fixLoc(loc));
       setActive(active => !active);
     },
     panels,
@@ -186,10 +182,10 @@ function Primitive({ k, val }) {
   );
 }
 
-function Viz({ code, cursor, setCursorAST }) {
+function Viz({ code, cursor, setCursorAST, plugins }) {
   const setPos = useCallback(setCursorAST);
   try {
-    const ast = useMemo(() => parse(code), [code]);
+    const ast = useMemo(() => parse(code, { startLine: 0, plugins }), [code]);
     const panels = [
       {
         key: 0,
@@ -207,8 +203,7 @@ function Viz({ code, cursor, setCursorAST }) {
   }
 }
 
-export default function VizOutput({ code, cursor, setCursorAST }) {
-  const cs = { line: cursor.line + 1, ch: cursor.ch };
+export default function VizOutput({ code, cursor, setCursorAST, plugins }) {
   const [hideEmpty, setHideEmpty] = useState(true);
   const [hideTypes, setHideTypes] = useState(true);
   const [hideLocation, setHideLocation] = useState(true);
@@ -264,7 +259,12 @@ export default function VizOutput({ code, cursor, setCursorAST }) {
             </Grid.Column>
           </Grid>
           <SettingsContext.Provider value={settings}>
-            <Viz code={code} cursor={cs} setCursorAST={setCursorAST} />
+            <Viz
+              code={code}
+              cursor={cursor}
+              setCursorAST={setCursorAST}
+              plugins={plugins}
+            />
           </SettingsContext.Provider>
         </Segment>
       </Grid.Column>

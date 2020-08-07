@@ -95,6 +95,9 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
   const debouncedCursor = useDebounce(cursor, 125);
   const editorRef = useRef(null);
 
+  // Array of plugin names for AST Viz integration
+  const [plugins, setPlugins] = useState(["doExpressions"]);
+
   const updateBabelConfig = useCallback((config, index) => {
     setJsonConfig(configs => {
       const newConfigs = [...configs];
@@ -163,6 +166,7 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
           code={debouncedSource}
           cursor={debouncedCursor}
           setCursorAST={setCursorAST}
+          plugins={plugins}
         />
       </Grid>
     </Root>

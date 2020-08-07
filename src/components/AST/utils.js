@@ -11,7 +11,7 @@ export function isBound(cursor, bounds) {
   const { line, ch } = cursor;
   const { start, end } = bounds;
 
-  if (line === 1 && !ch) return false;
+  if (line === 0 && ch === 0) return false;
 
   const cols = start.column + end.column === 0;
 
@@ -25,8 +25,8 @@ export function isBound(cursor, bounds) {
 // Location for AST is off by one for line.
 export function fixLoc(loc) {
   return {
-    start: { line: loc.start.line - 1, ch: loc.start.column },
-    end: { line: loc.end.line - 1, ch: loc.end.column },
+    head: { line: loc.start.line, ch: loc.start.column },
+    anchor: { line: loc.end.line, ch: loc.end.column },
   };
 }
 
