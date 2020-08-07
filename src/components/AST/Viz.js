@@ -23,14 +23,15 @@ const SettingsContext = createContext();
 
 // This is the component for a sub-tree of an object in the AST.
 function CompositeObj({ k, obj, cursor, setPos }) {
-  const { hideTypes, hideLocation } = useContext(SettingsContext);
+  const { hideEmpty, hideTypes, hideLocation } = useContext(SettingsContext);
   // setPos is memoized so dependency is just to placate warnings.
   const content = useMemo(() => {
     // Memoization should be helpful when parts of the tree are the same.
     return Object.entries(obj).map(([i, v], index) => {
       // i, v are key and value.
-      if (hideTypes && i === "type") return null;
-      if (hideLocation && i === "loc") return null;
+      if ((hideTypes && i === "type") || (hideLocation && i === "loc")) {
+        return null;
+      }
       return (
         <Fragment key={index}>
           {typeof v === "object" && v !== null ? (
@@ -41,7 +42,7 @@ function CompositeObj({ k, obj, cursor, setPos }) {
         </Fragment>
       );
     });
-  }, [obj, cursor, setPos]);
+  }, [obj, cursor, setPos, hideTypes, hideLocation]);
 
   const { type, loc, value, name } = obj;
   const label = type ? type : k;
@@ -87,13 +88,14 @@ function CompositeObj({ k, obj, cursor, setPos }) {
         },
       ]}
     />
-  ) : (
+  ) : hideEmpty ? null : (
     <Primitive k={label} val={"{ }"} />
   );
 }
 
 // This is the component for the sub-tree of an array.
 function CompositeArr({ k, arr, cursor, setPos }) {
+  const { hideEmpty } = useContext(SettingsContext);
   // setPos is memoized so dependency is just to placate warnings.
   const components = useMemo(() => {
     // Memoization should be helpful when parts of the tree are the same.
@@ -128,7 +130,7 @@ function CompositeArr({ k, arr, cursor, setPos }) {
         },
       ]}
     />
-  ) : (
+  ) : hideEmpty ? null : (
     <Primitive k={k} val={"[ ]"} />
   );
 }
@@ -144,7 +146,9 @@ function Composite({ k, ast, cursor, setPos }) {
 
 // This is the base case for the recursion when the AST is just a leaf node.
 function Primitive({ k, val }) {
-  const { hideLocation } = useContext(SettingsContext);
+  const { hideEmpty, hideLocation } = useContext(SettingsContext);
+  // Hide all falsy values except zero
+  if (hideEmpty && !val && val !== 0) return null;
   if (hideLocation && (k === "start" || k === "end")) return null;
   return (
     <Accordion.Content>
