@@ -23,12 +23,13 @@ const SettingsContext = createContext();
 
 // This is the component for a sub-tree of an object in the AST.
 function CompositeObj({ k, obj, cursor, setPos }) {
-  const { hideLocation } = useContext(SettingsContext);
+  const { hideTypes, hideLocation } = useContext(SettingsContext);
   // setPos is memoized so dependency is just to placate warnings.
   const content = useMemo(() => {
     // Memoization should be helpful when parts of the tree are the same.
     return Object.entries(obj).map(([i, v], index) => {
       // i, v are key and value.
+      if (hideTypes && i === "type") return null;
       if (hideLocation && i === "loc") return null;
       return (
         <Fragment key={index}>
