@@ -92,6 +92,7 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
     anchor: { line: 0, ch: 0 },
     head: { line: 0, ch: 0 },
   });
+  const debouncedCursor = useDebounce(cursor, 125);
   const editorRef = useRef(null);
 
   const updateBabelConfig = useCallback((config, index) => {
@@ -160,7 +161,7 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin }) => {
         />
         <VizOutput
           code={debouncedSource}
-          cursor={cursor}
+          cursor={debouncedCursor}
           setCursorAST={setCursorAST}
         />
       </Grid>
