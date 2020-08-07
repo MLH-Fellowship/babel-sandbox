@@ -55,7 +55,7 @@ function CompositeObj({ k, obj, cursor, setPos }) {
         </Fragment>
       );
     });
-  }, [obj, cursor, setPos, hideTypes, hideLocation]);
+  }, [obj, cursor, setPos, hideTypes, hideLocation, sortTree]);
 
   const { type, loc, value, name } = obj;
   const label = type ? type : k;
