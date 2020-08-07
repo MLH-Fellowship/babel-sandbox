@@ -33,29 +33,34 @@ function CompositeObj({ k, obj, cursor, setPos }) {
     SettingsContext
   );
   // setPos is memoized so dependency is just to placate warnings.
-  const content = useMemo(() => {
+  const subtree = useMemo(() => {
     // Memoization should be helpful when parts of the tree are the same.
-    const subtree = sortTree
-      ? Object.entries(obj).sort((former, latter) => {
-          return sortByCompositeness(former[1], latter[1]);
-        })
-      : Object.entries(obj);
-    return subtree.map(([i, v], index) => {
+    return Object.entries(obj).map(([i, v], index) => {
       // i, v are key and value.
       if ((hideTypes && i === "type") || (hideLocation && i === "loc")) {
-        return null;
+        return [v, null];
       }
-      return (
+      return [
+        v,
         <Fragment key={index}>
           {typeof v === "object" && v !== null ? (
             <Composite k={i} ast={v} cursor={cursor} setPos={setPos} />
           ) : (
             <Primitive k={i} val={v} />
           )}
-        </Fragment>
-      );
+        </Fragment>,
+      ];
     });
-  }, [obj, cursor, setPos, hideTypes, hideLocation, sortTree]);
+  }, [obj, cursor, setPos, hideTypes, hideLocation]);
+
+  const content = useMemo(() => {
+    return (sortTree
+      ? subtree.sort((former, latter) => {
+          return sortByCompositeness(former[0], latter[0]);
+        })
+      : subtree
+    ).map(v => v[1]);
+  }, [subtree, sortTree]);
 
   const { type, loc, value, name } = obj;
   const label = type ? type : k;
@@ -185,7 +190,10 @@ function Primitive({ k, val }) {
 function Viz({ code, cursor, setCursorAST, plugins }) {
   const setPos = useCallback(setCursorAST);
   try {
-    const ast = useMemo(() => parse(code, { startLine: 0, plugins }), [code]);
+    const ast = useMemo(() => parse(code, { startLine: 0, plugins }), [
+      code,
+      plugins,
+    ]);
     const panels = [
       {
         key: 0,
