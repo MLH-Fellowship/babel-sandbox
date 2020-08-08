@@ -41,12 +41,11 @@ export function CompiledOutput({
 
   const [timeTravelCode, setTimeTravelCode] = useState();
 
-  const transitions = new Transition();
-
   useEffect(() => {
     try {
       let options = processOptions(babelConfig, debouncedPlugin);
 
+      const transitions = new Transition();
       options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
       setTimeTravel(transitions.getValue());
 
