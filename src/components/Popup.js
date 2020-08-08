@@ -33,10 +33,6 @@ export const lookUpNodeType = nodeType => {
 // several 'window' elements together
 
 export default class UglyPopup extends React.Component {
-  constructor() {
-    super();
-  }
-
   render() {
     return this.props.def.map(nodeDef => (
       <div className="nodeDef" key={nodeDef.content}>

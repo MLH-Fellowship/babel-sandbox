@@ -64,7 +64,7 @@ export function CompiledOutput({
         error: true,
       });
     }
-  }, [source, babelConfig, debouncedPlugin]);
+  }, [source, babelConfig, debouncedPlugin, transitions]);
 
   function displayAvailablePlugins() {
     return Object.keys(plugins).map(pluginName => {
