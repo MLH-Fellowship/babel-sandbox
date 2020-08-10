@@ -317,7 +317,7 @@ export default function VizOutput(props) {
         {showJSON ? (
           <JSONViewer code={code} plugins={plugins} />
         ) : (
-          <VizWrapper code={code} plugins={plugins} {...props} />
+          <VizWrapper code={code} plugins={plugins} {...other} />
         )}
       </Grid.Column>
     </Grid.Row>
