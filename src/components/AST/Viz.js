@@ -7,6 +7,7 @@ import React, {
   useState,
 } from "react";
 import { parse } from "@babel/parser";
+import JSONPretty from "react-json-pretty";
 import {
   Accordion,
   Grid,
@@ -208,18 +209,101 @@ function Viz({ code, cursor, setCursorAST, plugins }) {
   }
 }
 
-export default function VizOutput(props) {
-  const { code, cursor, setCursorAST, plugins, setShowAST } = props;
+function VizWrapper(props) {
+  const { code, cursor, setCursorAST, plugins } = props;
   const [hideEmpty, setHideEmpty] = useState(true);
   const [hideTypes, setHideTypes] = useState(true);
   const [hideLocation, setHideLocation] = useState(true);
   const [sortTree, setSortTree] = useState(false);
   const settings = { hideEmpty, hideTypes, hideLocation, sortTree };
+
+  return (
+    <Segment attached="bottom">
+      <Grid divided>
+        <Grid.Column floated="left">
+          <Checkbox
+            toggle
+            defaultChecked={hideEmpty}
+            type="checkbox"
+            name="Hide Empty"
+            label="Hide Empty"
+            onClick={() => setHideEmpty(hideEmpty => !hideEmpty)}
+          />
+        </Grid.Column>
+        <Grid.Column floated="left">
+          <Checkbox
+            toggle
+            defaultChecked={hideTypes}
+            type="checkbox"
+            name="Hide Types"
+            label="Hide Types"
+            onClick={() => setHideTypes(hideTypes => !hideTypes)}
+          />
+        </Grid.Column>
+        <Grid.Column floated="left">
+          <Checkbox
+            toggle
+            defaultChecked={hideLocation}
+            type="checkbox"
+            name="Hide Location"
+            label="Hide Location"
+            onClick={() => setHideLocation(hideLocation => !hideLocation)}
+          />
+        </Grid.Column>
+        <Grid.Column floated="left">
+          <Checkbox
+            toggle
+            defaultChecked={sortTree}
+            type="checkbox"
+            name="Sort AST"
+            label="Sort AST"
+            onClick={() => setSortTree(sortTree => !sortTree)}
+          />
+        </Grid.Column>
+      </Grid>
+      <SettingsContext.Provider value={settings}>
+        <Viz
+          code={code}
+          cursor={cursor}
+          setCursorAST={setCursorAST}
+          plugins={plugins}
+        />
+      </SettingsContext.Provider>
+    </Segment>
+  );
+}
+
+function JSONViewer({ code, plugins }) {
+  try {
+    const ast = useMemo(() => parse(code, { startLine: 0, plugins }), [
+      code,
+      plugins,
+    ]);
+
+    return (
+      <Segment attached="bottom" style={{ overflow: "auto", maxHeight: 800 }}>
+        <JSONPretty data={ast} />
+      </Segment>
+    );
+  } catch (err) {
+    return (
+      <Segment attached="bottom" style={{ overflow: "auto", maxHeight: 800 }}>
+        <JSONPretty data={err.message} />
+      </Segment>
+    );
+  }
+}
+
+export default function VizOutput(props) {
+  const { code, plugins, setShowAST, ...other } = props;
+  const [showJSON, setShowJSON] = useState(false);
+
   return (
     <Grid.Row>
       <Grid.Column>
         <Menu attached="top" tabular inverted>
-          <Menu.Item>AST Explorer</Menu.Item>
+          <Menu.Item onClick={() => setShowJSON(false)}>AST Explorer</Menu.Item>
+          <Menu.Item onClick={() => setShowJSON(true)}>JSON</Menu.Item>
           <Menu.Menu position="right">
             <Menu.Item
               onClick={() => {
@@ -230,59 +314,11 @@ export default function VizOutput(props) {
             </Menu.Item>
           </Menu.Menu>
         </Menu>
-
-        <Segment attached="bottom">
-          <Grid divided>
-            <Grid.Column floated="left">
-              <Checkbox
-                toggle
-                defaultChecked={hideEmpty}
-                type="checkbox"
-                name="Hide Empty"
-                label="Hide Empty"
-                onClick={() => setHideEmpty(hideEmpty => !hideEmpty)}
-              />
-            </Grid.Column>
-            <Grid.Column floated="left">
-              <Checkbox
-                toggle
-                defaultChecked={hideTypes}
-                type="checkbox"
-                name="Hide Types"
-                label="Hide Types"
-                onClick={() => setHideTypes(hideTypes => !hideTypes)}
-              />
-            </Grid.Column>
-            <Grid.Column floated="left">
-              <Checkbox
-                toggle
-                defaultChecked={hideLocation}
-                type="checkbox"
-                name="Hide Location"
-                label="Hide Location"
-                onClick={() => setHideLocation(hideLocation => !hideLocation)}
-              />
-            </Grid.Column>
-            <Grid.Column floated="left">
-              <Checkbox
-                toggle
-                defaultChecked={sortTree}
-                type="checkbox"
-                name="Sort AST"
-                label="Sort AST"
-                onClick={() => setSortTree(sortTree => !sortTree)}
-              />
-            </Grid.Column>
-          </Grid>
-          <SettingsContext.Provider value={settings}>
-            <Viz
-              code={code}
-              cursor={cursor}
-              setCursorAST={setCursorAST}
-              plugins={plugins}
-            />
-          </SettingsContext.Provider>
-        </Segment>
+        {showJSON ? (
+          <JSONViewer code={code} plugins={plugins} />
+        ) : (
+          <VizWrapper code={code} plugins={plugins} {...props} />
+        )}
       </Grid.Column>
     </Grid.Row>
   );
