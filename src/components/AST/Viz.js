@@ -14,6 +14,7 @@ import {
   Popup,
   Segment,
   Checkbox,
+  Icon,
 } from "semantic-ui-react";
 import UglyPopup, { lookUpNodeType } from "../Popup";
 import {
@@ -83,7 +84,6 @@ function CompositeObj({ k, obj, cursor, setPos }) {
           content={
             popup.length ? (
               <Popup
-                header={type}
                 content={<UglyPopup def={popup} />}
                 on="hover"
                 trigger={<span>{title}</span>}
@@ -211,7 +211,8 @@ function Viz({ code, cursor, setCursorAST, plugins }) {
   }
 }
 
-export default function VizOutput({ code, cursor, setCursorAST, plugins }) {
+export default function VizOutput(props) {
+  const { code, cursor, setCursorAST, plugins, setShowAST } = props;
   const [hideEmpty, setHideEmpty] = useState(true);
   const [hideTypes, setHideTypes] = useState(true);
   const [hideLocation, setHideLocation] = useState(true);
@@ -222,7 +223,17 @@ export default function VizOutput({ code, cursor, setCursorAST, plugins }) {
       <Grid.Column>
         <Menu attached="top" tabular inverted>
           <Menu.Item>AST Explorer</Menu.Item>
+          <Menu.Menu position="right">
+            <Menu.Item
+              onClick={() => {
+                setShowAST(showAST => !showAST);
+              }}
+            >
+              <Icon name="close" />
+            </Menu.Item>
+          </Menu.Menu>
         </Menu>
+
         <Segment attached="bottom">
           <Grid divided>
             <Grid.Column floated="left">
