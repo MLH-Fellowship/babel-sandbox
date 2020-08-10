@@ -15,7 +15,6 @@ export function MainMenu({
   setShowAST,
 }) {
   const [shareLink, setShareLink] = React.useState("");
-  const [showShareLink, setShowShareLink] = React.useState(false);
   return (
     <Menu attached="top" inverted>
       <Menu.Item>
@@ -76,7 +75,6 @@ export function MainMenu({
                   );
                   const link = await state.Link();
                   setShareLink(link);
-                  setShowShareLink(true);
                 }}
               >
                 Share

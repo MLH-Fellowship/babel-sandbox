@@ -21,11 +21,11 @@ window.babel = Babel;
  */
 export function convertToBabelConfig(jsonConfig) {
   let result = { plugins: [], presets: [] };
-  result.plugins = jsonConfig.plugins ?.map(plugin => [
+  result.plugins = jsonConfig.plugins?.map(plugin => [
     plugin.name,
     plugin.defaultConfig,
   ]);
-  result.presets = jsonConfig.presets ?.map(preset => [
+  result.presets = jsonConfig.presets?.map(preset => [
     preset.name,
     preset.defaultConfig,
   ]);
