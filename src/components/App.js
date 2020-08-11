@@ -44,6 +44,40 @@ export function convertToJsonConfig(babelConfig) {
   });
 }
 
+/**
+ *
+ * @param {string} name
+ */
+export async function importPlugin(name) {
+  /**
+   *
+   * @param {string} str
+   */
+  const toCamelCase = str => {
+    const words = str.split("-");
+    const minLength = 2;
+    if (words.length < minLength) {
+      return str;
+    }
+    const camelWords = words.map((v, i) => {
+      let result = v[0].toUpperCase();
+      if (i === 0) {
+        result = v[0].toLowerCase();
+      }
+      return result + v.slice(1);
+    });
+    return camelWords.join("");
+  };
+
+  const script = document.createElement("script");
+  script.src = `https://bundle.run/${name}`;
+  script.async = false;
+  script.type = "text/babel";
+  document.head.appendChild(script);
+
+  Babel.registerPlugin(name, window[toCamelCase(name)]);
+}
+
 function importDefaultPlugins() {
   Object.keys(plugins).forEach(pluginName => {
     const script = document.createElement("script");
