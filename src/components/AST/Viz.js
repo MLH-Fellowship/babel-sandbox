@@ -211,11 +211,10 @@ function Viz({ code, cursor, setCursorAST, plugins }) {
 
 function VizWrapper(props) {
   const { code, cursor, setCursorAST, plugins } = props;
-  const [hideEmpty, setHideEmpty] = useState(true);
-  const [hideTypes, setHideTypes] = useState(true);
-  const [hideLocation, setHideLocation] = useState(true);
-  const [sortTree, setSortTree] = useState(false);
-  const settings = { hideEmpty, hideTypes, hideLocation, sortTree };
+  const { setHideEmpty, setHideTypes, setHideLocation, setSortTree } = props;
+  const { hideEmpty, hideTypes, hideLocation, sortTree } = useContext(
+    SettingsContext
+  );
 
   return (
     <Segment attached="bottom">
@@ -261,14 +260,12 @@ function VizWrapper(props) {
           />
         </Grid.Column>
       </Grid>
-      <SettingsContext.Provider value={settings}>
-        <Viz
-          code={code}
-          cursor={cursor}
-          setCursorAST={setCursorAST}
-          plugins={plugins}
-        />
-      </SettingsContext.Provider>
+      <Viz
+        code={code}
+        cursor={cursor}
+        setCursorAST={setCursorAST}
+        plugins={plugins}
+      />
     </Segment>
   );
 }
@@ -295,8 +292,14 @@ function JSONViewer({ code, plugins }) {
 }
 
 export default function VizOutput(props) {
-  const { code, plugins, setShowAST, ...other } = props;
+  const { code, plugins, setShowAST } = props;
   const [showJSON, setShowJSON] = useState(false);
+  const [hideEmpty, setHideEmpty] = useState(true);
+  const [hideTypes, setHideTypes] = useState(true);
+  const [hideLocation, setHideLocation] = useState(true);
+  const [sortTree, setSortTree] = useState(false);
+  const vizProps = { setHideEmpty, setHideTypes, setHideLocation, setSortTree };
+  const settings = { hideEmpty, hideTypes, hideLocation, sortTree };
 
   return (
     <Grid.Row>
@@ -317,7 +320,9 @@ export default function VizOutput(props) {
         {showJSON ? (
           <JSONViewer code={code} plugins={plugins} />
         ) : (
-          <VizWrapper code={code} plugins={plugins} {...other} />
+          <SettingsContext.Provider value={settings}>
+            <VizWrapper {...props} {...vizProps} />
+          </SettingsContext.Provider>
         )}
       </Grid.Column>
     </Grid.Row>
