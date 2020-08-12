@@ -62,8 +62,6 @@ export function CompiledOutput({
 
   useEffect(() => {
 
-    console.log('stringConfig changed')
-
     try {
       let sconfig = JSON.parse(stringConfig);
       saveConfig(sconfig);
@@ -112,8 +110,6 @@ export function CompiledOutput({
 
   function handlePluginChange(reactEvent, checkbox) {
 
-    console.log('plugin change', stringConfig)
-
     config.plugins = config.plugins || [];
     if (checkbox.checked) {
       config.plugins.push([plugins[checkbox.name].name, plugins[checkbox.name].defaultConfig]);
@@ -126,7 +122,6 @@ export function CompiledOutput({
       setStringConfig(JSON.stringify(config, null, '\t'));
       onConfigChange(config);
     }
-    console.log('handlepluginchnage reuslt', config);
   }
 
   function handlePresetChange(reactEvent, checkbox) {
@@ -145,16 +140,12 @@ export function CompiledOutput({
 
   function handleStringConfigChange(configText) {
 
-    console.log('changed')
-
     try {
-
 
       let sConfig = JSON.parse(configText)
       onConfigChange(sConfig);
 
     } catch (e) {
-      console.log('invalid config')
     }
     setStringConfig(configText)
   }

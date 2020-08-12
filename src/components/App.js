@@ -83,11 +83,7 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin, defaultId, 
 
   const updateBabelConfig = useCallback((config, index) => {
 
-    console.log('set index', index, 'as', config)
-
     jsonConfig[index] = config;
-
-    console.log(jsonConfig);
     setJsonConfig(jsonConfig);
 
   }, []);
@@ -117,8 +113,6 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin, defaultId, 
   registerDefaultPlugins();
 
   useEffect(() => {
-
-    console.log('jsonConfig is', jsonConfig)
 
     setPanes(jsonConfig.map((config, index) => {
 
