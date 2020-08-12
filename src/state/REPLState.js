@@ -211,9 +211,6 @@ class REPLState {
     try {
       const resp = await fetch(url);
       const text = await resp.text();
-
-      console.log(resp)
-
       // const json = await resp.json();
       const replState = REPLState.Decode(text);
       replState.id = ID;

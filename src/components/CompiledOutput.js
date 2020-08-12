@@ -121,7 +121,7 @@ export function CompiledOutput({
       setStringConfig(JSON.stringify(config, null, '\t'));
     } else {
       config.plugins = config.plugins.filter(plugin => {
-        return plugin.name !== checkbox.name;
+        return plugin[0] !== checkbox.name;
       });
       setStringConfig(JSON.stringify(config, null, '\t'));
       onConfigChange(config);
@@ -131,12 +131,14 @@ export function CompiledOutput({
 
   function handlePresetChange(reactEvent, checkbox) {
     if (checkbox.checked) {
-      config.presets.push(presets[checkbox.name]);
+      config.presets.push([presets[checkbox.name].name, presets[checkbox.name].defaultConfig]);
+      setStringConfig(JSON.stringify(config, null, '\t'));
       onConfigChange(config);
     } else {
       config.presets = config.presets.filter(preset => {
-        return preset.name !== checkbox.name;
+        return preset[0] !== checkbox.name;
       });
+      setStringConfig(JSON.stringify(config, null, '\t'));
       onConfigChange(config);
     }
   }
