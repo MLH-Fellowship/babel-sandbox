@@ -21,7 +21,6 @@ export function MainMenu({
   setShowAST,
 }) {
   const [shareLink, setShareLink] = React.useState("");
-  console.log(id);
   return (
     <Menu attached="top" inverted>
       <Menu.Item>

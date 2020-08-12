@@ -78,7 +78,6 @@ function registerDefaultPlugins() {
 }
 
 export const App = ({ defaultSource, defaultConfig, defCustomPlugin, defaultId, defaultForks }) => {
-  console.log(defaultId);
   const [source, setSource] = React.useState(defaultSource);
   const [enableCustomPlugin, toggleCustomPlugin] = React.useState(false);
   const [customPlugin, setCustomPlugin] = React.useState(defCustomPlugin);
