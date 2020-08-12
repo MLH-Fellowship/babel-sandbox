@@ -2,7 +2,7 @@ import React from "react";
 import { Dropdown, Icon, Menu, Button, Label } from "semantic-ui-react";
 import REPLState from "../state/REPLState.js";
 import { ShareModal } from "./ShareModal";
-// import { ForkModal } from "./ForkModal";
+import { ForkModal } from "./ForkModal";
 
 export function MainMenu({
   source,
@@ -83,6 +83,7 @@ export function MainMenu({
                 // If it does, update the blob
                 state.Save(id);
               }
+              window.history.replaceState(null, "Hello world", "/meow");
             }}
           >
             Save...
@@ -111,7 +112,7 @@ export function MainMenu({
       {id && (
         <Menu.Item>
           <Button as="div" labelPosition="right">
-            {/* <ForkModal
+            <ForkModal
               onFork={async () => {
                 const state = new REPLState(
                   source,
@@ -126,7 +127,7 @@ export function MainMenu({
                   <Icon name="fork" />
                 </Button>
               }
-            /> */}
+            />
 
             <Label
               as="a"
