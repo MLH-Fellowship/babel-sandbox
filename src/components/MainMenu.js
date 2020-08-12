@@ -106,6 +106,13 @@ export function MainMenu({
                   );
                   const link = await state.Link(id, setId);
                   setShareLink(link);
+                  const linkId = link.split("/")[4];
+                  // TODO: Replace title with name of config
+                  window.history.replaceState(
+                    null,
+                    "Babel Test Playground",
+                    `/share/${linkId}`
+                  );
                 }}
               >
                 Share
