@@ -76,6 +76,7 @@ async function getState() {
     return defaultState;
   }
   const id = extractID();
+  console.log(id);
   const state = await REPLState.FromID(id);
   return state === null ? defaultState : state;
 }

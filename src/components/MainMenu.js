@@ -16,10 +16,12 @@ export function MainMenu({
   setId,
   toggleForksVisible,
   forks,
+  setForks,
   showAST,
   setShowAST,
 }) {
   const [shareLink, setShareLink] = React.useState("");
+  console.log(id);
   return (
     <Menu attached="top" inverted>
       <Menu.Item>
@@ -79,11 +81,16 @@ export function MainMenu({
                 // If it doesn't, then this config has not been saved before
                 const blob = await state.New();
                 setId(blob.id);
+                // TODO: Replace title with name of config
+                window.history.replaceState(
+                  null,
+                  "Babel Test Playground",
+                  `/share/${blob.id}`
+                );
               } else {
                 // If it does, update the blob
                 state.Save(id);
               }
-              window.history.replaceState(null, "Hello world", "/meow");
             }}
           >
             Save...
@@ -121,6 +128,12 @@ export function MainMenu({
                 );
                 const fork = await state.Fork(id);
                 setId(fork.id);
+                setForks([]);
+                window.history.replaceState(
+                  null,
+                  "Babel Test Playground",
+                  `/share/${fork.id}`
+                );
               }}
               trigger={
                 <Button icon>

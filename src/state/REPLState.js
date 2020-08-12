@@ -205,6 +205,7 @@ class REPLState {
       // const json = await resp.json();
       const replState = REPLState.Decode(text);
       replState.id = ID;
+      console.log(replState.id);
       replState.forks = JSON.parse(text).forks;
       return replState;
     } catch (err) {
