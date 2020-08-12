@@ -133,7 +133,7 @@ function CompositeArr({ k, arr, cursor, setPos }) {
 
   const [active, setActive] = useState(false);
   const highlight = useMemo(() => {
-    return !active && arr.some(x => isBound(cursor, x.loc));
+    return !active && arr.some(x => x && isBound(cursor, x.loc));
   }, [active, arr, cursor]);
   const panels = [
     {
