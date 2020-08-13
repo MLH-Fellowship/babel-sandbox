@@ -7,6 +7,12 @@ import { useDebounce } from "../utils/useDebounce";
 import Transition from "./Transitions";
 import { TimeTravel } from "./TimeTravel";
 
+/* import {
+  convertToBabelConfig,
+  //   importDefaultPlugins,
+  //   registerDefaultPlugins
+} from "./App";
+ */
 import { plugins, presets } from "../plugins-list";
 
 import {
@@ -19,7 +25,6 @@ import {
   Dropdown,
   Button,
 } from "semantic-ui-react";
-import { check, string } from "yargs";
 
 export function CompiledOutput({
   source,
@@ -29,59 +34,45 @@ export function CompiledOutput({
   removeConfig,
 }) {
   const [compiled, setCompiled] = useState(null);
-  const [stringConfig, setStringConfig] = useState(JSON.stringify(config, null, '\t'));
   const [gzip, setGzip] = useState(null);
   const debouncedPlugin = useDebounce(customPlugin, 125);
 
+  const [babelConfig, setBabelConfig] = useState(config);
+
   const [timeTravel, setTimeTravel] = useState(null);
+
   const [timeTravelCode, setTimeTravelCode] = useState();
   const [timeTravelIndex, setTimeTravelIndex] = useState(1);
   const [displayAtIndex, setDisplayAtIndex] = useState("Time Travel");
 
-  let saveConfig = () => {
-
-    let options = processOptions(config, debouncedPlugin);
-
-    const transitions = new Transition();
-    options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
-    setTimeTravel(transitions.getValue());
-
-    const { code } = Babel.transform(source, options);
-
-    gzipSize(code).then(s => setGzip(s));
-
-    setCompiled({
-      code,
-      size: new Blob([code], { type: "text/plain" }).size,
-    });
-
-  }
-
-  useEffect(saveConfig, [source, config, debouncedPlugin]);
-
   useEffect(() => {
-    setStringConfig(JSON.stringify(config, null, '\t'));
-  }, [config])
-
-  useEffect(() => {
-
     try {
-      let sconfig = JSON.parse(stringConfig);
-      saveConfig(sconfig);
+      let options = processOptions(babelConfig, debouncedPlugin);
+
+      const transitions = new Transition();
+      options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
+      setTimeTravel(transitions.getValue());
+
+      const { code } = Babel.transform(source, options);
+
+      gzipSize(code).then(s => setGzip(s));
+
+      setCompiled({
+        code,
+        size: new Blob([code], { type: "text/plain" }).size,
+      });
     } catch (e) {
       setCompiled({
         code: e.message,
         error: true,
       });
     }
-
-  }, [stringConfig])
+  }, [source, babelConfig, debouncedPlugin]);
 
   function displayAvailablePlugins() {
     return Object.keys(plugins).map(pluginName => {
       return (
-        <Segment
-          key={pluginName}>
+        <Segment>
           <Checkbox
             toggle
             name={pluginName}
@@ -97,8 +88,7 @@ export function CompiledOutput({
   function displayAvailablePresets() {
     return Object.keys(presets).map(presetName => {
       return (
-        <Segment
-          key={presetName}>
+        <Segment>
           <Checkbox
             toggle
             name={presetName}
@@ -112,47 +102,34 @@ export function CompiledOutput({
   }
 
   function handlePluginChange(reactEvent, checkbox) {
-
-    config.plugins = config.plugins || [];
     if (checkbox.checked) {
-      config.plugins.push([plugins[checkbox.name].name, plugins[checkbox.name].defaultConfig]);
+      config.plugins.push(plugins[checkbox.name]);
       onConfigChange(config);
-      setStringConfig(JSON.stringify(config, null, '\t'));
+      setBabelConfig(config);
     } else {
       config.plugins = config.plugins.filter(plugin => {
-        return plugin[0] !== checkbox.name;
+        return plugin.name !== checkbox.name;
       });
-      setStringConfig(JSON.stringify(config, null, '\t'));
       onConfigChange(config);
+      setBabelConfig(config);
     }
+    console.log(config);
+    console.log(babelConfig);
   }
 
   function handlePresetChange(reactEvent, checkbox) {
     if (checkbox.checked) {
-      config.presets.push([presets[checkbox.name].name, presets[checkbox.name].defaultConfig]);
-      setStringConfig(JSON.stringify(config, null, '\t'));
+      config.presets.push(presets[checkbox.name]);
       onConfigChange(config);
+      setBabelConfig(config);
     } else {
       config.presets = config.presets.filter(preset => {
-        return preset[0] !== checkbox.name;
+        return preset.name !== checkbox.name;
       });
-      setStringConfig(JSON.stringify(config, null, '\t'));
       onConfigChange(config);
+      setBabelConfig(config);
     }
   }
-
-  function handleStringConfigChange(configText) {
-
-    try {
-
-      let sConfig = JSON.parse(configText)
-      onConfigChange(sConfig);
-
-    } catch (e) {
-    }
-    setStringConfig(configText)
-  }
-
 
   const sourceCode = compiled?.code ?? "";
   return (
@@ -171,8 +148,6 @@ export function CompiledOutput({
                         onClick={() => {
                           setTimeTravelCode(sourceCode);
                           setDisplayAtIndex("Source Output");
-
-                          // Source output is the first element
                           if (timeTravelIndex !== timeTravel.length) {
                             setTimeTravelIndex(1);
                           }
@@ -185,11 +160,6 @@ export function CompiledOutput({
                           onClick={() => {
                             setTimeTravelCode(`${timetravel.code}`);
                             setDisplayAtIndex(`${timetravel.currentNode}`);
-
-                            /* 
-                              Source output comes before the array, we 
-                              need to shift all the indices by +1
-                            */
                             if (timeTravelIndex !== timeTravel.length) {
                               setTimeTravelIndex(i + 1);
                             }
@@ -203,10 +173,6 @@ export function CompiledOutput({
               <Button
                 content="Next"
                 onClick={() => {
-                  /* 
-                    To get the original indices of the array
-                    we reverse the operation earlier.
-                  */
                   setDisplayAtIndex(
                     `${timeTravel[timeTravelIndex - 1]?.currentNode}`
                   );
@@ -233,8 +199,12 @@ export function CompiledOutput({
                 <Segment.Group piled>{displayAvailablePresets()}</Segment.Group>
                 <Wrapper>
                   <Config
-                    value={stringConfig}
-                    onChange={handleStringConfigChange}
+                    value={
+                      babelConfig === Object(babelConfig)
+                        ? JSON.stringify(babelConfig, null, "\t")
+                        : babelConfig
+                    }
+                    onChange={onConfigChange}
                     docName="config.json"
                     config={{ mode: "application/json" }}
                   />
@@ -259,14 +229,6 @@ export function CompiledOutput({
           </Segment>
         </Grid.Column>
       </Grid.Row>
-
-      {/* <TimeTravel
-        timeTravel={timeTravel}
-        setTimeTravel={setTimeTravel}
-        removeConfig={removeConfig}
-        source={compiled ?.code ?? ""}
-        setTimeTravelCode={setTimeTravelCode}
-      /> */}
     </Fragment>
   );
 }
