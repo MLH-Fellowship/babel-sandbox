@@ -7,12 +7,6 @@ import { useDebounce } from "../utils/useDebounce";
 import Transition from "./Transitions";
 import { TimeTravel } from "./TimeTravel";
 
-/* import {
-  convertToBabelConfig,
-  //   importDefaultPlugins,
-  //   registerDefaultPlugins
-} from "./App";
- */
 import { plugins, presets } from "../plugins-list";
 
 import {
@@ -131,7 +125,7 @@ export function CompiledOutput({
     }
   }
 
-  const sourceCode = compiled?.code ?? "";
+  const sourceCode = compiled ?.code ?? "";
   return (
     <Fragment>
       <Grid.Row>
@@ -174,9 +168,9 @@ export function CompiledOutput({
                 content="Next"
                 onClick={() => {
                   setDisplayAtIndex(
-                    `${timeTravel[timeTravelIndex - 1]?.currentNode}`
+                    `${timeTravel[timeTravelIndex - 1] ?.currentNode}`
                   );
-                  setTimeTravelCode(`${timeTravel[timeTravelIndex - 1]?.code}`);
+                  setTimeTravelCode(`${timeTravel[timeTravelIndex - 1] ?.code}`);
                   if (timeTravelIndex !== timeTravel.length) {
                     setTimeTravelIndex(timeTravelIndex + 1);
                   }
@@ -185,7 +179,7 @@ export function CompiledOutput({
             </Menu.Menu>
             <Menu.Menu position="right">
               <Menu.Item>
-                {compiled?.size}b, {gzip}b
+                {compiled ?.size}b, {gzip}b
               </Menu.Item>
               <Menu.Item onClick={removeConfig}>
                 <Icon name="close" />
@@ -215,11 +209,11 @@ export function CompiledOutput({
                   value={
                     timeTravelCode !== undefined
                       ? timeTravelCode
-                      : compiled?.code
+                      : compiled ?.code
                   }
                   docName="result.js"
                   config={{ readOnly: true, lineWrapping: true }}
-                  isError={compiled?.error ?? false}
+                  isError={compiled ?.error ?? false}
                 />
               </Grid.Column>
             </Grid>
