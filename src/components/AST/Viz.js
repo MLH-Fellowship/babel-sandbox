@@ -8,15 +8,7 @@ import React, {
 } from "react";
 import { parse } from "@babel/parser";
 import JSONPretty from "react-json-pretty";
-import {
-  Accordion,
-  Grid,
-  Menu,
-  Popup,
-  Segment,
-  Checkbox,
-  Icon,
-} from "semantic-ui-react";
+import { Accordion, Grid, Popup, Segment, Checkbox } from "semantic-ui-react";
 import UglyPopup, { lookUpNodeType } from "../Popup";
 import {
   StyledAccordion,
@@ -217,7 +209,7 @@ function VizWrapper(props) {
   );
 
   return (
-    <Segment attached="bottom">
+    <Segment>
       <Grid divided>
         <Grid.Column floated="left">
           <Checkbox
@@ -278,13 +270,13 @@ function JSONViewer({ code, plugins }) {
     ]);
 
     return (
-      <Segment attached="bottom" style={{ overflow: "auto", maxHeight: 800 }}>
+      <Segment style={{ overflow: "auto", maxHeight: 800 }}>
         <JSONPretty data={ast} />
       </Segment>
     );
   } catch (err) {
     return (
-      <Segment attached="bottom" style={{ overflow: "auto", maxHeight: 800 }}>
+      <Segment style={{ overflow: "auto", maxHeight: 800 }}>
         <JSONPretty data={err.message} />
       </Segment>
     );
@@ -292,8 +284,7 @@ function JSONViewer({ code, plugins }) {
 }
 
 export default function VizOutput(props) {
-  const { code, plugins, setShowAST } = props;
-  const [showJSON, setShowJSON] = useState(false);
+  const { code, plugins, showJSON } = props;
   const [hideEmpty, setHideEmpty] = useState(true);
   const [hideTypes, setHideTypes] = useState(true);
   const [hideLocation, setHideLocation] = useState(true);
@@ -304,19 +295,6 @@ export default function VizOutput(props) {
   return (
     <Grid.Row>
       <Grid.Column>
-        <Menu attached="top" tabular inverted>
-          <Menu.Item onClick={() => setShowJSON(false)}>AST Explorer</Menu.Item>
-          <Menu.Item onClick={() => setShowJSON(true)}>JSON</Menu.Item>
-          <Menu.Menu position="right">
-            <Menu.Item
-              onClick={() => {
-                setShowAST(showAST => !showAST);
-              }}
-            >
-              <Icon name="close" />
-            </Menu.Item>
-          </Menu.Menu>
-        </Menu>
         {showJSON ? (
           <JSONViewer code={code} plugins={plugins} />
         ) : (
