@@ -120,6 +120,8 @@ export const App = ({
               customPlugin={customPlugin}
               updateBabelConfig={updateBabelConfig}
               removeBabelConfig={removeBabelConfig}
+              debouncedCursor={debouncedCursor}
+              setCursorAST={setCursorAST}
               index={index}
             />
           ),
