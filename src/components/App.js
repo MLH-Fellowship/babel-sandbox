@@ -81,10 +81,13 @@ export const App = ({
   const debouncedCursor = useDebounce(cursor, 125);
   const editorRef = useRef(null);
 
-  const updateBabelConfig = useCallback((config, index) => {
-    jsonConfig[index] = config;
-    setJsonConfig(jsonConfig);
-  }, []);
+  const updateBabelConfig = useCallback(
+    (config, index) => {
+      jsonConfig[index] = config;
+      setJsonConfig(jsonConfig);
+    },
+    [jsonConfig]
+  );
 
   const removeBabelConfig = useCallback(index => {
     setJsonConfig(configs => configs.filter((c, i) => index !== i));
@@ -115,11 +118,11 @@ export const App = ({
           render: () => (
             <Output
               babelConfig={config}
-              debouncedSource={debouncedSource}
               enableCustomPlugin={enableCustomPlugin}
               customPlugin={customPlugin}
               updateBabelConfig={updateBabelConfig}
               removeBabelConfig={removeBabelConfig}
+              debouncedSource={debouncedSource}
               debouncedCursor={debouncedCursor}
               setCursorAST={setCursorAST}
               index={index}
@@ -128,7 +131,16 @@ export const App = ({
         };
       })
     );
-  }, [jsonConfig]);
+  }, [
+    jsonConfig,
+    enableCustomPlugin,
+    customPlugin,
+    updateBabelConfig,
+    removeBabelConfig,
+    debouncedSource,
+    debouncedCursor,
+    setCursorAST,
+  ]);
 
   return (
     <Root>
@@ -155,11 +167,7 @@ export const App = ({
           source={source}
           ref={editorRef}
           setSource={setSource}
-          setCursor={setCursorAST}
-          size={size}
-          gzip={gzip}
-          source={source}
-          setSource={setSource}
+          setCursor={setCursor}
         />
         {enableCustomPlugin && (
           <CustomPlugin
