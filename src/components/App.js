@@ -12,19 +12,9 @@ import { useDebounce } from "../utils/useDebounce";
 import VizOutput from "./AST/Viz";
 
 import { Grid, Tab } from "semantic-ui-react";
-import { plugins } from "../plugins-list";
 
 
 window.babel = Babel;
-
-function importDefaultPlugins() {
-  Object.keys(plugins).forEach(pluginName => {
-    const script = document.createElement("script");
-    script.src = plugins[pluginName].fileLocation;
-    script.async = false;
-    document.head.appendChild(script);
-  });
-}
 
 function registerDefaultPlugins() {
   Babel.registerPlugin(
@@ -112,8 +102,9 @@ export const App = ({
     }
   }, [editorRef, cursorAST]);
 
-  importDefaultPlugins();
-  registerDefaultPlugins();
+  useEffect(() => {
+    registerDefaultPlugins();
+  });
 
   useEffect(() => {
 
