@@ -114,7 +114,7 @@ export function MainMenu({
       {id && (
         <Menu.Item>
           <Button as="div" labelPosition="right">
-            {/* <ForkModal
+            {<ForkModal
               onFork={async () => {
                 const state = new REPLState(
                   source,
@@ -129,7 +129,7 @@ export function MainMenu({
                   <Icon name="fork" />
                 </Button>
               }
-            /> */}
+            />}
 
             <Label
               as="a"
