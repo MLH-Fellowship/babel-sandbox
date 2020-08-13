@@ -9,11 +9,9 @@ import { Output } from "./Output";
 import { gzipSize } from "../gzip";
 import { Root } from "./styles";
 import { useDebounce } from "../utils/useDebounce";
-import VizOutput from "./AST/Viz";
 
 import { Grid, Tab } from "semantic-ui-react";
 import { plugins } from "../plugins-list";
-
 
 window.babel = Babel;
 
@@ -83,15 +81,9 @@ export const App = ({
   const debouncedCursor = useDebounce(cursor, 125);
   const editorRef = useRef(null);
 
-  // Array of plugin names for AST Viz integration
-  const [plugins, setPlugins] = useState(["doExpressions"]);
-  const [showAST, setShowAST] = useState(true);
-
   const updateBabelConfig = useCallback((config, index) => {
-
     jsonConfig[index] = config;
     setJsonConfig(jsonConfig);
-
   }, []);
 
   const removeBabelConfig = useCallback(index => {
@@ -116,36 +108,25 @@ export const App = ({
   registerDefaultPlugins();
 
   useEffect(() => {
-
-    setPanes(jsonConfig.map((config, index) => {
-
-      return {
-        menuItem: 'Config ' + index, render: () =>
-          <><Output
-            babelConfig={config}
-            debouncedSource={debouncedSource}
-            enableCustomPlugin={enableCustomPlugin}
-            customPlugin={customPlugin}
-            updateBabelConfig={updateBabelConfig}
-            removeBabelConfig={removeBabelConfig}
-            index={index}
-          />
-            {showAST && (
-              <VizOutput
-                code={debouncedSource}
-                cursor={debouncedCursor}
-                setCursorAST={setCursorAST}
-                plugins={plugins}
-                setShowAST={setShowAST}
-              />
-            )
-            }
-          </>
-      }
-    }));
-
+    setPanes(
+      jsonConfig.map((config, index) => {
+        return {
+          menuItem: "Config " + index,
+          render: () => (
+            <Output
+              babelConfig={config}
+              debouncedSource={debouncedSource}
+              enableCustomPlugin={enableCustomPlugin}
+              customPlugin={customPlugin}
+              updateBabelConfig={updateBabelConfig}
+              removeBabelConfig={removeBabelConfig}
+              index={index}
+            />
+          ),
+        };
+      })
+    );
   }, [jsonConfig]);
-
 
   return (
     <Root>
@@ -162,8 +143,6 @@ export const App = ({
         toggleForksVisible={toggleForksVisible}
         forks={forks}
         setForks={setForks}
-        showAST={showAST}
-        setShowAST={setShowAST}
       />
 
       <Grid celled="internally">
@@ -188,7 +167,6 @@ export const App = ({
           />
         )}
         <Tab panes={panes} />
-
       </Grid>
     </Root>
   );
