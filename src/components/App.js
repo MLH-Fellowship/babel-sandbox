@@ -49,7 +49,13 @@ function registerDefaultPlugins() {
   );
 }
 
-export const App = ({ defaultSource, defaultConfig, defCustomPlugin, defaultId, defaultForks }) => {
+export const App = ({
+  defaultSource,
+  defaultConfig,
+  defCustomPlugin,
+  defaultId,
+  defaultForks,
+}) => {
   const [source, setSource] = React.useState(defaultSource);
   const [enableCustomPlugin, toggleCustomPlugin] = React.useState(false);
   const [customPlugin, setCustomPlugin] = React.useState(defCustomPlugin);
@@ -99,14 +105,11 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin, defaultId, 
   }, [debouncedSource]);
 
   useEffect(() => {
-
     if (editorRef && editorRef.current && cursorAST.anchor && cursorAST.head) {
-
       editorRef.current.editor.setSelection(cursorAST.anchor, cursorAST.head, {
         scroll: false,
       });
     }
-
   }, [editorRef, cursorAST]);
 
   importDefaultPlugins();
@@ -158,13 +161,15 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin, defaultId, 
         setId={setId}
         toggleForksVisible={toggleForksVisible}
         forks={forks}
+        setForks={setForks}
         showAST={showAST}
         setShowAST={setShowAST}
       />
 
       <Grid celled="internally">
         {forksVisible && <Forks forks={forks} />}
-        <Input size={size}
+        <Input
+          size={size}
           gzip={gzip}
           source={source}
           ref={editorRef}
@@ -173,7 +178,8 @@ export const App = ({ defaultSource, defaultConfig, defCustomPlugin, defaultId, 
           size={size}
           gzip={gzip}
           source={source}
-          setSource={setSource} />
+          setSource={setSource}
+        />
         {enableCustomPlugin && (
           <CustomPlugin
             toggleCustomPlugin={toggleCustomPlugin}

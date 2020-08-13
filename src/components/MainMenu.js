@@ -16,6 +16,7 @@ export function MainMenu({
   setId,
   toggleForksVisible,
   forks,
+  setForks,
   showAST,
   setShowAST,
 }) {
@@ -82,6 +83,12 @@ export function MainMenu({
                 // If it doesn't, then this config has not been saved before
                 const blob = await state.New();
                 setId(blob.id);
+                // TODO: Replace title with name of config
+                window.history.replaceState(
+                  null,
+                  "Babel Test Playground",
+                  `/share/${blob.id}`
+                );
               } else {
                 // If it does, update the blob
                 state.Save(id);
@@ -102,6 +109,13 @@ export function MainMenu({
                   );
                   const link = await state.Link(id, setId);
                   setShareLink(link);
+                  const linkId = link.split("/")[4];
+                  // TODO: Replace title with name of config
+                  window.history.replaceState(
+                    null,
+                    "Babel Test Playground",
+                    `/share/${linkId}`
+                  );
                 }}
               >
                 Share
@@ -114,7 +128,7 @@ export function MainMenu({
       {id && (
         <Menu.Item>
           <Button as="div" labelPosition="right">
-            {<ForkModal
+            <ForkModal
               onFork={async () => {
                 const state = new REPLState(
                   source,
@@ -123,13 +137,19 @@ export function MainMenu({
                 );
                 const fork = await state.Fork(id);
                 setId(fork.id);
+                setForks([]);
+                window.history.replaceState(
+                  null,
+                  "Babel Test Playground",
+                  `/share/${fork.id}`
+                );
               }}
               trigger={
                 <Button icon>
                   <Icon name="fork" />
                 </Button>
               }
-            />}
+            />
 
             <Label
               as="a"
