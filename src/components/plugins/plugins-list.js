@@ -58,17 +58,6 @@ export const plugins = {
       },
     },
   },
-  "@babel/plugin-proposal-do-expressions": {
-    name: "@babel/plugin-proposal-do-expressions",
-    description: "does this",
-    fileLocation: "/static/plugins/@babel/plugin-proposal-do-expressions.js",
-    defaultConfig: {
-      method: "usage-global",
-      targets: {
-        edge: 16,
-      },
-    },
-  },
 };
 
 // Default list of presets, internal use only
