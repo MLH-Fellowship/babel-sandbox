@@ -160,7 +160,7 @@ export function CompiledOutput({
     try {
       let sConfig = JSON.parse(configText);
       onConfigChange(sConfig);
-    } catch (e) { }
+    } catch (e) {}
     setStringConfig(configText);
   }
 
@@ -197,17 +197,10 @@ export function CompiledOutput({
                             setTimeTravelCode(`${timetravel.code}`);
                             setDisplayAtIndex(`${timetravel.currentNode}`);
 
-<<<<<<< HEAD
                             /*
                               Source output comes before the array, we
                               need to shift all the indices by +1
                             */
-=======
-                            /* 
-                            Source output comes before the array, we 
-                            need to shift all the indices by +1
-                          */
->>>>>>> fc593cbcaffa24ea988ad9cee3b8654396390124
                             if (timeTravelIndex !== timeTravel.length) {
                               setTimeTravelIndex(i + 1);
                             }
@@ -228,9 +221,7 @@ export function CompiledOutput({
                   setDisplayAtIndex(
                     `${timeTravel[timeTravelIndex - 1]?.currentNode}`
                   );
-                  setTimeTravelCode(
-                    `${timeTravel[timeTravelIndex - 1]?.code}`
-                  );
+                  setTimeTravelCode(`${timeTravel[timeTravelIndex - 1]?.code}`);
                   if (timeTravelIndex !== timeTravel.length) {
                     setTimeTravelIndex(timeTravelIndex + 1);
                   }
@@ -263,7 +254,7 @@ export function CompiledOutput({
             <Menu.Menu position="right">
               <Menu.Item>
                 {compiled?.size}b, {gzip}b
-                </Menu.Item>
+              </Menu.Item>
               <Menu.Item onClick={removeConfig}>
                 <Icon name="close" />
               </Menu.Item>
@@ -295,17 +286,15 @@ export function CompiledOutput({
                 plugins={pluginsAST}
               />
             ) : (
-                <Code
-                  value={
-                    timeTravelCode !== undefined
-                      ? timeTravelCode
-                      : compiled?.code
-                  }
-                  docName="result.js"
-                  config={{ readOnly: true, lineWrapping: true }}
-                  isError={compiled?.error ?? false}
-                />
-              )}
+              <Code
+                value={
+                  timeTravelCode !== undefined ? timeTravelCode : compiled?.code
+                }
+                docName="result.js"
+                config={{ readOnly: true, lineWrapping: true }}
+                isError={compiled?.error ?? false}
+              />
+            )}
           </Grid.Column>
         </Grid>
         <Divider vertical>
