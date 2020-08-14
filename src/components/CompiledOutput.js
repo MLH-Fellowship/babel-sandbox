@@ -80,18 +80,22 @@ export function CompiledOutput({
     }
   }, [stringConfig, saveConfig]);
 
-  const configOpts = useMemo(() => {
-    config.plugins.map(arr => arr[0]).concat(config.presets.map(arr => arr[0]));
-  }, [config.plugins, config.presets]);
+  const configOpts = config.plugins
+    .map(arr =>
+      arr[0]
+        .replace("@babel/plugin-proposal-", "")
+        .replace("babel-plugin-", "")
+        // kebab to camel
+        .replace(/-./g, x => x.toUpperCase()[1])
+    )
+    .concat(config.presets.map(arr => arr[0]));
 
   const pluginsAST = useMemo(() => {
     if (timeTravel === null) return configOpts;
-
-    return (timeTravelIndex === 1
-      ? timeTravel
-      : timeTravel.slice(0, timeTravelIndex)
-    ).map(t => t.pluginAlias);
-  }, [timeTravel, timeTravelIndex]);
+    if (timeTravelIndex === 1) return configOpts;
+    if (timeTravelIndex === timeTravel.length) return configOpts;
+    return timeTravel.slice(0, timeTravelIndex).map(t => t.pluginAlias);
+  }, [timeTravel, timeTravelIndex, configOpts]);
 
   function displayAvailablePlugins() {
     return Object.keys(plugins).map(pluginName => {
