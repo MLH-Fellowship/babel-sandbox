@@ -52,7 +52,13 @@ export function CompiledOutput({
 
     setTimeTravel(transitions.getValue());
 
-    const { code } = Babel.transform(source, options);
+    let code = "";
+
+    try {
+      code = Babel.transform(source, options).code;
+    } catch (error) {
+      code = error.message;
+    }
 
     gzipSize(code).then(s => setGzip(s));
 
