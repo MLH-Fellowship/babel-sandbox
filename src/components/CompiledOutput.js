@@ -80,8 +80,12 @@ export function CompiledOutput({
     }
   }, [stringConfig, saveConfig]);
 
+  const configOpts = useMemo(() => {
+    config.plugins.map(arr => arr[0]).concat(config.presets.map(arr => arr[0]));
+  }, [config.plugins, config.presets]);
+
   const pluginsAST = useMemo(() => {
-    if (timeTravel === null) return [];
+    if (timeTravel === null) return configOpts;
 
     return (timeTravelIndex === 1
       ? timeTravel
