@@ -210,7 +210,7 @@ function VizWrapper(props) {
 
   return (
     <Segment>
-      <Grid divided>
+      <Grid>
         <Grid.Column floated="left">
           <Checkbox
             toggle

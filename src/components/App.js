@@ -1,4 +1,10 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, {
+  useCallback,
+  useLayoutEffect,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import * as Babel from "@babel/standalone";
 
 import { CustomPlugin } from "./CustomPlugin";
@@ -143,7 +149,7 @@ export const App = ({
             setCustomPlugin={setCustomPlugin}
           />
         )}
-        <Tab panes={panes} style={{ width: '100%' }} />
+        <Tab panes={panes} style={{ width: "100%" }} />
       </Grid>
     </Root>
   );
