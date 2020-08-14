@@ -176,7 +176,7 @@ export const App = ({
             setCustomPlugin={setCustomPlugin}
           />
         )}
-        <Tab panes={panes} />
+        <Tab panes={panes} style={{ width: '100%' }} />
       </Grid>
     </Root>
   );
