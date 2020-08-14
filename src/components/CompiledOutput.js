@@ -160,138 +160,141 @@ export function CompiledOutput({
     try {
       let sConfig = JSON.parse(configText);
       onConfigChange(sConfig);
-    } catch (e) {}
+    } catch (e) { }
     setStringConfig(configText);
   }
 
   const sourceCode = compiled?.code ?? "";
   return (
     <Grid.Row>
-      <Grid.Column width={16}>
-        <Grid columns={2}>
-          <Grid.Column width={8}>
-            <Menu attached="top" tabular inverted>
-              <Menu.Item>input.json</Menu.Item>
-              <Menu.Menu position="left">
-                <Menu.Item>
-                  {timeTravel !== null ? (
-                    <Dropdown text={displayAtIndex}>
-                      <Dropdown.Menu>
-                        <Dropdown.Item
-                          text="Source Output"
-                          onClick={() => {
-                            setTimeTravelCode(sourceCode);
-                            setDisplayAtIndex("Source Output");
+      <Grid columns={2}>
+        <Grid.Column width={8}>
+          <Menu attached="top" tabular inverted>
+            <Menu.Item>input.json</Menu.Item>
+            <Menu.Menu position="left">
+              <Menu.Item>
+                {timeTravel !== null ? (
+                  <Dropdown text={displayAtIndex}>
+                    <Dropdown.Menu>
+                      <Dropdown.Item
+                        text="Source Output"
+                        onClick={() => {
+                          setTimeTravelCode(sourceCode);
+                          setDisplayAtIndex("Source Output");
 
+                          // Source output is the first element
+                          if (timeTravelIndex !== timeTravel.length) {
+                            setTimeTravelIndex(1);
+                          }
+                        }}
+                      />
+
+                      {timeTravel.map((timetravel, i) => (
+                        <Dropdown.Item
+                          key={i}
+                          text={`${timetravel.currentNode}`}
+                          onClick={() => {
+                            setTimeTravelCode(`${timetravel.code}`);
+                            setDisplayAtIndex(`${timetravel.currentNode}`);
+
+<<<<<<< HEAD
                             /*
                               Source output comes before the array, we
                               need to shift all the indices by +1
                             */
+=======
+                            /* 
+                            Source output comes before the array, we 
+                            need to shift all the indices by +1
+                          */
+>>>>>>> fc593cbcaffa24ea988ad9cee3b8654396390124
                             if (timeTravelIndex !== timeTravel.length) {
-                              setTimeTravelIndex(1);
+                              setTimeTravelIndex(i + 1);
                             }
                           }}
                         />
-
-                        {timeTravel.map((timetravel, i) => (
-                          <Dropdown.Item
-                            key={i}
-                            text={`${timetravel.currentNode}`}
-                            onClick={() => {
-                              setTimeTravelCode(`${timetravel.code}`);
-                              setDisplayAtIndex(`${timetravel.currentNode}`);
-
-                              /* 
-                              Source output comes before the array, we 
-                              need to shift all the indices by +1
-                            */
-                              if (timeTravelIndex !== timeTravel.length) {
-                                setTimeTravelIndex(i + 1);
-                              }
-                            }}
-                          />
-                        ))}
-                      </Dropdown.Menu>
-                    </Dropdown>
-                  ) : null}
-                </Menu.Item>
-                <Button
-                  content="Next"
-                  onClick={() => {
-                    /* 
-                    To get the original indices of the array
-                    we reverse the operation earlier.
-                  */
-                    setDisplayAtIndex(
-                      `${timeTravel[timeTravelIndex - 1]?.currentNode}`
-                    );
-                    setTimeTravelCode(
-                      `${timeTravel[timeTravelIndex - 1]?.code}`
-                    );
-                    if (timeTravelIndex !== timeTravel.length) {
-                      setTimeTravelIndex(timeTravelIndex + 1);
-                    }
-                  }}
-                />
-              </Menu.Menu>
-            </Menu>
-          </Grid.Column>
-          <Grid.Column width={8}>
-            <Menu attached="top" tabular inverted>
-              <Menu.Menu position="left">
-                <Menu.Item onClick={() => setShowAST(false)}>Output</Menu.Item>
-                <Menu.Item>
-                  <Dropdown
-                    onClick={() => {
-                      setShowAST(true);
-                    }}
-                    text={"AST"}
-                  >
-                    <Dropdown.Menu>
-                      <Dropdown.Item
-                        onClick={() => setShowJSON(showJSON => !showJSON)}
-                      >
-                        {showJSON ? "Explorer" : "JSON"}
-                      </Dropdown.Item>
+                      ))}
                     </Dropdown.Menu>
                   </Dropdown>
+                ) : null}
+              </Menu.Item>
+              <Button
+                content="Next"
+                onClick={() => {
+                  /* 
+                  To get the original indices of the array
+                  we reverse the operation earlier.
+                */
+                  setDisplayAtIndex(
+                    `${timeTravel[timeTravelIndex - 1]?.currentNode}`
+                  );
+                  setTimeTravelCode(
+                    `${timeTravel[timeTravelIndex - 1]?.code}`
+                  );
+                  if (timeTravelIndex !== timeTravel.length) {
+                    setTimeTravelIndex(timeTravelIndex + 1);
+                  }
+                }}
+              />
+            </Menu.Menu>
+          </Menu>
+        </Grid.Column>
+        <Grid.Column width={8}>
+          <Menu attached="top" tabular inverted>
+            <Menu.Menu position="left">
+              <Menu.Item onClick={() => setShowAST(false)}>Output</Menu.Item>
+              <Menu.Item>
+                <Dropdown
+                  onClick={() => {
+                    setShowAST(true);
+                  }}
+                  text={"AST"}
+                >
+                  <Dropdown.Menu>
+                    <Dropdown.Item
+                      onClick={() => setShowJSON(showJSON => !showJSON)}
+                    >
+                      {showJSON ? "Explorer" : "JSON"}
+                    </Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </Menu.Item>
+            </Menu.Menu>
+            <Menu.Menu position="right">
+              <Menu.Item>
+                {compiled?.size}b, {gzip}b
                 </Menu.Item>
-              </Menu.Menu>
-              <Menu.Menu position="right">
-                <Menu.Item>
-                  {compiled?.size}b, {gzip}b
-                </Menu.Item>
-                <Menu.Item onClick={removeConfig}>
-                  <Icon name="close" />
-                </Menu.Item>
-              </Menu.Menu>
-            </Menu>
+              <Menu.Item onClick={removeConfig}>
+                <Icon name="close" />
+              </Menu.Item>
+            </Menu.Menu>
+          </Menu>
+        </Grid.Column>
+      </Grid>
+      <Segment inverted attached="bottom">
+        <Grid columns={2} relaxed="very">
+          <Grid.Column>
+            <Segment.Group piled>{displayAvailablePlugins()}</Segment.Group>
+            <Segment.Group piled>{displayAvailablePresets()}</Segment.Group>
+            <Wrapper>
+              <Config
+                value={stringConfig}
+                onChange={handleStringConfigChange}
+                docName="config.json"
+                config={{ mode: "application/json" }}
+              />
+            </Wrapper>
           </Grid.Column>
-        </Grid>
-        <Segment inverted attached="bottom">
-          <Grid columns={2} relaxed="very">
-            <Grid.Column>
-              <Segment.Group piled>{displayAvailablePlugins()}</Segment.Group>
-              <Segment.Group piled>{displayAvailablePresets()}</Segment.Group>
-              <Wrapper>
-                <Config
-                  value={stringConfig}
-                  onChange={handleStringConfigChange}
-                  docName="config.json"
-                  config={{ mode: "application/json" }}
-                />
-              </Wrapper>
-            </Grid.Column>
-            <Grid.Column>
-              {showAST ? (
-                <VizOutput
-                  code={source}
-                  cursor={cursor}
-                  setCursorAST={setCursorAST}
-                  showJSON={showJSON}
-                  plugins={pluginsAST}
-                />
-              ) : (
+          <Grid.Column>
+            {showAST ? (
+              <VizOutput
+                code={source}
+                cursor={cursor}
+                setCursorAST={setCursorAST}
+                showJSON={showJSON}
+                plugins={pluginsAST}
+              />
+            ) : (
                 <Code
                   value={
                     timeTravelCode !== undefined
@@ -303,13 +306,12 @@ export function CompiledOutput({
                   isError={compiled?.error ?? false}
                 />
               )}
-            </Grid.Column>
-          </Grid>
-          <Divider vertical>
-            <Icon name="arrow right" />
-          </Divider>
-        </Segment>
-      </Grid.Column>
+          </Grid.Column>
+        </Grid>
+        <Divider vertical>
+          <Icon name="arrow right" />
+        </Divider>
+      </Segment>
     </Grid.Row>
   );
 }
