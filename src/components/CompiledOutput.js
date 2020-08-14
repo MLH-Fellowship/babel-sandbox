@@ -6,7 +6,7 @@ import { Wrapper, Code, Config } from "./styles";
 import { useDebounce } from "../utils/useDebounce";
 import Transition from "./Transitions";
 
-import { plugins, presets } from "../plugins-list";
+import { plugins, presets } from "./plugins";
 import VizOutput from "./AST/Viz";
 
 import {
@@ -49,6 +49,7 @@ export function CompiledOutput({
 
     const transitions = new Transition();
     options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
+
     setTimeTravel(transitions.getValue());
 
     const { code } = Babel.transform(source, options);
@@ -182,7 +183,10 @@ export function CompiledOutput({
                             setTimeTravelCode(sourceCode);
                             setDisplayAtIndex("Source Output");
 
-                            // Source output is the first element
+                            /*
+                              Source output comes before the array, we
+                              need to shift all the indices by +1
+                            */
                             if (timeTravelIndex !== timeTravel.length) {
                               setTimeTravelIndex(1);
                             }
