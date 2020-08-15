@@ -174,7 +174,7 @@ export function CompiledOutput({
     try {
       let sConfig = JSON.parse(configText);
       onConfigChange(sConfig);
-    } catch (e) {}
+    } catch (e) { }
     setStringConfig(configText);
   }
 
@@ -301,15 +301,15 @@ export function CompiledOutput({
                 plugins={pluginsAST}
               />
             ) : (
-              <Code
-                value={
-                  timeTravelCode !== undefined ? timeTravelCode : compiled?.code
-                }
-                docName="result.js"
-                config={{ readOnly: true, lineWrapping: true }}
-                isError={compiled?.error ?? false}
-              />
-            )}
+                <Code
+                  value={
+                    timeTravelCode !== undefined ? timeTravelCode : compiled?.code
+                  }
+                  docName="result.js"
+                  config={{ readOnly: true, lineWrapping: true }}
+                  isError={compiled?.error ?? false}
+                />
+              )}
           </Grid.Column>
         </Grid>
         <Divider vertical>
