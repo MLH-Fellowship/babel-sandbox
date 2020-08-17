@@ -8,15 +8,19 @@ export function Output({
   customPlugin,
   updateBabelConfig,
   removeBabelConfig,
-  index
+  debouncedCursor,
+  setCursorAST,
+  index,
 }) {
-
-  return <CompiledOutput
-    source={debouncedSource}
-    customPlugin={enableCustomPlugin ? customPlugin : undefined}
-    config={babelConfig}
-    onConfigChange={config => updateBabelConfig(config, index)}
-    removeConfig={() => removeBabelConfig(index)}
-  />
-
+  return (
+    <CompiledOutput
+      source={debouncedSource}
+      customPlugin={enableCustomPlugin ? customPlugin : undefined}
+      config={babelConfig}
+      onConfigChange={config => updateBabelConfig(config, index)}
+      removeConfig={() => removeBabelConfig(index)}
+      cursor={debouncedCursor}
+      setCursorAST={setCursorAST}
+    />
+  );
 }
