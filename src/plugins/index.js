@@ -1,5 +1,5 @@
-import { importDefaultPlugins, loadPlugin } from "./addPlugin";
-import { plugins, presets } from "./plugins-list";
+import { loadPlugin } from "./addPlugin";
+import { plugins, presets, addDefaultPlugins } from "./plugins-list";
 
-export { importDefaultPlugins, loadPlugin };
-export { plugins, presets };
+export { loadPlugin };
+export { plugins, presets, addDefaultPlugins };

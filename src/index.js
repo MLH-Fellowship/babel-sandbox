@@ -4,7 +4,7 @@ import { App } from "./components/App";
 import { extractID, isShareLink, REPLState } from "./state";
 
 import * as Babel from "@babel/standalone";
-import { plugins } from "./plugins";
+import { addDefaultPlugins } from "./plugins";
 
 // css
 import "semantic-ui-less/semantic.less";
@@ -85,17 +85,8 @@ async function getState() {
   return state === null ? defaultState : state;
 }
 
-function importDefaultPlugins() {
-  Object.keys(plugins).forEach(pluginName => {
-    const script = document.createElement("script");
-    script.src = plugins[pluginName].fileLocation;
-    script.async = false;
-    document.head.appendChild(script);
-  });
-}
-
 (async () => {
-  importDefaultPlugins();
+  addDefaultPlugins();
   const state = await getState();
   render(
     <App
