@@ -89,6 +89,12 @@ export const App = ({
           render: () => (
             <Output
               babelConfig={config}
+              cloneConfig={() => {
+                setJsonConfig(configs => [
+                  ...configs,
+                  config
+                ])
+              }}
               enableCustomPlugin={enableCustomPlugin}
               customPlugin={customPlugin}
               updateBabelConfig={updateBabelConfig}
