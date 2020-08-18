@@ -1,3 +1,5 @@
+const baseURL = process.env.NODE_ENV === "production" ? `https://babel-sandbox.herokuapp.com`: ''
+
 // convert a Unicode string to a string in which
 // each 16-bit unit occupies only one byte
 // source: https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/btoa
@@ -154,7 +156,7 @@ class REPLState {
    * @returns {Promise<Object>} Blob representing the current state.
    */
   async New() {
-    const url = `/api/v1/blobs/create`;
+    const url = baseURL + `/api/v1/blobs/create`;
 
     try {
       const resp = await fetch(url, {
@@ -178,7 +180,7 @@ class REPLState {
    * @returns {Promise<Object>} Blob representing the current state.
    */
   async Save(ID) {
-    const url = `/api/v1/blobs/update/${ID}`;
+    const url = baseURL + `/api/v1/blobs/update/${ID}`;
     try {
       const resp = await fetch(url, {
         method: "PUT",
@@ -201,7 +203,7 @@ class REPLState {
    * @returns {Promise<Object>} Blob representing the new fork
    */
   async Fork(ID) {
-    const url = `/api/v1/blobs/fork/${ID}`;
+    const url = baseURL + `/api/v1/blobs/fork/${ID}`;
     try {
       const resp = await fetch(url, {
         method: "POST",
@@ -223,7 +225,7 @@ class REPLState {
    * @return {Promise<Object>}
    */
   static async GetBlob(ID) {
-    const url = `/api/v1/blobs/${ID}`;
+    const url = baseURL + `/api/v1/blobs/${ID}`;
     try {
       const resp = await fetch(url);
       const json = await resp.json();
@@ -240,7 +242,7 @@ class REPLState {
    * @returns {Promise<REPLState | null>}
    */
   static async FromID(ID) {
-    const url = `/api/v1/blobs/${ID}`;
+    const url = baseURL + `/api/v1/blobs/${ID}`;
     try {
       const resp = await fetch(url);
       const text = await resp.text();

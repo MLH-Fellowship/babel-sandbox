@@ -185,11 +185,10 @@ export function CompiledOutput({
 
   const sourceCode = compiled?.code ?? "";
   return (
-    <Grid.Row>
+    <>
       <Grid columns={2}>
         <Grid.Column width={8}>
           <Menu attached="top" tabular inverted>
-            <Menu.Item>input.json</Menu.Item>
             <Menu.Menu position="left">
               <Menu.Item>
                 {timeTravel !== null ? (
@@ -254,21 +253,21 @@ export function CompiledOutput({
           <Menu attached="top" tabular inverted>
             <Menu.Menu position="left">
               <Menu.Item onClick={() => setShowAST(false)}>Output</Menu.Item>
-              <Menu.Item>
-                <Dropdown
-                  onClick={() => {
-                    setShowAST(true);
-                  }}
-                  text={"AST"}
-                >
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => setShowJSON(showJSON => !showJSON)}
-                    >
-                      {showJSON ? "Explorer" : "JSON"}
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
+              <Menu.Item
+                onClick={() => {
+                  setShowJSON(false);
+                  setShowAST(true);
+                }}
+              >
+                AST Explorer
+              </Menu.Item>
+              <Menu.Item
+                onClick={() => {
+                  setShowJSON(true);
+                  setShowAST(true);
+                }}
+              >
+                AST JSON
               </Menu.Item>
             </Menu.Menu>
             <Menu.Menu position="right">
@@ -321,6 +320,6 @@ export function CompiledOutput({
           <Icon name="arrow right" />
         </Divider>
       </Segment>
-    </Grid.Row>
+    </>
   );
 }
