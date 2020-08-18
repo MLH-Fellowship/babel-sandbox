@@ -1,3 +1,6 @@
 /*******************************
          Site Overrides
 *******************************/
+.ui.menu > .item:first-child {
+    border-radius: 0px !important;
+}

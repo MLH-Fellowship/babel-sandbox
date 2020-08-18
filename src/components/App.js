@@ -119,24 +119,24 @@ export const App = ({
 
   return (
     <Root>
-      <MainMenu
-        source={source}
-        setSource={setSource}
-        jsonConfig={jsonConfig}
-        setBabelConfig={setJsonConfig}
-        customPlugin={customPlugin}
-        toggleCustomPlugin={toggleCustomPlugin}
-        enableCustomPlugin={enableCustomPlugin}
-        id={id}
-        setId={setId}
-        toggleForksVisible={toggleForksVisible}
-        forks={forks}
-        setForks={setForks}
-      />
-
       <Grid divided>
         <Grid.Row>
           <Grid.Column width='5'>
+
+            <MainMenu
+              source={source}
+              setSource={setSource}
+              jsonConfig={jsonConfig}
+              setBabelConfig={setJsonConfig}
+              customPlugin={customPlugin}
+              toggleCustomPlugin={toggleCustomPlugin}
+              enableCustomPlugin={enableCustomPlugin}
+              id={id}
+              setId={setId}
+              toggleForksVisible={toggleForksVisible}
+              forks={forks}
+              setForks={setForks}
+            />
             <Input
               size={size}
               gzip={gzip}
@@ -145,6 +145,15 @@ export const App = ({
               setSource={setSource}
               setCursor={setCursor}
             />
+
+            {forksVisible && <Forks forks={forks} />}
+            {enableCustomPlugin && (
+              <CustomPlugin
+                toggleCustomPlugin={toggleCustomPlugin}
+                customPlugin={customPlugin}
+                setCustomPlugin={setCustomPlugin}
+              />
+            )}
           </Grid.Column>
           <Grid.Column width='11' >
 
@@ -154,16 +163,6 @@ export const App = ({
         </Grid.Row>
       </Grid>
 
-      <Grid celled="internally">
-        {forksVisible && <Forks forks={forks} />}
-        {enableCustomPlugin && (
-          <CustomPlugin
-            toggleCustomPlugin={toggleCustomPlugin}
-            customPlugin={customPlugin}
-            setCustomPlugin={setCustomPlugin}
-          />
-        )}
-      </Grid>
     </Root>
   );
 };

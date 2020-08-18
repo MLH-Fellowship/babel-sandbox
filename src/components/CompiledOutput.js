@@ -46,16 +46,20 @@ export function CompiledOutput({
   const [showJSON, setShowJSON] = useState(false);
 
   let saveConfig = useCallback(() => {
-    let options = processOptions(config, debouncedPlugin);
-
-    const transitions = new Transition();
-    options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
-
-    setTimeTravel(transitions.getValue());
 
     let code = "";
 
     try {
+
+      console.log(config, debouncedPlugin)
+
+      let options = processOptions(config, debouncedPlugin);
+
+      const transitions = new Transition();
+      options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
+
+      setTimeTravel(transitions.getValue());
+
       code = Babel.transform(source, options).code;
     } catch (error) {
       code = error.message;
@@ -181,7 +185,7 @@ export function CompiledOutput({
 
   const sourceCode = compiled?.code ?? "";
   return (
-    <>
+    <Grid.Row>
       <Grid columns={2}>
         <Grid.Column width={8}>
           <Menu attached="top" tabular inverted>
@@ -302,6 +306,6 @@ export function CompiledOutput({
           <Icon name="arrow right" />
         </Divider>
       </Segment>
-    </>
+    </Grid.Row>
   );
 }
