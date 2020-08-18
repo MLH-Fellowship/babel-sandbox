@@ -9,6 +9,7 @@ import { Output } from "./Output";
 import { gzipSize } from "../gzip";
 import { Root } from "./styles";
 import { useDebounce } from "../utils/useDebounce";
+import { DEFAULT_PLUGIN } from "../defaults";
 
 import { Grid, Tab } from "semantic-ui-react";
 
@@ -59,6 +60,11 @@ export const App = ({
   const removeBabelConfig = useCallback(index => {
     setJsonConfig(configs => configs.filter((c, i) => index !== i));
   }, []);
+
+  useEffect(() => {
+    // Display the custom plugin only if it's different from the default
+    toggleCustomPlugin(defCustomPlugin !== DEFAULT_PLUGIN);
+  }, [defCustomPlugin]);
 
   useEffect(() => {
     let size = new Blob([debouncedSource], { type: "text/plain" }).size;
