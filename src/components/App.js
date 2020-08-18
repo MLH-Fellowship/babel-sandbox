@@ -92,7 +92,8 @@ export const App = ({
               cloneConfig={() => {
                 setJsonConfig(configs => [
                   ...configs,
-                  config
+                  // Deep copy of config
+                  JSON.parse(JSON.stringify(config)),
                 ])
               }}
               enableCustomPlugin={enableCustomPlugin}
