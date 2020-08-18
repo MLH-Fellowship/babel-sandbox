@@ -4,11 +4,7 @@ import { App } from "./components/App";
 import { extractID, isShareLink, REPLState } from "./state";
 
 import * as Babel from "@babel/standalone";
-<<<<<<< HEAD
 import { addDefaultPlugins, loadPlugin, loadPreset } from "./plugins";
-=======
-import { addDefaultPlugins } from "./plugins";
->>>>>>> master
 
 // css
 import "semantic-ui-less/semantic.less";
