@@ -5,6 +5,7 @@ import { extractID, isShareLink, REPLState } from "./state";
 
 import * as Babel from "@babel/standalone";
 import { addDefaultPlugins, loadPlugin, loadPreset } from "./plugins";
+import { DEFAULT_SOURCE, DEFAULT_PLUGIN, DEFAULT_CONFIG } from "./defaults";
 
 // css
 import "semantic-ui-less/semantic.less";
@@ -17,60 +18,10 @@ window.babel = Babel;
 // const SOURCE = require("!raw-loader!../source.js");
 // const PLUGIN = require("!raw-loader!../plugin.js");
 
-const SOURCE = `Promise.allSettled([p1, p2]).finally(() => {
-  console.log("Done!");
-});
-`;
-const CONFIG = [
-  {
-    plugins: [
-      // [
-      //   "babel-plugin-polyfill-corejs3",
-      //   {
-      //     method: "usage-global",
-      //     targets: {
-      //       edge: 16,
-      //     },
-      //   },
-      // ],
-      // {
-      //   name: "babel-plugin-polyfill-corejs3",
-      //   description: "does this",
-      //   fileLocation: "babel-plugin-polyfill-corejs3",
-      //   defaultConfig: {
-      //     method: "usage-global",
-      //     targets: {
-      //       edge: 16,
-      //     }
-      //   },
-      // },
-    ],
-    presets: [
-      // {
-      //   name: "env",
-      //   description: "does this",
-      //   defaultConfig: {},
-      // }
-    ],
-  },
-  // {},
-];
-
-const PLUGIN = `export default function customPlugin(babel) {
-  return {
-    visitor: {
-      Identifier(path) {
-        // console.log(path.node.name);
-      }
-    }
-  };
-}
-`;
-
 const defaultState = new REPLState(
-  SOURCE,
-  PLUGIN,
-  CONFIG.map(conf => JSON.stringify(conf))
+  DEFAULT_SOURCE,
+  DEFAULT_PLUGIN,
+  DEFAULT_CONFIG.map(conf => JSON.stringify(conf))
 );
 
 /**
