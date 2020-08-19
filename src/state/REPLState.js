@@ -1,4 +1,7 @@
-const baseURL = process.env.NODE_ENV === "production" ? `https://babel-sandbox.herokuapp.com`: ''
+const baseURL =
+  process.env.NODE_ENV === "production"
+    ? `https://babel-sandbox.herokuapp.com`
+    : "";
 
 // convert a Unicode string to a string in which
 // each 16-bit unit occupies only one byte
