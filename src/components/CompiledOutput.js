@@ -12,11 +12,9 @@ import VizOutput from "./AST/Viz";
 import SplitPane from 'react-split-pane';
 
 import {
-  Grid,
   Icon,
   Menu,
   Segment,
-  Divider,
   Checkbox,
   Dropdown,
   Button,

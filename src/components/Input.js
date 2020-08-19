@@ -1,12 +1,12 @@
 import React, { forwardRef } from "react";
-import { Grid, Menu, Segment } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
 import { Code } from "./styles";
 
 export const Input = forwardRef((props, ref) => {
   const { size, gzip, source, setSource, setCursor } = props;
   return (
     <>
-      <Menu attached="top" tabular inverted attached>
+      <Menu attached="top" tabular inverted>
         <Menu.Item>input.js</Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>

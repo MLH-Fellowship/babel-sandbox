@@ -11,7 +11,7 @@ import { Root } from "./styles";
 import { useDebounce } from "../utils/useDebounce";
 import SplitPane from 'react-split-pane';
 
-import { Grid, Tab } from "semantic-ui-react";
+import { Tab } from "semantic-ui-react";
 
 window.babel = Babel;
 
