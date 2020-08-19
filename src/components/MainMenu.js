@@ -81,7 +81,7 @@ export function MainMenu({
                 window.history.replaceState(
                   null,
                   "Babel Test Playground",
-                  `/share/${blob.id}`
+                  `#/share/${blob.id}`
                 );
               } else {
                 // If it does, update the blob
@@ -108,7 +108,7 @@ export function MainMenu({
                   window.history.replaceState(
                     null,
                     "Babel Test Playground",
-                    `/share/${linkId}`
+                    `#/share/${linkId}`
                   );
                 }}
               >
@@ -135,7 +135,7 @@ export function MainMenu({
                 window.history.replaceState(
                   null,
                   "Babel Test Playground",
-                  `/share/${fork.id}`
+                  `#/share/${fork.id}`
                 );
               }}
               trigger={
