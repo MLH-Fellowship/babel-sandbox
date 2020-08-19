@@ -4,6 +4,7 @@ import REPLState from "../state/REPLState.js";
 import { ShareModal } from "./ShareModal";
 import { ForkModal } from "./ForkModal";
 import { loadPlugin, loadPreset } from "../plugins/addPlugin.js";
+import logo from '../babel.png';
 
 export function MainMenu({
   source,
@@ -25,7 +26,7 @@ export function MainMenu({
     <Menu attached="top" inverted>
       <Menu.Item>
         <img
-          src="https://d33wubrfki0l68.cloudfront.net/7a197cfe44548cc1a3f581152af70a3051e11671/78df8/img/babel.svg"
+          src={logo}
           alt="Babel Logo"
         />
       </Menu.Item>
