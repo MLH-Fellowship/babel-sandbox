@@ -106,12 +106,22 @@ class REPLState {
       if (arr === undefined || !Array.isArray(arr) || arr.length < 1) {
         return;
       }
-      // Then grab their names.
+
+      // For sure an array, grab each name.
       arr.forEach(val => {
+        // Is this just a string?
+        if (typeof val === "string") {
+          s.add(val);
+          return;
+        }
+
+        // If this is an array then the plugin name is the first one.
         if (Array.isArray(val) && val.length > 0) {
           s.add(val[0]);
           return;
         }
+
+        // Otherwise check if it has a name property.
         const name = val?.name;
         if (name === undefined) {
           return;
