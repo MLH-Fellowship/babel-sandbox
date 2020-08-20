@@ -52,7 +52,8 @@ function CompositeObj({ k, obj, cursor, setPos, ...other }) {
   const { type, loc, value, name } = obj;
   const label = type ? type : k;
   const keys = Object.keys(obj);
-  const { defaultActiveIndex } = other;
+  const { toggled } = other;
+  const defaultActiveIndex = toggled ?? (label === "Program" ? 0 : null);
   const [active, setActive] = useState(!!defaultActiveIndex);
   const highlight = useMemo(() => {
     return (
@@ -117,7 +118,7 @@ function CompositeArr({ k, arr, cursor, setPos }) {
               ast={value}
               cursor={cursor}
               setPos={setPos}
-              defaultActiveIndex={arr.length === 1 ? 0 : null}
+              toggled={arr.length === 1 ? 0 : null}
             />
           ) : (
             <Primitive k={k} ast={value} />
