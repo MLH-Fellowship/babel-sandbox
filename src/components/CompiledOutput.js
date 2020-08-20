@@ -5,6 +5,7 @@ import { gzipSize } from "../gzip";
 import { Wrapper, Code, Config } from "./styles";
 import { useDebounce } from "../utils/useDebounce";
 import Transition from "./Transitions";
+import { PluginPanel } from "./PluginPanel";
 
 import { plugins, presets } from "../plugins";
 import VizOutput from "./AST/Viz";
@@ -109,21 +110,6 @@ export function CompiledOutput({
     return timeTravel.slice(0, timeTravelIndex).map(t => t.pluginAlias);
   }, [timeTravel, timeTravelIndex, configOpts]);
 
-  function displayAvailablePlugins() {
-    return Object.keys(plugins).map(pluginName => {
-      return (
-        <Segment key={pluginName}>
-          <Checkbox
-            toggle
-            name={pluginName}
-            type="checkbox"
-            onChange={handlePluginChange}
-            label={pluginName}
-          />
-        </Segment>
-      );
-    });
-  }
 
   function displayAvailablePresets() {
     return Object.keys(presets).map(presetName => {
@@ -180,7 +166,7 @@ export function CompiledOutput({
     try {
       let sConfig = JSON.parse(configText);
       onConfigChange(sConfig);
-    } catch (e) {}
+    } catch (e) { }
     setStringConfig(configText);
   }
 
@@ -289,8 +275,18 @@ export function CompiledOutput({
       <Segment inverted attached="bottom">
         <Grid columns={2} relaxed="very">
           <Grid.Column>
-            <Segment.Group piled>{displayAvailablePlugins()}</Segment.Group>
-            <Segment.Group piled>{displayAvailablePresets()}</Segment.Group>
+            <Segment.Group piled>
+              <PluginPanel
+                pluginList={plugins}
+                onChange={handlePluginChange}
+              />
+            </Segment.Group>
+            <Segment.Group piled>
+              <PluginPanel
+                pluginList={presets}
+                onChange={handlePresetChange}
+              />
+            </Segment.Group>
             <Wrapper>
               <Config
                 value={stringConfig}
@@ -310,15 +306,15 @@ export function CompiledOutput({
                 plugins={pluginsAST}
               />
             ) : (
-              <Code
-                value={
-                  timeTravelCode !== undefined ? timeTravelCode : compiled?.code
-                }
-                docName="result.js"
-                config={{ readOnly: true, lineWrapping: true }}
-                isError={compiled?.error ?? false}
-              />
-            )}
+                <Code
+                  value={
+                    timeTravelCode !== undefined ? timeTravelCode : compiled?.code
+                  }
+                  docName="result.js"
+                  config={{ readOnly: true, lineWrapping: true }}
+                  isError={compiled?.error ?? false}
+                />
+              )}
           </Grid.Column>
         </Grid>
         <Divider vertical>
