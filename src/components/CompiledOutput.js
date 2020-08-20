@@ -175,8 +175,6 @@ export function CompiledOutput({
 
   function handleStringConfigChange(configText) {
 
-    console.log(configText)
-
     setStringConfig(configText);
 
     let sConfig = {};
