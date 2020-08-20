@@ -21,10 +21,8 @@ const StyledAccordion = styled(Accordion)`
 
 const StyledAccordionTitle = styled(Accordion.Title)`
   font-family: "Lucida Console", Courier, monospace !important;
-`;
-
-const HighlightedSubAccordion = styled(Accordion.Accordion)`
-  background: ${props => (props.highlight ? "#ffff99" : "rgb(221, 221, 221)")} !important;
+  background: ${props =>
+    props.highlight ? "#ffff99" : "rgb(221, 221, 221)"} !important;
 `;
 
 const Markdown = styled(ReactMarkdown)`
@@ -46,6 +44,5 @@ export {
   Code,
   StyledAccordion,
   StyledAccordionTitle,
-  HighlightedSubAccordion,
   Markdown,
 };
