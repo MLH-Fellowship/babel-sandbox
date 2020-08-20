@@ -186,8 +186,7 @@ export function CompiledOutput({
   const sourceCode = compiled?.code ?? "";
   return (
     <>
-
-      <SplitPane minSize={40} defaultSize={500}>
+      <SplitPane minSize={40} defaultSize={300}>
         <>
           <Menu attached="top" tabular inverted>
             <Menu.Menu position="left">
@@ -231,23 +230,22 @@ export function CompiledOutput({
                   </Dropdown>
                 ) : null}
               </Menu.Item>
-              <Menu.Item>
-                <Button
-                  content="Next"
-                  onClick={() => {
-                    /*
-                    To get the original indices of the array
-                    we reverse the operation earlier.
-                  */
-                    setDisplayAtIndex(
-                      `${timeTravel[timeTravelIndex - 1]?.currentNode}`
-                    );
-                    setTimeTravelCode(`${timeTravel[timeTravelIndex - 1]?.code}`);
-                    if (timeTravelIndex !== timeTravel.length) {
-                      setTimeTravelIndex(timeTravelIndex + 1);
-                    }
-                  }}
-                />              </Menu.Item>
+              <Button
+                content="Next"
+                onClick={() => {
+                  /*
+                  To get the original indices of the array
+                  we reverse the operation earlier.
+                */
+                  setDisplayAtIndex(
+                    `${timeTravel[timeTravelIndex - 1]?.currentNode}`
+                  );
+                  setTimeTravelCode(`${timeTravel[timeTravelIndex - 1]?.code}`);
+                  if (timeTravelIndex !== timeTravel.length) {
+                    setTimeTravelIndex(timeTravelIndex + 1);
+                  }
+                }}
+              />
             </Menu.Menu>
           </Menu>
           <Segment.Group id="plugins">{displayAvailablePlugins()}</Segment.Group>

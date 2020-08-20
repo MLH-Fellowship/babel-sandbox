@@ -80,9 +80,9 @@ export const App = ({
       jsonConfig.map((config, index) => {
         let name;
         if (!index) {
-          name = "config.json";
+          name = "Config.json";
         } else {
-          name = `config_${index}.json`;
+          name = `Config${index + 1}.json`;
         }
 
         return {
@@ -90,6 +90,13 @@ export const App = ({
           render: () => (
             <Output
               babelConfig={config}
+              cloneConfig={() => {
+                setJsonConfig(configs => [
+                  ...configs,
+                  // Deep copy of config
+                  JSON.parse(JSON.stringify(config)),
+                ])
+              }}
               enableCustomPlugin={enableCustomPlugin}
               customPlugin={customPlugin}
               updateBabelConfig={updateBabelConfig}
@@ -116,7 +123,7 @@ export const App = ({
 
   return (
     <Root>
-      <SplitPane split="vertical" minSize={50} defaultSize={300}>
+      <SplitPane split="vertical" minSize={50} defaultSize={400}>
         <SplitPane split="horizontal" minSize={40} defaultSize={500}>
           <div style={{ width: '100%', height: '100%' }}>
             <MainMenu

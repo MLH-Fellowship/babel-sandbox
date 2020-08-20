@@ -33,13 +33,6 @@ export function MainMenu({
       <Dropdown item icon="wrench" simple>
         <Dropdown.Menu>
           <Dropdown.Item
-            onClick={() => {
-              setSource("const hello = 'world';");
-            }}
-          >
-            Load Example
-          </Dropdown.Item>
-          <Dropdown.Item
             disabled={configsCount >= 5}
             onClick={() =>
               setBabelConfig(configs => [
@@ -53,49 +46,14 @@ export function MainMenu({
           >
             Add Config
           </Dropdown.Item>
-          <Dropdown.Item>
-            <Icon name="dropdown" />
-            <span className="text">Add Plugin</span>
-
-            <Dropdown.Menu>
-              <Dropdown.Item
-                onClick={() => toggleCustomPlugin(!enableCustomPlugin)}
-              >
-                Custom
-              </Dropdown.Item>
-              <Dropdown.Item>Import</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown.Item>
-          <Dropdown.Divider />
           <Dropdown.Item
-            onClick={async () => {
-              const state = new REPLState(
-                source,
-                enableCustomPlugin ? customPlugin : "",
-                jsonConfig.map(config => JSON.stringify(config))
-              );
-              state.PluginList().forEach(plugin => loadPlugin(plugin));
-              state.PresetList().forEach(preset => loadPreset(preset));
-
-              // Check if the id exists
-              if (!id) {
-                // If it doesn't, then this config has not been saved before
-                const blob = await state.New();
-                setId(blob.id);
-                // TODO: Replace title with name of config
-                window.history.replaceState(
-                  null,
-                  "Babel Test Playground",
-                  `/share/${blob.id}`
-                );
-              } else {
-                // If it does, update the blob
-                state.Save(id);
-              }
+            onClick={() => {
+              setSource("const hello = 'world';");
             }}
           >
-            Save...
+            Load Example
           </Dropdown.Item>
+          <Dropdown.Divider />
           <ShareModal
             shareLink={shareLink}
             trigger={
@@ -113,7 +71,7 @@ export function MainMenu({
                   window.history.replaceState(
                     null,
                     "Babel Test Playground",
-                    `/share/${linkId}`
+                    `#/share/${linkId}`
                   );
                 }}
               >
@@ -124,6 +82,36 @@ export function MainMenu({
         </Dropdown.Menu>
       </Dropdown>
 
+      <Menu.Item
+        onClick={async () => {
+          const state = new REPLState(
+            source,
+            enableCustomPlugin ? customPlugin : "",
+            jsonConfig.map(config => JSON.stringify(config))
+          );
+          state.PluginList().forEach(plugin => loadPlugin(plugin));
+          state.PresetList().forEach(preset => loadPreset(preset));
+
+          // Check if the id exists
+          if (!id) {
+            // If it doesn't, then this config has not been saved before
+            const blob = await state.New();
+            setId(blob.id);
+            // TODO: Replace title with name of config
+            window.history.replaceState(
+              null,
+              "Babel Test Playground",
+              `#/share/${blob.id}`
+            );
+          } else {
+            // If it does, update the blob
+            state.Save(id);
+          }
+        }}
+      >
+
+        <Icon name="save" /> Save
+      </Menu.Item>
       {id && (
         <Menu.Item>
           <Button as="div" labelPosition="right">
@@ -140,12 +128,12 @@ export function MainMenu({
                 window.history.replaceState(
                   null,
                   "Babel Test Playground",
-                  `/share/${fork.id}`
+                  `#/share/${fork.id}`
                 );
               }}
               trigger={
                 <Button icon>
-                  <Icon name="fork" />
+                  <Icon name="fork" /> Forks
                 </Button>
               }
             />

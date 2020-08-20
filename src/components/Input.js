@@ -6,8 +6,8 @@ export const Input = forwardRef((props, ref) => {
   const { size, gzip, source, setSource, setCursor } = props;
   return (
     <>
-      <Menu attached="top" tabular inverted>
-        <Menu.Item>input.js</Menu.Item>
+      <Menu attached tabular inverted>
+        <Menu.Item>Input.js</Menu.Item>
         <Menu.Menu position="right">
           <Menu.Item>
             {size}b, {gzip}b
