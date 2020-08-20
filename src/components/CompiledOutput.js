@@ -45,32 +45,30 @@ export function CompiledOutput({
   const [showJSON, setShowJSON] = useState(false);
 
   let saveConfig = useCallback(() => {
+
     let options;
-    try {
-      options = processOptions(config, debouncedPlugin);
-    } catch (error) {
-      console.error(error);
-      return;
-    }
-    const transitions = new Transition();
-    options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
-
-    setTimeTravel(transitions.getValue());
-
     let code = "";
 
     try {
+      options = processOptions(config, debouncedPlugin);
+      const transitions = new Transition();
+      options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
+
+      setTimeTravel(transitions.getValue());
+
       code = Babel.transform(source, options).code;
+
+      gzipSize(code).then(s => setGzip(s));
+
     } catch (error) {
       code = error.message;
     }
-
-    gzipSize(code).then(s => setGzip(s));
 
     setCompiled({
       code,
       size: new Blob([code], { type: "text/plain" }).size,
     });
+
   }, [config, debouncedPlugin, source]);
 
   useEffect(saveConfig, [source, config, debouncedPlugin]);
@@ -176,11 +174,19 @@ export function CompiledOutput({
   }
 
   function handleStringConfigChange(configText) {
-    try {
-      let sConfig = JSON.parse(configText);
-      onConfigChange(sConfig);
-    } catch (e) { }
+
+    console.log(configText)
+
     setStringConfig(configText);
+
+    let sConfig = {};
+
+    try {
+      sConfig = JSON.parse(configText);
+    } catch (e) {
+      return console.error(e)
+    }
+    onConfigChange(sConfig);
   }
 
   const sourceCode = compiled?.code ?? "";

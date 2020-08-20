@@ -23,14 +23,12 @@ const SOURCE = `Promise.allSettled([p1, p2]).finally(() => {
 `;
 const CONFIG = [
   {
-    "plugins": [],
-    "presets": [
-      [
-        "env",
-        {}
-      ]
-    ]
-  }
+    plugins: [
+    ],
+    presets: [
+    ],
+  },
+  // {},
 ];
 
 const PLUGIN = `export default function customPlugin(babel) {
