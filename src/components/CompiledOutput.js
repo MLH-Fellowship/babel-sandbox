@@ -279,12 +279,14 @@ export function CompiledOutput({
               <PluginPanel
                 pluginList={plugins}
                 onChange={handlePluginChange}
+                stringConfig={stringConfig}
               />
             </Segment.Group>
             <Segment.Group piled>
               <PluginPanel
                 pluginList={presets}
                 onChange={handlePresetChange}
+                stringConfig={stringConfig}
               />
             </Segment.Group>
             <Wrapper>

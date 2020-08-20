@@ -1,23 +1,21 @@
-import React from 'react';
+import React from "react";
 import { Checkbox, Segment } from "semantic-ui-react";
+import {PluginToggle} from "./PluginToggle";
 
 export function PluginPanel({
   pluginList,
-  onChange
+  onChange,
+  stringConfig,
 }) {
   return (
     <>
       {Object.keys(pluginList).map(pluginName => {
         return (
-          <Segment key={pluginName}>
-            <Checkbox
-              toggle
-              name={pluginName}
-              type="checkbox"
-              onChange={onChange}
-              label={pluginName}
-            />
-          </Segment>
+          <PluginToggle
+            pluginName={pluginName}
+            onChange={onChange}
+            stringConfig={stringConfig}
+          />
         );
       })}
 
