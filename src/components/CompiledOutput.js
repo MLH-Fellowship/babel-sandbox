@@ -10,12 +10,12 @@ import { PluginPanel } from "./PluginPanel";
 import { plugins, presets } from "../plugins";
 import VizOutput from "./AST/Viz";
 
+import SplitPane from 'react-split-pane';
+
 import {
-  Grid,
   Icon,
   Menu,
   Segment,
-  Divider,
   Checkbox,
   Dropdown,
   Button,
@@ -25,7 +25,6 @@ export function CompiledOutput({
   source,
   customPlugin,
   config,
-  cloneConfig,
   onConfigChange,
   removeConfig,
   cursor,
@@ -47,32 +46,30 @@ export function CompiledOutput({
   const [showJSON, setShowJSON] = useState(false);
 
   let saveConfig = useCallback(() => {
+
     let options;
-    try {
-      options = processOptions(config, debouncedPlugin);
-    } catch (error) {
-      console.error(error);
-      return;
-    }
-    const transitions = new Transition();
-    options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
-
-    setTimeTravel(transitions.getValue());
-
     let code = "";
 
     try {
+      options = processOptions(config, debouncedPlugin);
+      const transitions = new Transition();
+      options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
+
+      setTimeTravel(transitions.getValue());
+
       code = Babel.transform(source, options).code;
+
+      gzipSize(code).then(s => setGzip(s));
+
     } catch (error) {
       code = error.message;
     }
-
-    gzipSize(code).then(s => setGzip(s));
 
     setCompiled({
       code,
       size: new Blob([code], { type: "text/plain" }).size,
     });
+
   }, [config, debouncedPlugin, source]);
 
   useEffect(saveConfig, [source, config, debouncedPlugin]);
@@ -169,36 +166,29 @@ export function CompiledOutput({
   }
 
   function handleStringConfigChange(configText) {
-    try {
-      let sConfig = JSON.parse(configText);
-      onConfigChange(sConfig);
-    } catch (e) { }
     setStringConfig(configText);
+
+    let sConfig = {};
+
+    try {
+      sConfig = JSON.parse(configText);
+    } catch (e) {
+      return console.error(e)
+    }
+    onConfigChange(sConfig);
   }
 
   const sourceCode = compiled?.code ?? "";
   return (
     <>
-      <Grid columns={2}>
-        <Grid.Column width={8}>
+      <SplitPane minSize={40} defaultSize={300}>
+        <>
           <Menu attached="top" tabular inverted>
             <Menu.Menu position="left">
               <Menu.Item>
                 {timeTravel !== null ? (
                   <Dropdown text={displayAtIndex}>
                     <Dropdown.Menu>
-                      <Dropdown.Item
-                        text="Source Output"
-                        onClick={() => {
-                          setTimeTravelCode(sourceCode);
-                          setDisplayAtIndex("Source Output");
-
-                          // Source output is the first element
-                          if (timeTravelIndex !== timeTravel.length) {
-                            setTimeTravelIndex(1);
-                          }
-                        }}
-                      />
 
                       {timeTravel.map((timetravel, i) => (
                         <Dropdown.Item
@@ -219,6 +209,18 @@ export function CompiledOutput({
                           }}
                         />
                       ))}
+                      <Dropdown.Item
+                        text="Output"
+                        onClick={() => {
+                          setTimeTravelCode(sourceCode);
+                          setDisplayAtIndex("Output");
+
+                          // Source output is the first element
+                          if (timeTravelIndex !== timeTravel.length) {
+                            setTimeTravelIndex(1);
+                          }
+                        }}
+                      />
                     </Dropdown.Menu>
                   </Dropdown>
                 ) : null}
@@ -227,26 +229,49 @@ export function CompiledOutput({
                 content="Next"
                 onClick={() => {
                   /*
-                  To get the original indices of the array
-                  we reverse the operation earlier.
-                */
-                  setDisplayAtIndex(
-                    `${timeTravel[timeTravelIndex - 1]?.currentNode}`
-                  );
-                  setTimeTravelCode(`${timeTravel[timeTravelIndex - 1]?.code}`);
-                  if (timeTravelIndex !== timeTravel.length) {
-                    setTimeTravelIndex(timeTravelIndex + 1);
+                    To get the original indices of the array
+                    we reverse the operation earlier.
+                  */
+                  if (timeTravel !== null) {
+                    setDisplayAtIndex(
+                      `${timeTravel[timeTravelIndex - 1]?.currentNode}`
+                    );
+                    setTimeTravelCode(`${timeTravel[timeTravelIndex - 1]?.code}`);
+                    if (timeTravelIndex !== timeTravel.length) {
+                      setTimeTravelIndex(timeTravelIndex + 1);
+                    }
                   }
                 }}
-              />
-              <Button
-                content="Clone"
-                onClick={cloneConfig}
+                disabled={timeTravel === null}
               />
             </Menu.Menu>
           </Menu>
-        </Grid.Column>
-        <Grid.Column width={8}>
+          {/* <Segment.Group id="plugins">{displayAvailablePlugins()}</Segment.Group>
+          <Segment.Group id="plugins">{displayAvailablePresets()}</Segment.Group> */}
+          <Segment.Group piled>
+            <PluginPanel
+              pluginList={plugins}
+              onChange={handlePluginChange}
+              stringConfig={stringConfig}
+            />
+          </Segment.Group>
+          <Segment.Group piled>
+            <PluginPanel
+              pluginList={presets}
+              onChange={handlePresetChange}
+              stringConfig={stringConfig}
+            />
+          </Segment.Group>
+          <Wrapper>
+            <Config
+              value={stringConfig}
+              onChange={handleStringConfigChange}
+              docName="config.json"
+              config={{ mode: "application/json" }}
+            />
+          </Wrapper>
+        </>
+        <>
           <Menu attached="top" tabular inverted>
             <Menu.Menu position="left">
               <Menu.Item onClick={() => setShowAST(false)}>Output</Menu.Item>
@@ -276,59 +301,28 @@ export function CompiledOutput({
               </Menu.Item>
             </Menu.Menu>
           </Menu>
-        </Grid.Column>
-      </Grid>
-      <Segment inverted attached="bottom">
-        <Grid columns={2} relaxed="very">
-          <Grid.Column>
-            <Segment.Group piled>
-              <PluginPanel
-                pluginList={plugins}
-                onChange={handlePluginChange}
-                stringConfig={stringConfig}
+          {showAST ? (
+            <VizOutput
+              code={source}
+              cursor={cursor}
+              setCursorAST={setCursorAST}
+              showJSON={showJSON}
+              plugins={pluginsAST}
+            />
+          ) : (
+              <Code
+                value={
+                  timeTravelCode !== undefined ? timeTravelCode : compiled?.code
+                }
+                docName="result.js"
+                config={{ readOnly: true, lineWrapping: true }}
+                isError={compiled?.error ?? false}
               />
-            </Segment.Group>
-            <Segment.Group piled>
-              <PluginPanel
-                pluginList={presets}
-                onChange={handlePresetChange}
-                stringConfig={stringConfig}
-              />
-            </Segment.Group>
-            <Wrapper>
-              <Config
-                value={stringConfig}
-                onChange={handleStringConfigChange}
-                docName="config.json"
-                config={{ mode: "application/json" }}
-              />
-            </Wrapper>
-          </Grid.Column>
-          <Grid.Column>
-            {showAST ? (
-              <VizOutput
-                code={source}
-                cursor={cursor}
-                setCursorAST={setCursorAST}
-                showJSON={showJSON}
-                plugins={pluginsAST}
-              />
-            ) : (
-                <Code
-                  value={
-                    timeTravelCode !== undefined ? timeTravelCode : compiled?.code
-                  }
-                  docName="result.js"
-                  config={{ readOnly: true, lineWrapping: true }}
-                  isError={compiled?.error ?? false}
-                />
-              )}
-          </Grid.Column>
-        </Grid>
-        <Divider vertical>
-          <Icon name="arrow right" />
-        </Divider>
-      </Segment>
+            )}
+
+        </>
+      </SplitPane>
+
     </>
   );
 }
