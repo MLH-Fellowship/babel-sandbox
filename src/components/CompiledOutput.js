@@ -101,7 +101,7 @@ export function CompiledOutput({
         // kebab to camel
         .replace(/-./g, x => x.toUpperCase()[1])
     )
-    .concat(config.presets.map(arr => arr[0]));
+    .concat(config.presets?.map(arr => arr[0]));
 
   const pluginsAST = useMemo(() => {
     if (timeTravel === null) return configOpts;
