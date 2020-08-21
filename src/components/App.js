@@ -5,7 +5,7 @@ import { CustomPlugin } from "./CustomPlugin";
 import { MainMenu } from "./MainMenu";
 import { Forks } from "./Forks";
 import { Input } from "./Input";
-import { Output } from "./Output";
+import { CompiledOutput } from "./CompiledOutput"
 import { gzipSize } from "../gzip";
 import { Root } from "./styles";
 import { useDebounce } from "../utils/useDebounce";
@@ -88,8 +88,10 @@ export const App = ({
         return {
           menuItem: name,
           render: () => (
-            <Output
-              babelConfig={config}
+            <CompiledOutput
+              source={debouncedSource}
+              customPlugin={enableCustomPlugin ? customPlugin : undefined}
+              config={config}
               cloneConfig={() => {
                 setJsonConfig(configs => [
                   ...configs,
@@ -97,29 +99,25 @@ export const App = ({
                   JSON.parse(JSON.stringify(config)),
                 ])
               }}
-              enableCustomPlugin={enableCustomPlugin}
-              customPlugin={customPlugin}
-              updateBabelConfig={updateBabelConfig}
-              removeBabelConfig={removeBabelConfig}
-              debouncedSource={debouncedSource}
-              debouncedCursor={debouncedCursor}
+              onConfigChange={config => updateBabelConfig(config, index)}
+              removeConfig={() => removeBabelConfig(index)}
+              cursor={debouncedCursor}
               setCursorAST={setCursorAST}
-              index={index}
             />
           ),
         };
       })
     );
   }, [
-    jsonConfig,
-    enableCustomPlugin,
-    customPlugin,
-    updateBabelConfig,
-    removeBabelConfig,
-    debouncedSource,
-    debouncedCursor,
-    setCursorAST,
-  ]);
+      jsonConfig,
+      enableCustomPlugin,
+      customPlugin,
+      updateBabelConfig,
+      removeBabelConfig,
+      debouncedSource,
+      debouncedCursor,
+      setCursorAST,
+    ]);
 
   return (
     <Root>
