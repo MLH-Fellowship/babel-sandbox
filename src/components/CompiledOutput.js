@@ -183,7 +183,7 @@ export function CompiledOutput({
     onConfigChange(sConfig);
   }
 
-  const sourceCode = compiled ?.code ?? "";
+  const sourceCode = compiled?.code ?? "";
   return (
     <>
       <SplitPane minSize={40} defaultSize={300}>
@@ -238,9 +238,9 @@ export function CompiledOutput({
                   */
                   if (timeTravel !== null) {
                     setDisplayAtIndex(
-                      `${timeTravel[timeTravelIndex - 1] ?.currentNode}`
+                      `${timeTravel[timeTravelIndex - 1]?.currentNode}`
                     );
-                    setTimeTravelCode(`${timeTravel[timeTravelIndex - 1] ?.code}`);
+                    setTimeTravelCode(`${timeTravel[timeTravelIndex - 1]?.code}`);
                     if (timeTravelIndex !== timeTravel.length) {
                       setTimeTravelIndex(timeTravelIndex + 1);
                     }
@@ -288,7 +288,7 @@ export function CompiledOutput({
             </Menu.Menu>
             <Menu.Menu position="right">
               <Menu.Item>
-                {compiled ?.size}b, {gzip}b
+                {compiled?.size}b, {gzip}b
               </Menu.Item>
               <Menu.Item onClick={removeConfig}>
                 <Icon name="close" />
@@ -304,28 +304,15 @@ export function CompiledOutput({
               plugins={pluginsAST}
             />
           ) : (
-<<<<<<< HEAD
-            <Code
-              value={
-                timeTravelCode !== undefined ? timeTravelCode : compiled?.code
-              }
-              docName="result.js"
-              config={{ readOnly: true, lineWrapping: true }}
-              isError={compiled?.error ?? false}
-            />
-          )}
-=======
               <Code
                 value={
-                  timeTravelCode !== undefined ? timeTravelCode : compiled ?.code
+                  timeTravelCode !== undefined ? timeTravelCode : compiled?.code
                 }
                 docName="result.js"
                 config={{ readOnly: true, lineWrapping: true }}
-                isError={compiled ?.error ?? false}
+                isError={compiled?.error ?? false}
               />
             )}
-
->>>>>>> master
         </>
       </SplitPane>
     </>
