@@ -77,9 +77,15 @@ export function CompiledOutput({
 
   useEffect(saveConfig, [source, config, debouncedPlugin]);
 
+  // Bind config and stringConfig changes to each other
   useEffect(() => {
     setStringConfig(JSON.stringify(config, null, "\t"));
   }, [config]);
+
+  useEffect(() => {
+    config = JSON.parse(stringConfig);
+    onConfigChange(config);
+  }, [stringConfig])
 
   useEffect(() => {
     try {
