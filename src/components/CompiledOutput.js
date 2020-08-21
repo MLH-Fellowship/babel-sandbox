@@ -161,6 +161,7 @@ export function CompiledOutput({
   }
 
   function handlePresetChange(reactEvent, checkbox) {
+    config.presets = config.presets || [];
     if (checkbox.checked) {
       config.presets.push([
         presets[checkbox.name].name,
@@ -178,8 +179,22 @@ export function CompiledOutput({
   }
 
   function handleStringConfigChange(configText) {
+
     setStringConfig(configText);
-    onConfigChange(configText);
+    try {
+
+      let jsonString = JSON.parse(configText);
+
+      onConfigChange(jsonString);
+
+    } catch (error) {
+
+      setCompiled({
+        error: true,
+        code: error.message
+      });
+
+    }
   }
 
   const sourceCode = compiled?.code ?? "";
