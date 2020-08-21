@@ -47,7 +47,7 @@ export function CompiledOutput({
   let saveConfig = useCallback(() => {
     let options;
     let code = "";
-    let error = false;
+    let isError = false;
 
     try {
 
@@ -62,12 +62,12 @@ export function CompiledOutput({
       gzipSize(code).then(s => setGzip(s));
     } catch (error) {
       code = error.message;
-      error = true;
+      isError = true;
     }
 
     setCompiled({
       code,
-      error,
+      isError,
       size: new Blob([code], { type: "text/plain" }).size,
     });
   }, [config, debouncedPlugin, source]);
@@ -193,7 +193,7 @@ export function CompiledOutput({
     }
   }
 
-  const sourceCode = compiled ?.code ?? "";
+  const sourceCode = compiled?.code ?? "";
   return (
     <>
       <SplitPane minSize={40} defaultSize={300}>
@@ -248,9 +248,9 @@ export function CompiledOutput({
                   */
                   if (timeTravel !== null) {
                     setDisplayAtIndex(
-                      `${timeTravel[timeTravelIndex - 1] ?.currentNode}`
+                      `${timeTravel[timeTravelIndex - 1]?.currentNode}`
                     );
-                    setTimeTravelCode(`${timeTravel[timeTravelIndex - 1] ?.code}`);
+                    setTimeTravelCode(`${timeTravel[timeTravelIndex - 1]?.code}`);
                     if (timeTravelIndex !== timeTravel.length) {
                       setTimeTravelIndex(timeTravelIndex + 1);
                     }
@@ -298,7 +298,7 @@ export function CompiledOutput({
             </Menu.Menu>
             <Menu.Menu position="right">
               <Menu.Item>
-                {compiled ?.size}b, {gzip}b
+                {compiled?.size}b, {gzip}b
               </Menu.Item>
               <Menu.Item onClick={removeConfig}>
                 <Icon name="close" />
@@ -314,28 +314,15 @@ export function CompiledOutput({
               plugins={pluginsAST}
             />
           ) : (
-<<<<<<< HEAD
-            <Code
-              value={
-                timeTravelCode !== undefined ? timeTravelCode : compiled?.code
-              }
-              docName="result.js"
-              config={{ readOnly: true, lineWrapping: true }}
-              isError={compiled?.error ?? false}
-            />
-          )}
-=======
               <Code
                 value={
-                  timeTravelCode !== undefined ? timeTravelCode : compiled ?.code
+                  timeTravelCode !== undefined ? timeTravelCode : (compiled?.error + compiled?.code)
                 }
                 docName="result.js"
                 config={{ readOnly: true, lineWrapping: true }}
-                isError={compiled ?.error ?? false}
+                isError={compiled?.error ?? false}
               />
             )}
-
->>>>>>> master
         </>
       </SplitPane>
     </>
