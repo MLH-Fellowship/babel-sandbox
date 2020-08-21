@@ -316,7 +316,7 @@ export function CompiledOutput({
           ) : (
               <Code
                 value={
-                  timeTravelCode !== undefined ? timeTravelCode : (compiled?.code)
+                  timeTravelCode !== undefined ? timeTravelCode : compiled?.code
                 }
                 docName="result.js"
                 config={{ readOnly: true, lineWrapping: true }}
