@@ -9,7 +9,7 @@ import Transition from "./Transitions";
 import { plugins, presets } from "../plugins";
 import VizOutput from "./AST/Viz";
 
-import SplitPane from 'react-split-pane';
+import SplitPane from "react-split-pane";
 
 import {
   Icon,
@@ -45,7 +45,6 @@ export function CompiledOutput({
   const [showJSON, setShowJSON] = useState(false);
 
   let saveConfig = useCallback(() => {
-
     let options;
     let code = "";
     let error = false;
@@ -61,7 +60,6 @@ export function CompiledOutput({
       code = Babel.transform(source, options).code;
 
       gzipSize(code).then(s => setGzip(s));
-
     } catch (error) {
       code = error.message;
       error = true;
@@ -72,7 +70,6 @@ export function CompiledOutput({
       error,
       size: new Blob([code], { type: "text/plain" }).size,
     });
-
   }, [config, debouncedPlugin, source]);
 
   useEffect(saveConfig, [source, config, debouncedPlugin]);
@@ -179,7 +176,6 @@ export function CompiledOutput({
   }
 
   function handleStringConfigChange(configText) {
-
     setStringConfig(configText);
     try {
 
@@ -197,7 +193,7 @@ export function CompiledOutput({
     }
   }
 
-  const sourceCode = compiled?.code ?? "";
+  const sourceCode = compiled ?.code ?? "";
   return (
     <>
       <SplitPane minSize={40} defaultSize={300}>
@@ -208,7 +204,6 @@ export function CompiledOutput({
                 {timeTravel !== null ? (
                   <Dropdown text={displayAtIndex}>
                     <Dropdown.Menu>
-
                       {timeTravel.map((timetravel, i) => (
                         <Dropdown.Item
                           key={i}
@@ -248,22 +243,29 @@ export function CompiledOutput({
                 content="Next"
                 onClick={() => {
                   /*
-                  To get the original indices of the array
-                  we reverse the operation earlier.
-                */
-                  setDisplayAtIndex(
-                    `${timeTravel[timeTravelIndex - 1]?.currentNode}`
-                  );
-                  setTimeTravelCode(`${timeTravel[timeTravelIndex - 1]?.code}`);
-                  if (timeTravelIndex !== timeTravel.length) {
-                    setTimeTravelIndex(timeTravelIndex + 1);
+                    To get the original indices of the array
+                    we reverse the operation earlier.
+                  */
+                  if (timeTravel !== null) {
+                    setDisplayAtIndex(
+                      `${timeTravel[timeTravelIndex - 1] ?.currentNode}`
+                    );
+                    setTimeTravelCode(`${timeTravel[timeTravelIndex - 1] ?.code}`);
+                    if (timeTravelIndex !== timeTravel.length) {
+                      setTimeTravelIndex(timeTravelIndex + 1);
+                    }
                   }
                 }}
+                disabled={timeTravel === null}
               />
             </Menu.Menu>
           </Menu>
-          <Segment.Group id="plugins">{displayAvailablePlugins()}</Segment.Group>
-          <Segment.Group id="plugins">{displayAvailablePresets()}</Segment.Group>
+          <Segment.Group id="plugins">
+            {displayAvailablePlugins()}
+          </Segment.Group>
+          <Segment.Group id="plugins">
+            {displayAvailablePresets()}
+          </Segment.Group>
           <Wrapper>
             <Config
               value={stringConfig}
@@ -296,7 +298,7 @@ export function CompiledOutput({
             </Menu.Menu>
             <Menu.Menu position="right">
               <Menu.Item>
-                {compiled?.size}b, {gzip}b
+                {compiled ?.size}b, {gzip}b
               </Menu.Item>
               <Menu.Item onClick={removeConfig}>
                 <Icon name="close" />
@@ -312,19 +314,30 @@ export function CompiledOutput({
               plugins={pluginsAST}
             />
           ) : (
+<<<<<<< HEAD
+            <Code
+              value={
+                timeTravelCode !== undefined ? timeTravelCode : compiled?.code
+              }
+              docName="result.js"
+              config={{ readOnly: true, lineWrapping: true }}
+              isError={compiled?.error ?? false}
+            />
+          )}
+=======
               <Code
                 value={
-                  timeTravelCode !== undefined ? timeTravelCode : compiled?.code
+                  timeTravelCode !== undefined ? timeTravelCode : compiled ?.code
                 }
                 docName="result.js"
                 config={{ readOnly: true, lineWrapping: true }}
-                isError={compiled?.error ?? false}
+                isError={compiled ?.error ?? false}
               />
             )}
 
+>>>>>>> master
         </>
       </SplitPane>
-
     </>
   );
 }
