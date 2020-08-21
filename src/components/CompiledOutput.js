@@ -5,6 +5,7 @@ import { gzipSize } from "../gzip";
 import { Wrapper, Code, Config } from "./styles";
 import { useDebounce } from "../utils/useDebounce";
 import Transition from "./Transitions";
+import { PluginPanel } from "./PluginPanel";
 
 import { plugins, presets } from "../plugins";
 import VizOutput from "./AST/Viz";
@@ -73,9 +74,15 @@ export function CompiledOutput({
 
   useEffect(saveConfig, [source, config, debouncedPlugin]);
 
+  // Bind config and stringConfig changes to each other
   useEffect(() => {
     setStringConfig(JSON.stringify(config, null, "\t"));
   }, [config]);
+
+  useEffect(() => {
+    config = JSON.parse(stringConfig);
+    onConfigChange(config);
+  }, [stringConfig])
 
   useEffect(() => {
     try {
@@ -106,21 +113,6 @@ export function CompiledOutput({
     return timeTravel.slice(0, timeTravelIndex).map(t => t.pluginAlias);
   }, [timeTravel, timeTravelIndex, configOpts]);
 
-  function displayAvailablePlugins() {
-    return Object.keys(plugins).map(pluginName => {
-      return (
-        <Segment key={pluginName}>
-          <Checkbox
-            toggle
-            name={pluginName}
-            type="checkbox"
-            onChange={handlePluginChange}
-            label={pluginName}
-          />
-        </Segment>
-      );
-    });
-  }
 
   function displayAvailablePresets() {
     return Object.keys(presets).map(presetName => {
@@ -174,7 +166,6 @@ export function CompiledOutput({
   }
 
   function handleStringConfigChange(configText) {
-
     setStringConfig(configText);
 
     let sConfig = {};
@@ -187,7 +178,7 @@ export function CompiledOutput({
     onConfigChange(sConfig);
   }
 
-  const sourceCode = compiled ?.code ?? "";
+  const sourceCode = compiled?.code ?? "";
   return (
     <>
       <SplitPane minSize={40} defaultSize={300}>
@@ -243,9 +234,9 @@ export function CompiledOutput({
                   */
                   if (timeTravel !== null) {
                     setDisplayAtIndex(
-                      `${timeTravel[timeTravelIndex - 1] ?.currentNode}`
+                      `${timeTravel[timeTravelIndex - 1]?.currentNode}`
                     );
-                    setTimeTravelCode(`${timeTravel[timeTravelIndex - 1] ?.code}`);
+                    setTimeTravelCode(`${timeTravel[timeTravelIndex - 1]?.code}`);
                     if (timeTravelIndex !== timeTravel.length) {
                       setTimeTravelIndex(timeTravelIndex + 1);
                     }
@@ -255,8 +246,22 @@ export function CompiledOutput({
               />
             </Menu.Menu>
           </Menu>
-          <Segment.Group id="plugins">{displayAvailablePlugins()}</Segment.Group>
-          <Segment.Group id="plugins">{displayAvailablePresets()}</Segment.Group>
+          {/* <Segment.Group id="plugins">{displayAvailablePlugins()}</Segment.Group>
+          <Segment.Group id="plugins">{displayAvailablePresets()}</Segment.Group> */}
+          <Segment.Group piled>
+            <PluginPanel
+              pluginList={plugins}
+              onChange={handlePluginChange}
+              stringConfig={stringConfig}
+            />
+          </Segment.Group>
+          <Segment.Group piled>
+            <PluginPanel
+              pluginList={presets}
+              onChange={handlePresetChange}
+              stringConfig={stringConfig}
+            />
+          </Segment.Group>
           <Wrapper>
             <Config
               value={stringConfig}
@@ -289,7 +294,7 @@ export function CompiledOutput({
             </Menu.Menu>
             <Menu.Menu position="right">
               <Menu.Item>
-                {compiled ?.size}b, {gzip}b
+                {compiled?.size}b, {gzip}b
               </Menu.Item>
               <Menu.Item onClick={removeConfig}>
                 <Icon name="close" />
@@ -307,11 +312,11 @@ export function CompiledOutput({
           ) : (
               <Code
                 value={
-                  timeTravelCode !== undefined ? timeTravelCode : compiled ?.code
+                  timeTravelCode !== undefined ? timeTravelCode : compiled?.code
                 }
                 docName="result.js"
                 config={{ readOnly: true, lineWrapping: true }}
-                isError={compiled ?.error ?? false}
+                isError={compiled?.error ?? false}
               />
             )}
 
