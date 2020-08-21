@@ -21,10 +21,11 @@ const StyledEditor = styled(CodeMirror)`
 
 export const Editor = forwardRef((props, ref) => {
   const { className, onChange, onCursor, style, ...options } = props;
+
   return (
     <StyledEditor
+      className={props.isError ? 'errorWrap' : ''}
       ref={ref}
-      className={className}
       onBeforeChange={(editor, data, value) => {
         onChange(value);
       }}
@@ -37,7 +38,6 @@ export const Editor = forwardRef((props, ref) => {
         theme: "darcula",
         ...options.config,
       }}
-      style={style}
       value={options.value}
     />
   );

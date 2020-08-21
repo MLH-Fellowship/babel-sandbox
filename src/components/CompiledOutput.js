@@ -60,14 +60,14 @@ export function CompiledOutput({
       code = Babel.transform(source, options).code;
 
       gzipSize(code).then(s => setGzip(s));
-    } catch (error) {
-      code = error.message;
+    } catch (e) {
+      code = e.message;
       isError = true;
     }
 
     setCompiled({
       code,
-      isError,
+      error: isError,
       size: new Blob([code], { type: "text/plain" }).size,
     });
   }, [config, debouncedPlugin, source]);
@@ -316,7 +316,7 @@ export function CompiledOutput({
           ) : (
               <Code
                 value={
-                  timeTravelCode !== undefined ? timeTravelCode : (compiled?.error + compiled?.code)
+                  timeTravelCode !== undefined ? timeTravelCode : (compiled?.code)
                 }
                 docName="result.js"
                 config={{ readOnly: true, lineWrapping: true }}
