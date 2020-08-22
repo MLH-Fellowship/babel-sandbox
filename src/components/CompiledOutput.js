@@ -47,8 +47,10 @@ export function CompiledOutput({
   let saveConfig = useCallback(() => {
     let options;
     let code = "";
+    let isError = false;
 
     try {
+
       options = processOptions(config, debouncedPlugin);
       const transitions = new Transition();
       options.wrapPluginVisitorMethod = transitions.wrapPluginVisitorMethod;
@@ -58,12 +60,14 @@ export function CompiledOutput({
       code = Babel.transform(source, options).code;
 
       gzipSize(code).then(s => setGzip(s));
-    } catch (error) {
-      code = error.message;
+    } catch (e) {
+      code = e.message;
+      isError = true;
     }
 
     setCompiled({
       code,
+      error: isError,
       size: new Blob([code], { type: "text/plain" }).size,
     });
   }, [config, debouncedPlugin, source]);
@@ -94,7 +98,7 @@ export function CompiledOutput({
         // kebab to camel
         .replace(/-./g, x => x.toUpperCase()[1])
     )
-    .concat(config.presets.map(arr => arr[0]));
+    .concat(config.presets?.map(arr => arr[0]));
 
   const pluginsAST = useMemo(() => {
     if (timeTravel === null) return configOpts;
@@ -154,6 +158,7 @@ export function CompiledOutput({
   }
 
   function handlePresetChange(reactEvent, checkbox) {
+    config.presets = config.presets || [];
     if (checkbox.checked) {
       config.presets.push([
         presets[checkbox.name].name,
@@ -172,15 +177,20 @@ export function CompiledOutput({
 
   function handleStringConfigChange(configText) {
     setStringConfig(configText);
-
-    let sConfig = {};
-
     try {
-      sConfig = JSON.parse(configText);
-    } catch (e) {
-      return console.error(e);
+
+      let jsonString = JSON.parse(configText);
+
+      onConfigChange(jsonString);
+
+    } catch (error) {
+
+      setCompiled({
+        error: true,
+        code: error.message
+      });
+
     }
-    onConfigChange(sConfig);
   }
 
   const sourceCode = compiled?.code ?? "";
